@@ -16,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E75F069F28D92FB1006404D6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E7796EE328D92F0400D78A14 /* Jacamole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jacamole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7796EE628D92F0400D78A14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7796EE828D92F0400D78A14 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +41,7 @@
 		E7796EDA28D92F0300D78A14 = {
 			isa = PBXGroup;
 			children = (
+				E75F069F28D92FB1006404D6 /* .gitignore */,
 				E7796EE528D92F0400D78A14 /* Jacamole */,
 				E7796EE428D92F0400D78A14 /* Products */,
 			);
