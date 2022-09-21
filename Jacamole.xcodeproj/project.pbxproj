@@ -11,6 +11,7 @@
 		77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7B28DB1DAE00D0F6E5 /* NetworkManager.swift */; };
 		77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */; };
 		77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */; };
+		E75F06A228DB5E30006404D6 /* SongsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */; };
 		E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE628D92F0400D78A14 /* AppDelegate.swift */; };
 		E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE828D92F0400D78A14 /* SceneDelegate.swift */; };
 		E7796EEB28D92F0400D78A14 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EEA28D92F0400D78A14 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		E75F069F28D92FB1006404D6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E75F06A028D93006006404D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionViewController.swift; sourceTree = "<group>"; };
 		E7796EE328D92F0400D78A14 /* Jacamole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jacamole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7796EE628D92F0400D78A14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7796EE828D92F0400D78A14 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				E7796EF428D92F0500D78A14 /* Info.plist */,
 				E7796EEA28D92F0400D78A14 /* ViewController.swift */,
 				77568D7828DB1D1900D0F6E5 /* SongsListViewController.swift */,
+				E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
 			);
 			path = Jacamole;
@@ -171,6 +174,7 @@
 				77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */,
 				E7796EEB28D92F0400D78A14 /* ViewController.swift in Sources */,
 				77568D7928DB1D1900D0F6E5 /* SongsListViewController.swift in Sources */,
+				E75F06A228DB5E30006404D6 /* SongsCollectionViewController.swift in Sources */,
 				77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */,
 				E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */,
 				77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */,
