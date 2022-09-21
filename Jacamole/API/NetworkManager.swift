@@ -2,11 +2,15 @@ import UIKit
 
 class SongsAPIConstructor {
     
-    private let baseUrl = ""
-    private let apiKey = ""
+    private let baseUrl = "https://api.jamendo.com/v3.0/"
+    private let clientId = "676da3fb"
+    
+    // api example: https://api.jamendo.com/v3.0/tracks/?client_id=676da3fb&format=json&limit=10&include=musicinfo+lyrics&groupby=artist_id
+    // this returns random list of ten tracks, /tracks/ - is a changable thing
+    // to get specific album must be changed to /albums/ ...
     
     func makeURL() -> URL? {
-        let urlString = "\(self.baseUrl)/?api_key=\(self.apiKey)"
+        let urlString = "\(self.baseUrl)/tracks/?client_id=\(self.clientId)"
         return URL(string: urlString)
     }
 }
