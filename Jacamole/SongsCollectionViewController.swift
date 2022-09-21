@@ -11,13 +11,65 @@ private let reuseIdentifier = "Cell"
 
 class SongsCollectionViewController: UICollectionViewController {
     
-    private let cellID = "Cell"
+    // MARK: - Private Properties
     private var songsList: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        registerCells()
+        collectionView.backgroundColor = UIColor(named: "BackgroungColor")
+    }
+    
+    convenience init() {
+        let compositionalLayout: UICollectionViewCompositionalLayout = {
+            let inset: CGFloat = 8
+            
+            // Item
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            // Group
+            let outerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4), heightDimension: .fractionalHeight(0.21))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: outerGroupSize, subitems: [item])
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
+            
+            // Section
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+            section.orthogonalScrollingBehavior = .continuous
+            
+            // Supplementary Item - HEADER
+            let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50))
+            let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: "header", alignment: .top)
+            headerItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: inset, bottom: 8, trailing: inset)
+            section.boundarySupplementaryItems = [headerItem]
+            
+            // Decoration Item - BACKGROUND
+            // let backgroundItem = NSCollectionLayoutDecorationItem.background(elementKind: "background")
+            // section.decorationItems = [backgroundItem]
+            
+            // Section Configuration
+            let config = UICollectionViewCompositionalLayoutConfiguration()
+            config.interSectionSpacing = 20
+            
+            // Make UICollectionViewCompositionalLayout
+             let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)
+            // layout.register(BackgroundDecorationView.self, forDecorationViewOfKind: "background")
+            
+            return layout
+        }()
         
+        self.init(collectionViewLayout: compositionalLayout)
+    }
+    
+    // MARK: - Private Methods
+    private func registerCells() {
+        collectionView.register(SongCollectionViewCell.self,
+                                forCellWithReuseIdentifier: "SongCollectionViewCell")
+        
+        collectionView.register(HeaderCollectionReusableView.self,
+                                forSupplementaryViewOfKind: "header",
+                                withReuseIdentifier: "HeaderCollectionReusableView")
     }
 }
 
@@ -26,18 +78,26 @@ class SongsCollectionViewController: UICollectionViewController {
 extension SongsCollectionViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 4
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCollectionReusableView", for: indexPath) as? HeaderCollectionReusableView else {
+            return HeaderCollectionReusableView()
+        }
+        
+        return headerView
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return 10
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongCollectionViewCell", for: indexPath) as? SongCollectionViewCell else {
+            return SongCollectionViewCell()
+        }
     
         // Configure the cell
     
