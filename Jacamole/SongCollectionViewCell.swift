@@ -49,6 +49,10 @@ class SongCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(with title: String) {
+        self.title.text = title
+    }
+    
     private func setupViews() {
         contentView.addSubview(posterImage)
         contentView.addSubview(title)

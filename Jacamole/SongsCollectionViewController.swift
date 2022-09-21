@@ -12,7 +12,11 @@ private let reuseIdentifier = "Cell"
 class SongsCollectionViewController: UICollectionViewController {
     
     // MARK: - Private Properties
-    private var songsList: [String] = []
+    private var songs = [
+        ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
+        ["Recently Played": ["One", "Two", "Three", "Four", "Five"]],
+        ["Genre": ["Rap", "Pop", "Jazz"]]
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +82,7 @@ class SongsCollectionViewController: UICollectionViewController {
 extension SongsCollectionViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return songs.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -86,12 +90,16 @@ extension SongsCollectionViewController {
             return HeaderCollectionReusableView()
         }
         
+        let section = songs[indexPath.section]
+        let title = section.keys.first!
+        headerView.configure(with: title)
         return headerView
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        let section = songs[section]
+        return section.values.first?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -99,7 +107,10 @@ extension SongsCollectionViewController {
             return SongCollectionViewCell()
         }
     
-        // Configure the cell
+        let section = songs[indexPath.section]
+        let songs = section.values.first ?? [""]
+        let title = songs[indexPath.row]
+        cell.configure(with: title)
     
         return cell
     }

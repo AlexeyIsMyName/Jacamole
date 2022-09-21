@@ -38,9 +38,9 @@ class HeaderCollectionReusableView: UICollectionReusableView {
         return chevronImage
     }()
     
-//    public func configure() {
-//
-//    }
+    public func configure(with title: String) {
+        self.title.text = title
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
