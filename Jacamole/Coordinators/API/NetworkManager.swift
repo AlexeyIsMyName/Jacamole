@@ -1,18 +1,15 @@
-import UIKit
+import Foundation
+
+enum APIEndpoints: String {
+    case songs = "/v3.0//tracks"
+    case artist = "/v3.0/artists/tracks"
+    case alboms = "/v3.0/albums/tracks"
+}
 
 class SongsAPIConstructor {
+    let baseUrl = "api.jamendo.com"
+    let clientId = "676da3fb"
     
-    private let baseUrl = "https://api.jamendo.com/v3.0/"
-    private let clientId = "676da3fb"
-    
-    // api example: https://api.jamendo.com/v3.0/tracks/?client_id=676da3fb&format=json&limit=10&include=musicinfo+lyrics&groupby=artist_id
-    // this returns random list of ten tracks, /tracks/ - is a changable thing
-    // to get specific album must be changed to /albums/ ...
-    
-    func makeURL() -> URL? {
-        let urlString = "\(self.baseUrl)/tracks/?client_id=\(self.clientId)"
-        return URL(string: urlString)
-    }
 }
 
 class NetworkManager {
@@ -20,10 +17,27 @@ class NetworkManager {
     private let session = URLSession(configuration: .default)
     
     func request<D: Decodable>(
+        apiEnpoint: APIEndpoints,
+        params: [String: String]? = nil,
         for dataModel: D.Type,
         completion: @escaping (Result<D, Error>) -> Void
     ) {
-        guard let url = self.apiConstructor.makeURL() else { return }
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = self.apiConstructor.baseUrl
+        components.path = apiEnpoint.rawValue
+        
+        if let params = params {
+            components.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+        }
+    
+        components.queryItems?.append(
+            URLQueryItem(name: "client_id", value: self.apiConstructor.clientId)
+        )
+        
+        let url = components.url!
+        print("___url: \(url)")
+        print("clientId: \(self.apiConstructor.clientId)")
         self.request(for: url, for: dataModel, completion: completion)
     }
     

@@ -15,6 +15,21 @@
 		E72C62A728E5F84A003033F4 /* MusicGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A628E5F84A003033F4 /* MusicGenres.swift */; };
 		E75F06A428DB7912006404D6 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A328DB7912006404D6 /* HeaderCollectionReusableView.swift */; };
 		E75F06A628DB895C006404D6 /* SongCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A528DB895C006404D6 /* SongCollectionViewCell.swift */; };
+		77568D8428DB417700D0F6E5 /* SongsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8328DB417700D0F6E5 /* SongsListView.swift */; };
+		77568D8628DB430D00D0F6E5 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8528DB430D00D0F6E5 /* SongListCell.swift */; };
+		77568D8828DB56FC00D0F6E5 /* Abel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77568D7E28DB217F00D0F6E5 /* Abel-Regular.ttf */; };
+		77568D8B28DB86AC00D0F6E5 /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8A28DB86AC00D0F6E5 /* AppTabBarController.swift */; };
+		776A37B128E44056005DAF1C /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37B028E44056005DAF1C /* ArtistModel.swift */; };
+		776A37B328E44513005DAF1C /* ArtistAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37B228E44513005DAF1C /* ArtistAPIClient.swift */; };
+		776A37B528E44763005DAF1C /* SongsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37B428E44763005DAF1C /* SongsModel.swift */; };
+		776A37B728E455C3005DAF1C /* AlbomAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37B628E455C3005DAF1C /* AlbomAPIClient.swift */; };
+		776A37B928E45636005DAF1C /* AlbomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37B828E45636005DAF1C /* AlbomModel.swift */; };
+		776A37BB28E45B04005DAF1C /* SongListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37BA28E45B04005DAF1C /* SongListVM.swift */; };
+		776A37BD28E45DE3005DAF1C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37BC28E45DE3005DAF1C /* AppCoordinator.swift */; };
+		776A37BF28E474BB005DAF1C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37BE28E474BB005DAF1C /* Coordinator.swift */; };
+		776A37C128E47A59005DAF1C /* FavoriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C028E47A59005DAF1C /* FavoriteCoordinator.swift */; };
+		776A37C328E47BE7005DAF1C /* SongsMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C228E47BE7005DAF1C /* SongsMenuCoordinator.swift */; };
+		776A37C528E47D95005DAF1C /* SongSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C428E47D95005DAF1C /* SongSearchCoordinator.swift */; };
 		E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE628D92F0400D78A14 /* AppDelegate.swift */; };
 		E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE828D92F0400D78A14 /* SceneDelegate.swift */; };
 		E7796EEB28D92F0400D78A14 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EEA28D92F0400D78A14 /* ViewController.swift */; };
@@ -30,6 +45,20 @@
 		77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		E72C62A228E5E614003033F4 /* SongsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsMainViewController.swift; sourceTree = "<group>"; };
 		E72C62A628E5F84A003033F4 /* MusicGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicGenres.swift; sourceTree = "<group>"; };
+		77568D8328DB417700D0F6E5 /* SongsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsListView.swift; sourceTree = "<group>"; };
+		77568D8528DB430D00D0F6E5 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
+		77568D8A28DB86AC00D0F6E5 /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
+		776A37B028E44056005DAF1C /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
+		776A37B228E44513005DAF1C /* ArtistAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAPIClient.swift; sourceTree = "<group>"; };
+		776A37B428E44763005DAF1C /* SongsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsModel.swift; sourceTree = "<group>"; };
+		776A37B628E455C3005DAF1C /* AlbomAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbomAPIClient.swift; sourceTree = "<group>"; };
+		776A37B828E45636005DAF1C /* AlbomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbomModel.swift; sourceTree = "<group>"; };
+		776A37BA28E45B04005DAF1C /* SongListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListVM.swift; sourceTree = "<group>"; };
+		776A37BC28E45DE3005DAF1C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		776A37BE28E474BB005DAF1C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		776A37C028E47A59005DAF1C /* FavoriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoordinator.swift; sourceTree = "<group>"; };
+		776A37C228E47BE7005DAF1C /* SongsMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsMenuCoordinator.swift; sourceTree = "<group>"; };
+		776A37C428E47D95005DAF1C /* SongSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearchCoordinator.swift; sourceTree = "<group>"; };
 		E75F069F28D92FB1006404D6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E75F06A028D93006006404D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E75F06A328DB7912006404D6 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -59,6 +88,11 @@
 			children = (
 				77568D7B28DB1DAE00D0F6E5 /* NetworkManager.swift */,
 				77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */,
+				776A37B428E44763005DAF1C /* SongsModel.swift */,
+				776A37B228E44513005DAF1C /* ArtistAPIClient.swift */,
+				776A37B028E44056005DAF1C /* ArtistModel.swift */,
+				776A37B628E455C3005DAF1C /* AlbomAPIClient.swift */,
+				776A37B828E45636005DAF1C /* AlbomModel.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -70,6 +104,30 @@
 				77568D7E28DB217F00D0F6E5 /* Abel-Regular.ttf */,
 			);
 			path = "Resourсes";
+			sourceTree = "<group>";
+		};
+		77568D8728DB47DE00D0F6E5 /* SongsList */ = {
+			isa = PBXGroup;
+			children = (
+				77568D8528DB430D00D0F6E5 /* SongListCell.swift */,
+				77568D8328DB417700D0F6E5 /* SongsListView.swift */,
+				776A37BA28E45B04005DAF1C /* SongListVM.swift */,
+				77568D7828DB1D1900D0F6E5 /* SongsListViewController.swift */,
+			);
+			path = SongsList;
+			sourceTree = "<group>";
+		};
+		777F302B28E33CF1004B5A5E /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				776A37BE28E474BB005DAF1C /* Coordinator.swift */,
+				776A37BC28E45DE3005DAF1C /* AppCoordinator.swift */,
+				776A37C028E47A59005DAF1C /* FavoriteCoordinator.swift */,
+				776A37C228E47BE7005DAF1C /* SongsMenuCoordinator.swift */,
+				776A37C428E47D95005DAF1C /* SongSearchCoordinator.swift */,
+				77568D7A28DB1D8600D0F6E5 /* API */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		E7796EDA28D92F0300D78A14 = {
@@ -96,7 +154,8 @@
 				E7796EE628D92F0400D78A14 /* AppDelegate.swift */,
 				E7796EE828D92F0400D78A14 /* SceneDelegate.swift */,
 				77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */,
-				77568D7A28DB1D8600D0F6E5 /* API */,
+				77568D8A28DB86AC00D0F6E5 /* AppTabBarController.swift */,
+				777F302B28E33CF1004B5A5E /* Coordinators */,
 				E7796EF128D92F0500D78A14 /* LaunchScreen.storyboard */,
 				E7796EF428D92F0500D78A14 /* Info.plist */,
 				E7796EEA28D92F0400D78A14 /* ViewController.swift */,
@@ -105,6 +164,7 @@
 				E75F06A328DB7912006404D6 /* HeaderCollectionReusableView.swift */,
 				E75F06A528DB895C006404D6 /* SongCollectionViewCell.swift */,
 				E72C62A628E5F84A003033F4 /* MusicGenres.swift */,
+				77568D8728DB47DE00D0F6E5 /* SongsList */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
 			);
 			path = Jacamole;
@@ -168,6 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77568D8828DB56FC00D0F6E5 /* Abel-Regular.ttf in Resources */,
 				E7796EF328D92F0500D78A14 /* LaunchScreen.storyboard in Resources */,
 				E7796EF028D92F0500D78A14 /* Assets.xcassets in Resources */,
 			);
@@ -180,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				776A37B728E455C3005DAF1C /* AlbomAPIClient.swift in Sources */,
 				77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */,
 				E72C62A728E5F84A003033F4 /* MusicGenres.swift in Sources */,
 				E75F06A428DB7912006404D6 /* HeaderCollectionReusableView.swift in Sources */,
@@ -188,9 +250,22 @@
 				77568D7928DB1D1900D0F6E5 /* SongsListViewController.swift in Sources */,
 				E72C62A328E5E614003033F4 /* SongsMainViewController.swift in Sources */,
 				77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */,
+				776A37C528E47D95005DAF1C /* SongSearchCoordinator.swift in Sources */,
 				E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */,
 				77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */,
+				776A37BD28E45DE3005DAF1C /* AppCoordinator.swift in Sources */,
+				776A37BF28E474BB005DAF1C /* Coordinator.swift in Sources */,
+				776A37B328E44513005DAF1C /* ArtistAPIClient.swift in Sources */,
 				E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */,
+				776A37BB28E45B04005DAF1C /* SongListVM.swift in Sources */,
+				776A37C328E47BE7005DAF1C /* SongsMenuCoordinator.swift in Sources */,
+				77568D8628DB430D00D0F6E5 /* SongListCell.swift in Sources */,
+				776A37B128E44056005DAF1C /* ArtistModel.swift in Sources */,
+				77568D8428DB417700D0F6E5 /* SongsListView.swift in Sources */,
+				776A37B528E44763005DAF1C /* SongsModel.swift in Sources */,
+				77568D8B28DB86AC00D0F6E5 /* AppTabBarController.swift in Sources */,
+				776A37B928E45636005DAF1C /* AlbomModel.swift in Sources */,
+				776A37C128E47A59005DAF1C /* FavoriteCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +404,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZG8HC24927;
+				DEVELOPMENT_TEAM = X3L28X5FYM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jacamole/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -342,7 +417,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.suslovaleksey.Jacamole;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.hmnlsuslovaleksey.Jacamole;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -360,7 +435,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZG8HC24927;
+				DEVELOPMENT_TEAM = X3L28X5FYM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Jacamole/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -373,7 +448,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.suslovaleksey.Jacamole;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.jjjhsuslovaleksey.Jacamole;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
