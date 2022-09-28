@@ -11,6 +11,7 @@
 		77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7B28DB1DAE00D0F6E5 /* NetworkManager.swift */; };
 		77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */; };
 		77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */; };
+		E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A028E4BED6003033F4 /* PlayerViewController.swift */; };
 		E75F06A228DB5E30006404D6 /* SongsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */; };
 		E75F06A428DB7912006404D6 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A328DB7912006404D6 /* HeaderCollectionReusableView.swift */; };
 		E75F06A628DB895C006404D6 /* SongCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75F06A528DB895C006404D6 /* SongCollectionViewCell.swift */; };
@@ -27,6 +28,7 @@
 		77568D7E28DB217F00D0F6E5 /* Abel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Abel-Regular.ttf"; sourceTree = "<group>"; };
 		77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsAPIClient.swift; sourceTree = "<group>"; };
 		77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		E72C62A028E4BED6003033F4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		E75F069F28D92FB1006404D6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E75F06A028D93006006404D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				E75F06A128DB5E30006404D6 /* SongsCollectionViewController.swift */,
 				E75F06A328DB7912006404D6 /* HeaderCollectionReusableView.swift */,
 				E75F06A528DB895C006404D6 /* SongCollectionViewCell.swift */,
+				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
 			);
 			path = Jacamole;
@@ -186,6 +189,7 @@
 				77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */,
 				E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */,
 				77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */,
+				E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */,
 				E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
