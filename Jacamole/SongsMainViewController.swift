@@ -12,7 +12,7 @@ class SongsMainViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let viewLayout = setupCompositionalLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(named: "BackgroungColor")
         return collectionView
     }()
 
@@ -31,8 +31,6 @@ class SongsMainViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = UIColor(named: "BackgroungColor")
-        collectionView.backgroundColor = UIColor(named: "BackgroungColor")
-        
         view.addSubview(collectionView)
 
         collectionView.dataSource = self
@@ -66,7 +64,7 @@ class SongsMainViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
-        let outerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4), heightDimension: .fractionalHeight(0.21))
+        let outerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4), heightDimension: .fractionalWidth(0.45))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: outerGroupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
         
