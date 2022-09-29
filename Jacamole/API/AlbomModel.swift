@@ -7,8 +7,8 @@ struct AlbomAPIResult: Decodable {
 struct AlbomInfo: Decodable {
     let id: String
     let name: String
-    let artist_id: String
-    let artist_name: String
+    let artistId: String
+    let artistName: String
     let image: String
     let tracks: [AlbomTrack]
 }
@@ -20,5 +20,5 @@ struct AlbomTrack: Decodable {
     let duration: String
     let audio: String
     let audiodownload: String
-    let audiodownload_allowed: Bool
+    let audiodownloadAllowed: Bool
 }

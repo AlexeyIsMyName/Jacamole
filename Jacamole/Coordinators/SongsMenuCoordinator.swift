@@ -5,6 +5,7 @@ class SongsMenuCoordinator: Coordinator {
     
     // MARK: - API
     override var rootViewController: UIViewController? {
+        navigationController.tabBarItem.image = UIImage(named: "Music")
         return navigationController
     }
     
@@ -17,7 +18,7 @@ class SongsMenuCoordinator: Coordinator {
 private extension SongsMenuCoordinator {
     
     func showSongsMenu() {
-        let songsMenuVC = ViewController()
+        let songsMenuVC = SongsCollectionViewController()
         navigationController.pushViewController(songsMenuVC, animated: false)
     }
 }

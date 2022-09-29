@@ -12,7 +12,7 @@ class ArtistAPIClient {
             "id": artistID
         ]
         
-        self.networkManager.request(apiEnpoint: api, params: params, for: ArtistAPIResult.self) { result in
+        networkManager.request(apiEnpoint: api, params: params, for: ArtistAPIResult.self) { result in
             switch result {
             case .success(let artist):
                 complition(artist.results)

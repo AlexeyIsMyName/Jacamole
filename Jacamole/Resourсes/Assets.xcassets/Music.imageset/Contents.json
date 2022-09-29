@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "Music.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -10,6 +9,7 @@
       "scale" : "2x"
     },
     {
+      "filename" : "kisspng-eighth-note-sixteenth-note-computer-icons-clip-art-double-5b0d36a167bf46.274152281527592609425.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

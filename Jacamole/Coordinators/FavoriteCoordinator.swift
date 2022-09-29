@@ -5,6 +5,7 @@ class FavoriteCoordinator: Coordinator {
     
     // MARK: - API
     override var rootViewController: UIViewController? {
+        navigationController.tabBarItem.image = UIImage(systemName: "heart")
         return navigationController
     }
     
@@ -17,7 +18,7 @@ class FavoriteCoordinator: Coordinator {
 private extension FavoriteCoordinator {
     
     func showFavoriteSongs() {
-        let favoriteVC = SongsListViewController()
+        let favoriteVC = SongsListViewController(navigationTitle: "Favorite Title")
         navigationController.pushViewController(favoriteVC, animated: false)
     }
 }

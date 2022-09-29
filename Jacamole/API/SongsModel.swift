@@ -11,10 +11,10 @@ struct Song: Decodable {
     let id: String
     let name: String
     let duration: Int
-    let artist_id: String
-    let artist_name: String
-    let album_name: String
-    let album_id: String
+    let artistId: String
+    let artistName: String
+    let albumName: String
+    let albumId: String
     let position: Int
     let audio: String
     let audiodownload: String

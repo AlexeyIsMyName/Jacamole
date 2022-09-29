@@ -12,14 +12,14 @@ struct ArtistInfo: Decodable {
 }
 
 struct Track: Decodable {
-    let album_id: String
-    let album_name: String
+    let albumId: String
+    let albumName: String
     let id: String
     let name: String
     let duration: String
-    let album_image: String
+    let albumImage: String
     let image: String
     let audio: String
     let audiodownload: String
-    let audiodownload_allowed: Bool
+    let audiodownloadAllowed: Bool
 }

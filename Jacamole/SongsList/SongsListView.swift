@@ -14,13 +14,24 @@ class SongsListView: UIView {
         tableView.dataSource = self
         
         return tableView
-    } ()
+    }()
     
-    override init(frame: CGRect = .zero) {
-        super.init(frame: frame)
-        self.backgroundColor = .clear
+    let viewModel: SongsListViewModel
+    
+    init(viewModel: SongsListViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(frame: .zero)
+        backgroundColor = .clear
     
         self.setupUI()
+        
+        self.viewModel.viewModelChanged = {
+            [weak self] in
+            guard let self = self else { return }
+            
+            self.tableView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -29,15 +40,14 @@ class SongsListView: UIView {
     
     
     private func setupUI() {
-        
         overrideUserInterfaceStyle = .light
         addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10),
-            tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            tableView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            tableView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
         ])
     }
 
@@ -52,7 +62,10 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
     
     func makeSongCell(for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongListCell
-        
+        let vm = self.viewModel.songsVM[indexPath.row]
+        cell.songLabel.text = vm.songName
+        cell.artistLabel.text = vm.songArtist
+        cell.songImage.load(urlAdress: vm.imageAdress)
         return cell
     }
     
@@ -61,7 +74,7 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        self.viewModel.songsVM.count
     }
     
     //Вывести в ячейках отфильтрованные данные по запросу

@@ -11,7 +11,6 @@ class SongCollectionViewCell: UICollectionViewCell {
     
     private lazy var posterImage: UIImageView = {
         let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
-//        let posterImage = UIImageView()
         posterImage.clipsToBounds = true
         posterImage.layer.cornerRadius = 16
         posterImage.sizeToFit()

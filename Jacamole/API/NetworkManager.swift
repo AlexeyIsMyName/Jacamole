@@ -24,7 +24,7 @@ class NetworkManager {
     ) {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = self.apiConstructor.baseUrl
+        components.host = apiConstructor.baseUrl
         components.path = apiEnpoint.rawValue
         
         if let params = params {
@@ -32,12 +32,12 @@ class NetworkManager {
         }
     
         components.queryItems?.append(
-            URLQueryItem(name: "client_id", value: self.apiConstructor.clientId)
+            URLQueryItem(name: "client_id", value: apiConstructor.clientId)
         )
         
         let url = components.url!
         print("___url: \(url)")
-        print("clientId: \(self.apiConstructor.clientId)")
+        print("clientId: \(apiConstructor.clientId)")
         self.request(for: url, for: dataModel, completion: completion)
     }
     
@@ -63,7 +63,7 @@ private extension NetworkManager {
         }
        
         guard let data = data,
-              let model = self.parseJSON(data, to: D.self) else {
+              let model = parseJSON(data, to: D.self) else {
             completion(.failure(NSError(domain: "NetworkManager", code: 1)))
             return
         }
@@ -75,6 +75,7 @@ private extension NetworkManager {
     
     func parseJSON<D: Decodable>(_ data: Data, to model: D.Type) -> D? {
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             return try decoder.decode(model, from: data)
         } catch {
@@ -83,3 +84,4 @@ private extension NetworkManager {
         }
     }
 }
+

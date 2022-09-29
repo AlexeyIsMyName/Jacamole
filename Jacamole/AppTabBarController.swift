@@ -8,30 +8,32 @@ class AppTabBarController: UITabBarController {
         view.backgroundColor = UIColor(named: "BackgroungColor")
 
         setupTB()
-        setupVCs()
         setTabBarAppearance()
     }
     
-    private func createNavController(for rootViewController: UIViewController,
+    func createNavController(for rootViewController: UIViewController,
                                      image: UIImage) -> UIViewController {
-        let tabBarTitleOffset = UIOffset(horizontal: 0,vertical: 50)
+        
         let navController = AppNavigationController(rootViewController: rootViewController)
+        
+        
         navController.tabBarItem.image = image
+        let tabBarTitleOffset = UIOffset(horizontal: 0,vertical: 50)
         navController.tabBarItem.titlePositionAdjustment = tabBarTitleOffset
 
         return navController
     }
     
-    private func setupVCs() {
-        viewControllers = [
-            createNavController(for: SongsListViewController(),
-                                image: UIImage(systemName: "heart")!),
-            createNavController(for: ViewController(),
-                                image: UIImage(named: "Music")!),
-            createNavController(for: SongsListViewController(),
-                                image: UIImage(systemName: "magnifyingglass")!)
-        ]
-    }
+//    private func setupVCs() {
+//        viewControllers = [
+//            createNavController(for: SongsListViewController(),
+//                                image: UIImage(systemName: "heart")!),
+//            createNavController(for: SongsCollectionViewController(),
+//                                image: UIImage(named: "Music")!),
+//            createNavController(for: SongsListViewController(),
+//                                image: UIImage(systemName: "magnifyingglass")!)
+//        ]
+//    }
     
     private func setupTB() {
         UITabBar.appearance().barTintColor = UIColor(named: "ButtonColor")
@@ -59,7 +61,6 @@ class AppTabBarController: UITabBarController {
         )
 
         roundLayer.path = bezierPath.cgPath
-        
         roundLayer.shadowColor = UIColor.black.cgColor
         roundLayer.shadowOpacity = 2
         roundLayer.shadowOffset = .zero

@@ -1,13 +1,12 @@
 import UIKit
 
 class SongListCell: UITableViewCell {
-
-    private lazy var songImage: UIImageView = {
+    
+    lazy var songImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "guacamole-vectorportal")
         iv.layer.cornerRadius = 30.0
         iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             iv.heightAnchor.constraint(equalToConstant: 60.0),
@@ -18,7 +17,7 @@ class SongListCell: UITableViewCell {
         return iv
     }()
     
-    public lazy var songLabel: UILabel = {
+    lazy var songLabel: UILabel = {
         let label = UILabel()
         label.text = "Default"
         label.textColor = UIColor(named: "TextColor")
@@ -48,13 +47,30 @@ class SongListCell: UITableViewCell {
         return sv
     }()
     
+    private lazy var heartButton: UIButton = {
+        let btn = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                 weight: .light,
+                                                 scale: .default)
+      
+        btn.setImage( UIImage.init(systemName: "heart", withConfiguration: config), for: .normal)
+        btn.setImage( UIImage.init(systemName: "heart.fill", withConfiguration: config), for: .selected)
+        btn.tintColor = UIColor(named: "TextColor")
+        btn.setTitleColor(.red, for: .selected)
+        btn.addTarget(self, action: #selector(setHeartColor), for: .touchUpInside)
+        
+        return btn
+    }()
+    
     private lazy var contentStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [
             songImage,
-            textStackView
+            textStackView,
+            heartButton
         ])
         sv.axis = .horizontal
         sv.alignment = .center
+        sv.backgroundColor = UIColor(named: "BackgroungColor")
         sv.spacing = 6.26
         sv.translatesAutoresizingMaskIntoConstraints = false
 
@@ -73,7 +89,7 @@ class SongListCell: UITableViewCell {
     
     private func setupView() {
         addSubview(contentView)
-        backgroundColor = .clear
+        backgroundColor = UIColor(named: "BackgroungColor")
         contentView.backgroundColor = .clear
         contentView.addSubview(contentStackView)
         
@@ -89,5 +105,12 @@ class SongListCell: UITableViewCell {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    @objc func setHeartColor() {
+        print("I tap on this button")
+        self.heartButton.isSelected.toggle()
+        let isSelected = self.heartButton.isSelected
+        heartButton.tintColor = isSelected ? .red : UIColor(named: "TextColor")
     }
 }

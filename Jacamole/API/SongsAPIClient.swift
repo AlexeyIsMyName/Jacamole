@@ -16,7 +16,7 @@ class SongsAPIClient {
             "tags": tag
         ]
         
-        self.networkManager.request(apiEnpoint: api, params: params, for: SongsAPIResult.self) { result in
+        networkManager.request(apiEnpoint: api, params: params, for: SongsAPIResult.self) { result in
             switch result {
             case .success(let songs):
                 complition(songs.results)

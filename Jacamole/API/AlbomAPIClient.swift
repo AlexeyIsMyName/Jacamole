@@ -12,7 +12,7 @@ class AlbomAPIClient {
             "id": albomID
         ]
         
-        self.networkManager.request(apiEnpoint: api, params: params, for: AlbomAPIResult.self) { result in
+        networkManager.request(apiEnpoint: api, params: params, for: AlbomAPIResult.self) { result in
             switch result {
             case .success(let alboms):
                 complition(alboms.results)

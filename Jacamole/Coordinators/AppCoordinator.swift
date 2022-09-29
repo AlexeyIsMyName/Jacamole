@@ -13,6 +13,7 @@ class AppCoordinator: Coordinator {
         childCoordinators.forEach { (childCoordinator) in
             childCoordinator.start()
         }
+        tabBarController.selectedIndex = 1
     }
     
     // MARK: - Init
@@ -38,15 +39,15 @@ private extension AppCoordinator {
         childCoordinators.append(contentsOf: tabs)
     }
     
-    func setupLKTab() {
-        guard var tabViewControllers = tabBarController.viewControllers else { return }
-
-        let songsMenuCoordinator = SongsMenuCoordinator()
-        songsMenuCoordinator.start()
-
-        tabViewControllers[1] = songsMenuCoordinator.rootViewController!
-
-        childCoordinators.append(songsMenuCoordinator)
+//    func setupTab() {
+//        guard var tabViewControllers = tabBarController.viewControllers else { return }
+//
+//        let songsMenuCoordinator = SongsMenuCoordinator()
+//        songsMenuCoordinator.start()
+//
+//        tabViewControllers[1] = songsMenuCoordinator.rootViewController!
+//
+//        childCoordinators.append(songsMenuCoordinator)
 
 //        // Remove unnecessary coordinator
 //        if lkCoordinator is LKCoordinator {
@@ -56,6 +57,6 @@ private extension AppCoordinator {
 //        }
 //
 //        tabBarController.viewControllers = tabViewControllers
-    }
+//    }
 
 }

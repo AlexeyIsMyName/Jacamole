@@ -5,6 +5,7 @@ class SongSearchCoordinator: Coordinator {
     
     // MARK: - API
     override var rootViewController: UIViewController? {
+        navigationController.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         return navigationController
     }
     
@@ -17,7 +18,7 @@ class SongSearchCoordinator: Coordinator {
 private extension SongSearchCoordinator {
     
     func showSongSearch() {
-        let songSearchVC = SongsListViewController()
+        let songSearchVC = SongsListViewController(navigationTitle: "Search")
         navigationController.pushViewController(songSearchVC, animated: false)
     }
 }
