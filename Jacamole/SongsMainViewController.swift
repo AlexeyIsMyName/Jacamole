@@ -88,7 +88,6 @@ class SongsMainViewController: UIViewController {
         
         return layout
     }
-
 }
 
 // MARK: UICollectionViewDataSource
