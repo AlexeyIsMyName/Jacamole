@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = UIColor(named: "Color")
         
-        let navigationController = AppNavigationController(rootViewController: SongsCollectionViewController())
+        let navigationController = AppNavigationController(rootViewController: PlayerViewController())
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
