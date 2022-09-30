@@ -1,5 +1,5 @@
 //
-//  HeaderCollectionReusableView.swift
+//  SongsCollectionReusableView.swift
 //  Jacamole
 //
 //  Created by ALEKSEY SUSLOV on 21.09.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeaderCollectionReusableView: UICollectionReusableView {
+class SongsCollectionReusableView: UICollectionReusableView {
     
     private lazy var title: UILabel = {
         let title = UILabel()

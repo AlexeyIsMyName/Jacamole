@@ -5,7 +5,7 @@
 //  Created by ALEKSEY SUSLOV on 29.09.2022.
 //
 
-enum MusicGenres: String, CaseIterable {
+enum SongsCollectionGenres: String, CaseIterable {
     case soul
     case pop
     case dreampop

@@ -18,7 +18,6 @@ class SongsMainViewController: UIViewController {
 
     private var songs = [
         ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
-        ["Recently Played": ["One", "Two", "Three", "Four", "Five"]],
         ["Genre": ["Rap", "Pop", "Jazz"]]
     ]
     
@@ -39,9 +38,9 @@ class SongsMainViewController: UIViewController {
         collectionView.register(SongCollectionViewCell.self,
                                 forCellWithReuseIdentifier: "SongCollectionViewCell")
         
-        collectionView.register(HeaderCollectionReusableView.self,
+        collectionView.register(SongsCollectionReusableView.self,
                                 forSupplementaryViewOfKind: "header",
-                                withReuseIdentifier: "HeaderCollectionReusableView")
+                                withReuseIdentifier: "SongsCollectionReusableView")
     }
     
     private func setupLayouts() {
@@ -97,8 +96,8 @@ extension SongsMainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCollectionReusableView", for: indexPath) as? HeaderCollectionReusableView else {
-            return HeaderCollectionReusableView()
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SongsCollectionReusableView", for: indexPath) as? SongsCollectionReusableView else {
+            return SongsCollectionReusableView()
         }
         
         let section = songs[indexPath.section]
