@@ -5,13 +5,10 @@
 //  Created by ALEKSEY SUSLOV on 30.09.2022.
 //
 
-import Foundation
-
-
 class SongsCollectionViewModel {
     var viewModelChanged: (() -> Void)?
     
-    private(set) var songsVM = [SongListItemViewModel]() {
+    private(set) var songsVM = [[String: [Any]]]() {
         didSet {
             self.viewModelChanged?()
         }
@@ -21,10 +18,8 @@ class SongsCollectionViewModel {
     
     init(songsAPIClient: SongsAPIClient) {
         self.songsAPIClient = songsAPIClient
-        
         self.loadSongs()
     }
-    
 }
 
 private extension SongsCollectionViewModel {
@@ -35,8 +30,19 @@ private extension SongsCollectionViewModel {
             guard let self = self else { return }
             
             print("______________songs: \(songs)")
-            self.songsVM = songs.map { SongListItemViewModel(song: $0) }
+            self.songsVM.append(
+                ["Popular Music": songs]
+            )
+            self.appendGenres()
         }
+    }
+    
+    func appendGenres() {
+        let songGenres = SongsCollectionGenres.allCases
+        
+        self.songsVM.append(
+            ["Genres" : songGenres]
+        )
     }
     
 }

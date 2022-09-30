@@ -9,7 +9,7 @@ import UIKit
 
 class SongCollectionViewCell: UICollectionViewCell {
     
-    private lazy var posterImage: UIImageView = {
+    lazy var posterImage: UIImageView = {
         let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
         posterImage.clipsToBounds = true
         posterImage.layer.cornerRadius = 16
@@ -20,7 +20,7 @@ class SongCollectionViewCell: UICollectionViewCell {
         return posterImage
     }()
     
-    private lazy var title: UILabel = {
+    lazy var title: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         title.textColor = UIColor(named: "TextColor")
@@ -29,7 +29,7 @@ class SongCollectionViewCell: UICollectionViewCell {
         return title
     }()
     
-    private lazy var secondaryTitle: UILabel = {
+    lazy var secondaryTitle: UILabel = {
         let secondaryTitle = UILabel()
         secondaryTitle.font = .systemFont(ofSize: 12, weight: .light)
         secondaryTitle.textColor = UIColor(named: "TextColor")
@@ -46,10 +46,6 @@ class SongCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func configure(with title: String) {
-        self.title.text = title
     }
     
     private func setupViews() {

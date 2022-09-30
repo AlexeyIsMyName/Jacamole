@@ -35,7 +35,14 @@ class SongsMainViewController: UIViewController {
 // MARK: Setting up view model
 extension SongsMainViewController {
     private func setupViewModel() {
+        let viewModel = SongsCollectionViewModel(songsAPIClient: SongsAPIClient())
         
+        viewModel.viewModelChanged = { [weak self] in
+            guard let self = self else { return }
+            self.collectionView.reloadData()
+        }
+        
+        self.viewModel = viewModel
     }
 }
 
@@ -108,7 +115,7 @@ extension SongsMainViewController {
 // MARK: UICollectionViewDataSource
 extension SongsMainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return songs.count
+        return viewModel.songsVM.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -116,14 +123,14 @@ extension SongsMainViewController: UICollectionViewDataSource {
             return SongsCollectionReusableView()
         }
         
-        let section = songs[indexPath.section]
+        let section = viewModel.songsVM[indexPath.section]
         let title = section.keys.first!
         headerView.configure(with: title)
         return headerView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let section = songs[section]
+        let section = viewModel.songsVM[section]
         return section.values.first?.count ?? 0
     }
 
@@ -132,11 +139,20 @@ extension SongsMainViewController: UICollectionViewDataSource {
             return SongCollectionViewCell()
         }
     
-        let section = songs[indexPath.section]
-        let songs = section.values.first ?? [""]
-        let title = songs[indexPath.row]
-        cell.configure(with: title)
-    
+        let section = viewModel.songsVM[indexPath.section]
+        let items = section.values.first!
+        
+        if let songs = items as? [Song] {
+            let song = songs[indexPath.row]
+            cell.title.text = song.artistName
+            cell.secondaryTitle.text = song.name
+            cell.posterImage.load(urlAdress: song.image)
+        } else if let genres = items as? [SongsCollectionGenres] {
+            let genre = genres[indexPath.row]
+            cell.title.text = genre.rawValue.uppercased()
+            cell.posterImage.image = UIImage(named: genre.rawValue)
+        }
+        
         return cell
     }
 }
