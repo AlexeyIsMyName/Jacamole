@@ -33,7 +33,7 @@ class SongCollectionViewCell: UICollectionViewCell {
         let secondaryTitle = UILabel()
         secondaryTitle.font = .systemFont(ofSize: 12, weight: .light)
         secondaryTitle.textColor = UIColor(named: "TextColor")
-        secondaryTitle.text = "Secondary Title"
+        secondaryTitle.text = " "
         secondaryTitle.translatesAutoresizingMaskIntoConstraints = false
         return secondaryTitle
     }()
@@ -85,6 +85,5 @@ class SongCollectionViewCell: UICollectionViewCell {
             secondaryTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
                                                    constant: 0)
         ])
-        
     }
 }

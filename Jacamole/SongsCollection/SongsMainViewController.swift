@@ -96,7 +96,7 @@ extension SongsMainViewController {
         section.orthogonalScrollingBehavior = .continuous
         
         // Supplementary Item - HEADER
-        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50))
+        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(30))
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: "header", alignment: .top)
         headerItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: inset, bottom: 8, trailing: inset)
         section.boundarySupplementaryItems = [headerItem]
@@ -125,7 +125,13 @@ extension SongsMainViewController: UICollectionViewDataSource {
         
         let section = viewModel.songsVM[indexPath.section]
         let title = section.keys.first!
-        headerView.configure(with: title)
+        
+        if let _ = section[title] as? [Song] {
+            headerView.configure(with: title, isTappable: true)
+        } else {
+            headerView.configure(with: title)
+        }
+        
         return headerView
     }
     
@@ -159,5 +165,7 @@ extension SongsMainViewController: UICollectionViewDataSource {
 
 // MARK: UICollectionViewDelegate
 extension SongsMainViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }
