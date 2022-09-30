@@ -15,6 +15,8 @@ class SongsMainViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "BackgroungColor")
         return collectionView
     }()
+    
+    private var viewModel: SongsCollectionViewModel!
 
     private var songs = [
         ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
@@ -24,10 +26,21 @@ class SongsMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViewModel()
         setupViews()
         setupLayouts()
     }
-    
+}
+
+// MARK: Setting up view model
+extension SongsMainViewController {
+    private func setupViewModel() {
+        
+    }
+}
+
+// MARK: Setting up views and their layouts
+extension SongsMainViewController {
     private func setupViews() {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         view.addSubview(collectionView)
@@ -54,7 +67,10 @@ class SongsMainViewController: UIViewController {
             collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
-    
+}
+
+// MARK: Providing compositional layout for collection view
+extension SongsMainViewController {
     private func setupCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let inset: CGFloat = 8
         
@@ -123,7 +139,6 @@ extension SongsMainViewController: UICollectionViewDataSource {
     
         return cell
     }
-
 }
 
 // MARK: UICollectionViewDelegate
