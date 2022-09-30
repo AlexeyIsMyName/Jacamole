@@ -167,5 +167,15 @@ extension SongsMainViewController: UICollectionViewDataSource {
 extension SongsMainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let section = viewModel.songsVM[indexPath.section]
+        let items = section.values.first!
+        
+        if let songs = items as? [Song] {
+            let song = songs[indexPath.row]
+            print("\(song.artistName) - \(song.name)")
+        } else if let genres = items as? [SongsCollectionGenres] {
+            let genre = genres[indexPath.row]
+            print(genre.rawValue)
+        }
     }
 }
