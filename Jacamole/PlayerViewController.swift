@@ -9,6 +9,15 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
+    private lazy var nowPlaying: UILabel = {
+        let nowPlaying = UILabel()
+        nowPlaying.font = .systemFont(ofSize: 30, weight: .medium)
+        nowPlaying.textColor = UIColor(named: "TextColor")
+        nowPlaying.text = "Now Playing"
+        nowPlaying.translatesAutoresizingMaskIntoConstraints = false
+        return nowPlaying
+    }()
+    
     private lazy var posterImage: UIImageView = {
         let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
 //        let posterImage = UIImageView()
@@ -42,20 +51,26 @@ class PlayerViewController: UIViewController {
     private lazy var vStack: UIStackView = {
         let vStack = UIStackView()
         vStack.axis = .vertical
-        vStack.distribution = .fillEqually
+        vStack.distribution = .fillProportionally
         vStack.alignment = .center
         vStack.spacing = 16
-        vStack.backgroundColor = .gray
+        vStack.backgroundColor = UIColor(named: "BackgroungColor")
         vStack.translatesAutoresizingMaskIntoConstraints = false
         return vStack
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupViews()
+        view.backgroundColor = UIColor(named: "BackgroungColor")
         configureVStack()
+        setupViews()
         setConstraints()
+        
+        // ТЕНЬ НЕ РАБОТАЕТ!!!
+        posterImage.layer.shadowColor = UIColor.black.cgColor
+        posterImage.layer.shadowOffset = .zero
+        posterImage.layer.shadowRadius = 10
+        posterImage.layer.shadowOpacity = 1
     }
     
     private func setupViews() {
@@ -81,6 +96,7 @@ class PlayerViewController: UIViewController {
     }
     
     private func configureVStack() {
+        vStack.addArrangedSubview(nowPlaying)
         vStack.addArrangedSubview(posterImage)
         vStack.addArrangedSubview(artistTitle)
         vStack.addArrangedSubview(songTitle)
