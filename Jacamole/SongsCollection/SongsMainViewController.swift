@@ -15,20 +15,39 @@ class SongsMainViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "BackgroungColor")
         return collectionView
     }()
+    
+    private var viewModel: SongsCollectionViewModel!
 
     private var songs = [
         ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
-        ["Recently Played": ["One", "Two", "Three", "Four", "Five"]],
         ["Genre": ["Rap", "Pop", "Jazz"]]
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViewModel()
         setupViews()
         setupLayouts()
     }
-    
+}
+
+// MARK: Setting up view model
+extension SongsMainViewController {
+    private func setupViewModel() {
+        let viewModel = SongsCollectionViewModel(songsAPIClient: SongsAPIClient())
+        
+        viewModel.viewModelChanged = { [weak self] in
+            guard let self = self else { return }
+            self.collectionView.reloadData()
+        }
+        
+        self.viewModel = viewModel
+    }
+}
+
+// MARK: Setting up views and their layouts
+extension SongsMainViewController {
     private func setupViews() {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         view.addSubview(collectionView)
@@ -39,9 +58,9 @@ class SongsMainViewController: UIViewController {
         collectionView.register(SongCollectionViewCell.self,
                                 forCellWithReuseIdentifier: "SongCollectionViewCell")
         
-        collectionView.register(HeaderCollectionReusableView.self,
+        collectionView.register(SongsCollectionReusableView.self,
                                 forSupplementaryViewOfKind: "header",
-                                withReuseIdentifier: "HeaderCollectionReusableView")
+                                withReuseIdentifier: "SongsCollectionReusableView")
     }
     
     private func setupLayouts() {
@@ -55,7 +74,10 @@ class SongsMainViewController: UIViewController {
             collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
-    
+}
+
+// MARK: Providing compositional layout for collection view
+extension SongsMainViewController {
     private func setupCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let inset: CGFloat = 8
         
@@ -74,7 +96,7 @@ class SongsMainViewController: UIViewController {
         section.orthogonalScrollingBehavior = .continuous
         
         // Supplementary Item - HEADER
-        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50))
+        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(30))
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: "header", alignment: .top)
         headerItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: inset, bottom: 8, trailing: inset)
         section.boundarySupplementaryItems = [headerItem]
@@ -93,22 +115,28 @@ class SongsMainViewController: UIViewController {
 // MARK: UICollectionViewDataSource
 extension SongsMainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return songs.count
+        return viewModel.songsVM.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCollectionReusableView", for: indexPath) as? HeaderCollectionReusableView else {
-            return HeaderCollectionReusableView()
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SongsCollectionReusableView", for: indexPath) as? SongsCollectionReusableView else {
+            return SongsCollectionReusableView()
         }
         
-        let section = songs[indexPath.section]
+        let section = viewModel.songsVM[indexPath.section]
         let title = section.keys.first!
-        headerView.configure(with: title)
+        
+        if let _ = section[title] as? [Song] {
+            headerView.configure(with: title, isTappable: true)
+        } else {
+            headerView.configure(with: title)
+        }
+        
         return headerView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let section = songs[section]
+        let section = viewModel.songsVM[section]
         return section.values.first?.count ?? 0
     }
 
@@ -117,17 +145,37 @@ extension SongsMainViewController: UICollectionViewDataSource {
             return SongCollectionViewCell()
         }
     
-        let section = songs[indexPath.section]
-        let songs = section.values.first ?? [""]
-        let title = songs[indexPath.row]
-        cell.configure(with: title)
-    
+        let section = viewModel.songsVM[indexPath.section]
+        let items = section.values.first!
+        
+        if let songs = items as? [Song] {
+            let song = songs[indexPath.row]
+            cell.title.text = song.artistName
+            cell.secondaryTitle.text = song.name
+            cell.posterImage.load(urlAdress: song.image)
+        } else if let genres = items as? [SongsCollectionGenres] {
+            let genre = genres[indexPath.row]
+            cell.title.text = genre.rawValue.uppercased()
+            cell.posterImage.image = UIImage(named: genre.rawValue)
+        }
+        
         return cell
     }
-
 }
 
 // MARK: UICollectionViewDelegate
 extension SongsMainViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let section = viewModel.songsVM[indexPath.section]
+        let items = section.values.first!
+        
+        if let songs = items as? [Song] {
+            let song = songs[indexPath.row]
+            print("\(song.artistName) - \(song.name)")
+        } else if let genres = items as? [SongsCollectionGenres] {
+            let genre = genres[indexPath.row]
+            print(genre.rawValue)
+        }
+    }
 }

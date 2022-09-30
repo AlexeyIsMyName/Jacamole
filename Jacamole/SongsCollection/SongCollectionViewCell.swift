@@ -9,7 +9,7 @@ import UIKit
 
 class SongCollectionViewCell: UICollectionViewCell {
     
-    private lazy var posterImage: UIImageView = {
+    lazy var posterImage: UIImageView = {
         let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
         posterImage.clipsToBounds = true
         posterImage.layer.cornerRadius = 16
@@ -20,7 +20,7 @@ class SongCollectionViewCell: UICollectionViewCell {
         return posterImage
     }()
     
-    private lazy var title: UILabel = {
+    lazy var title: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         title.textColor = UIColor(named: "TextColor")
@@ -29,11 +29,10 @@ class SongCollectionViewCell: UICollectionViewCell {
         return title
     }()
     
-    private lazy var secondaryTitle: UILabel = {
+    lazy var secondaryTitle: UILabel = {
         let secondaryTitle = UILabel()
         secondaryTitle.font = .systemFont(ofSize: 12, weight: .light)
         secondaryTitle.textColor = UIColor(named: "TextColor")
-        secondaryTitle.text = "Secondary Title"
         secondaryTitle.translatesAutoresizingMaskIntoConstraints = false
         return secondaryTitle
     }()
@@ -46,10 +45,6 @@ class SongCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func configure(with title: String) {
-        self.title.text = title
     }
     
     private func setupViews() {
@@ -85,10 +80,7 @@ class SongCollectionViewCell: UICollectionViewCell {
             secondaryTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                    constant: 0),
             secondaryTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                    constant: 0),
-            secondaryTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                                   constant: 0)
+                                                    constant: 0)
         ])
-        
     }
 }
