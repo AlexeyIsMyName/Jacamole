@@ -23,8 +23,8 @@ class PlayerViewController: UIViewController {
         posterImage.sizeToFit()
         posterImage.contentMode = .scaleAspectFill
         
-        posterImage.layer.masksToBounds = true
         posterImage.layer.cornerRadius = 16
+        posterImage.layer.masksToBounds = true
         
         posterImage.translatesAutoresizingMaskIntoConstraints = false
         return posterImage
@@ -85,7 +85,6 @@ class PlayerViewController: UIViewController {
         imageAndTitlesVStack.alignment = .center
         imageAndTitlesVStack.spacing = 16
         imageAndTitlesVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        imageAndTitlesVStack.translatesAutoresizingMaskIntoConstraints = false
         return imageAndTitlesVStack
     }()
     
@@ -183,7 +182,6 @@ class PlayerViewController: UIViewController {
         allControlsVStack.alignment = .fill
         allControlsVStack.spacing = 64
         allControlsVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        allControlsVStack.translatesAutoresizingMaskIntoConstraints = false
         return allControlsVStack
     }()
     
