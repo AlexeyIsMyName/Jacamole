@@ -9,23 +9,39 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
-    private lazy var nowPlaying: UILabel = {
-        let nowPlaying = UILabel()
-        nowPlaying.font = .systemFont(ofSize: 28, weight: .medium)
-        nowPlaying.textColor = UIColor(named: "TextColor")
-        nowPlaying.text = "Now Playing"
-        return nowPlaying
+    private lazy var nowPlayingLabel: UILabel = {
+        let nowPlayingLabel = UILabel()
+        nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
+        nowPlayingLabel.textColor = UIColor(named: "TextColor")
+        nowPlayingLabel.text = "Now Playing"
+        return nowPlayingLabel
     }()
     
     private lazy var posterImage: UIImageView = {
-        let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
-//        let posterImage = UIImageView()
-        posterImage.clipsToBounds = true
-        posterImage.layer.cornerRadius = 16
+        let posterImage = UIImageView()
+        posterImage.image = UIImage(named: "guacamole-vectorportal")
         posterImage.sizeToFit()
         posterImage.contentMode = .scaleAspectFill
-        posterImage.backgroundColor = .gray
+        
+        posterImage.layer.masksToBounds = true
+        posterImage.layer.cornerRadius = 16
+        
+        posterImage.translatesAutoresizingMaskIntoConstraints = false
         return posterImage
+    }()
+    
+    private lazy var posterView: PosterView = {
+        let posterView = PosterView()
+        posterView.addSubview(posterImage)
+        
+        NSLayoutConstraint.activate([
+            posterImage.topAnchor.constraint(equalTo: posterView.topAnchor),
+            posterImage.leadingAnchor.constraint(equalTo: posterView.leadingAnchor),
+            posterImage.trailingAnchor.constraint(equalTo: posterView.trailingAnchor),
+            posterImage.bottomAnchor.constraint(equalTo: posterView.bottomAnchor)
+        ])
+        
+        return posterView
     }()
     
     private lazy var artistTitle: UILabel = {
@@ -45,33 +61,68 @@ class PlayerViewController: UIViewController {
     }()
     
     private lazy var titlesVStack: UIStackView = {
-        let vStack = UIStackView(arrangedSubviews: [
+        let titlesVStack = UIStackView(arrangedSubviews: [
             artistTitle,
             songTitle
         ])
         
-        vStack.axis = .vertical
-        vStack.distribution = .fillEqually
-        vStack.alignment = .center
-        vStack.spacing = 16
-        vStack.backgroundColor = UIColor(named: "BackgroungColor")
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        return vStack
+        titlesVStack.axis = .vertical
+        titlesVStack.distribution = .fillProportionally
+        titlesVStack.alignment = .center
+        titlesVStack.spacing = 16
+        titlesVStack.backgroundColor = UIColor(named: "BackgroungColor")
+        return titlesVStack
     }()
     
-    private lazy var imageAndtitlesVStack: UIStackView = {
-        let vStack = UIStackView(arrangedSubviews: [
-            posterImage,
+    private lazy var imageAndTitlesVStack: UIStackView = {
+        let imageAndTitlesVStack = UIStackView(arrangedSubviews: [
+            posterView,
             titlesVStack
         ])
         
-        vStack.axis = .vertical
-        vStack.distribution = .fillEqually
-        vStack.alignment = .center
-        vStack.spacing = 16
-        vStack.backgroundColor = UIColor(named: "BackgroungColor")
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        return vStack
+        imageAndTitlesVStack.axis = .vertical
+        imageAndTitlesVStack.distribution = .equalCentering
+        imageAndTitlesVStack.alignment = .center
+        imageAndTitlesVStack.spacing = 16
+        imageAndTitlesVStack.backgroundColor = UIColor(named: "BackgroungColor")
+        imageAndTitlesVStack.translatesAutoresizingMaskIntoConstraints = false
+        return imageAndTitlesVStack
+    }()
+    
+    private lazy var songZeroTimeTitle: UILabel = {
+        let songZeroTimeTitle = UILabel()
+        songZeroTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
+        songZeroTimeTitle.textColor = UIColor(named: "TextColor")
+        songZeroTimeTitle.text = "0.00"
+        return songZeroTimeTitle
+    }()
+    
+    private lazy var songTimeTitle: UILabel = {
+        let songTimeTitle = UILabel()
+        songTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
+        songTimeTitle.textColor = UIColor(named: "TextColor")
+        songTimeTitle.text = "0.00"
+        return songTimeTitle
+    }()
+    
+    private lazy var songDuartionSlider: UISlider = {
+        let sdSlider = UISlider()
+        sdSlider.tintColor = UIColor(named: "TextColor")
+        return sdSlider
+    }()
+    
+    private lazy var songDurationHStack: UIStackView = {
+        let songDurationHStack = UIStackView(arrangedSubviews: [
+            songZeroTimeTitle,
+            songDuartionSlider,
+            songTimeTitle
+        ])
+        songDurationHStack.axis = .horizontal
+        songDurationHStack.distribution = .fill
+        songDurationHStack.alignment = .center
+        songDurationHStack.spacing = 16
+        songDurationHStack.backgroundColor = UIColor(named: "BackgroungColor")
+        return songDurationHStack
     }()
     
     private lazy var backwardButton: UIButton = {
@@ -98,54 +149,18 @@ class PlayerViewController: UIViewController {
         return forwardButton
     }()
     
-    private lazy var songZeroTimeTitle: UILabel = {
-        let songTimeZeroTitle = UILabel()
-        songTimeZeroTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTimeZeroTitle.textColor = UIColor(named: "TextColor")
-        songTimeZeroTitle.text = "0.00"
-        return songTimeZeroTitle
-    }()
-    
-    private lazy var songTimeTitle: UILabel = {
-        let songTimeZeroTitle = UILabel()
-        songTimeZeroTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTimeZeroTitle.textColor = UIColor(named: "TextColor")
-        songTimeZeroTitle.text = "0.00"
-        return songTimeZeroTitle
-    }()
-    
-    private lazy var songDuartionSlider: UISlider = {
-        let sdSlider = UISlider()
-        sdSlider.tintColor = UIColor(named: "TextColor")
-        return sdSlider
-    }()
-    
-    private lazy var songDurationHStack: UIStackView = {
-        let hStack = UIStackView(arrangedSubviews: [
-            songZeroTimeTitle,
-            songDuartionSlider,
-            songTimeTitle
-        ])
-        hStack.axis = .horizontal
-        hStack.distribution = .fill
-        hStack.alignment = .center
-        hStack.spacing = 16
-        hStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return hStack
-    }()
-    
     private lazy var controlsHStack: UIStackView = {
-        let hStack = UIStackView(arrangedSubviews: [
+        let controlsHStack = UIStackView(arrangedSubviews: [
             backwardButton,
             playAndPauseButton,
             forwardButton
         ])
-        hStack.axis = .horizontal
-        hStack.distribution = .fillEqually
-        hStack.alignment = .center
-        hStack.spacing = 16
-        hStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return hStack
+        controlsHStack.axis = .horizontal
+        controlsHStack.distribution = .fillEqually
+        controlsHStack.alignment = .center
+        controlsHStack.spacing = 16
+        controlsHStack.backgroundColor = UIColor(named: "BackgroungColor")
+        return controlsHStack
     }()
     
     private lazy var volumeControlSlider: UISlider = {
@@ -156,22 +171,36 @@ class PlayerViewController: UIViewController {
         return vcSlider
     }()
     
-    private lazy var mainVStack: UIStackView = {
-        let vStack = UIStackView(arrangedSubviews: [
-            nowPlaying,
-            imageAndtitlesVStack,
+    private lazy var allControlsVStack: UIStackView = {
+        let allControlsVStack = UIStackView(arrangedSubviews: [
             songDurationHStack,
             controlsHStack,
             volumeControlSlider
         ])
         
-        vStack.axis = .vertical
-        vStack.distribution = .equalCentering
-        vStack.alignment = .fill
-        vStack.spacing = 16
-        vStack.backgroundColor = UIColor(named: "BackgroungColor")
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        return vStack
+        allControlsVStack.axis = .vertical
+        allControlsVStack.distribution = .equalSpacing
+        allControlsVStack.alignment = .fill
+        allControlsVStack.spacing = 64
+        allControlsVStack.backgroundColor = UIColor(named: "BackgroungColor")
+        allControlsVStack.translatesAutoresizingMaskIntoConstraints = false
+        return allControlsVStack
+    }()
+    
+    private lazy var mainVStack: UIStackView = {
+        let mainVStack = UIStackView(arrangedSubviews: [
+            nowPlayingLabel,
+            imageAndTitlesVStack,
+            allControlsVStack
+        ])
+        
+        mainVStack.axis = .vertical
+        mainVStack.distribution = .equalSpacing
+        mainVStack.alignment = .fill
+        mainVStack.spacing = 16
+        mainVStack.backgroundColor = UIColor(named: "BackgroungColor")
+        mainVStack.translatesAutoresizingMaskIntoConstraints = false
+        return mainVStack
     }()
 
     override func viewDidLoad() {
@@ -179,12 +208,6 @@ class PlayerViewController: UIViewController {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         setupViews()
         setConstraints()
-        
-        // ТЕНЬ НЕ РАБОТАЕТ!!!
-        posterImage.layer.shadowColor = UIColor.black.cgColor
-        posterImage.layer.shadowOffset = .zero
-        posterImage.layer.shadowRadius = 10
-        posterImage.layer.shadowOpacity = 1
     }
     
     private func setupViews() {
@@ -194,19 +217,43 @@ class PlayerViewController: UIViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             mainVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                        constant: 20),
-            mainVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                        constant: 10),
+            mainVStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                                             constant: 20),
-            mainVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+            mainVStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                                              constant: -20),
-            mainVStack.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                           constant: -20)
+            mainVStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                           constant: -30)
         ])
         
         NSLayoutConstraint.activate([
-            posterImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            posterImage.heightAnchor.constraint(equalTo: posterImage.widthAnchor),
-            posterImage.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor),
+            posterView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+}
+
+final class PosterView: UIView {
+    private var shadowLayer: CAShapeLayer!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if shadowLayer == nil {
+            shadowLayer = CAShapeLayer()
+            shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 12).cgPath
+            shadowLayer.fillColor = UIColor.white.cgColor
+            
+            shadowLayer.shadowColor = UIColor.darkGray.cgColor
+            shadowLayer.shadowPath = shadowLayer.path
+//            shadowLayer.shadowOffset = CGSize(width: 3.0, height: 3.0)
+            shadowLayer.shadowOffset = .zero
+            shadowLayer.shadowOpacity = 0.8
+            shadowLayer.shadowRadius = 10
+            
+            layer.insertSublayer(shadowLayer, at: 0)
+//            layer.insertSublayer(shadowLayer, below: nil) // also works
+        }
     }
 }
