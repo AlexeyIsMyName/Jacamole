@@ -226,8 +226,7 @@ class PlayerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor),
-            posterView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor)
         ])
     }
 }
