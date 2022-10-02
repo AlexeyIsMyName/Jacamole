@@ -23,7 +23,7 @@ class PlayerViewController: UIViewController {
         posterImage.sizeToFit()
         posterImage.contentMode = .scaleAspectFill
         
-        posterImage.layer.cornerRadius = 16
+        posterImage.layer.cornerRadius = 12
         posterImage.layer.masksToBounds = true
         
         posterImage.translatesAutoresizingMaskIntoConstraints = false
@@ -228,29 +228,5 @@ class PlayerViewController: UIViewController {
             posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor)
         ])
-    }
-}
-
-final class PosterView: UIView {
-    private var shadowLayer: CAShapeLayer!
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if shadowLayer == nil {
-            shadowLayer = CAShapeLayer()
-            shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 12).cgPath
-            shadowLayer.fillColor = UIColor.white.cgColor
-            
-            shadowLayer.shadowColor = UIColor.darkGray.cgColor
-            shadowLayer.shadowPath = shadowLayer.path
-//            shadowLayer.shadowOffset = CGSize(width: 3.0, height: 3.0)
-            shadowLayer.shadowOffset = .zero
-            shadowLayer.shadowOpacity = 0.8
-            shadowLayer.shadowRadius = 10
-            
-            layer.insertSublayer(shadowLayer, at: 0)
-//            layer.insertSublayer(shadowLayer, below: nil) // also works
-        }
     }
 }

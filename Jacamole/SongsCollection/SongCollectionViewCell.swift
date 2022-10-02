@@ -10,14 +10,31 @@ import UIKit
 class SongCollectionViewCell: UICollectionViewCell {
     
     lazy var posterImage: UIImageView = {
-        let posterImage = UIImageView(image: #imageLiteral(resourceName: "guacamole-vectorportal"))
-        posterImage.clipsToBounds = true
-        posterImage.layer.cornerRadius = 16
+        let posterImage = UIImageView()
+        posterImage.image = UIImage(named: "guacamole-vectorportal")
         posterImage.sizeToFit()
         posterImage.contentMode = .scaleAspectFill
+        
+        posterImage.layer.cornerRadius = 12
+        posterImage.layer.masksToBounds = true
+        
         posterImage.translatesAutoresizingMaskIntoConstraints = false
-        posterImage.backgroundColor = .gray
         return posterImage
+    }()
+    
+    private lazy var posterView: PosterView = {
+        let posterView = PosterView()
+        posterView.addSubview(posterImage)
+        
+        NSLayoutConstraint.activate([
+            posterImage.topAnchor.constraint(equalTo: posterView.topAnchor),
+            posterImage.leadingAnchor.constraint(equalTo: posterView.leadingAnchor),
+            posterImage.trailingAnchor.constraint(equalTo: posterView.trailingAnchor),
+            posterImage.bottomAnchor.constraint(equalTo: posterView.bottomAnchor)
+        ])
+        
+        posterView.translatesAutoresizingMaskIntoConstraints = false
+        return posterView
     }()
     
     lazy var title: UILabel = {
@@ -48,7 +65,7 @@ class SongCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        contentView.addSubview(posterImage)
+        contentView.addSubview(posterView)
         contentView.addSubview(title)
         contentView.addSubview(secondaryTitle)
     }
@@ -56,12 +73,12 @@ class SongCollectionViewCell: UICollectionViewCell {
     private func setConstraints() {
         
         NSLayoutConstraint.activate([
-            posterImage.heightAnchor.constraint(equalTo: contentView.widthAnchor),
-            posterImage.topAnchor.constraint(equalTo: contentView.topAnchor,
+            posterView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
+            posterView.topAnchor.constraint(equalTo: contentView.topAnchor,
                                                constant: 0),
-            posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+            posterView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                    constant: 0),
-            posterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+            posterView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
                                                     constant: 0)
         ])
         
