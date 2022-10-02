@@ -222,7 +222,12 @@ class PlayerViewController: UIViewController {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         setupViews()
         setConstraints()
+        
         audioManager.setupPlayer()
+        songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
+        audioManager.durationHandler = { time in
+            self.songDuartionSlider.value = Float(time.seconds)
+        }
     }
     
     private func setupViews() {

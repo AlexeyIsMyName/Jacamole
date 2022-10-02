@@ -16,17 +16,30 @@ class AudioManager {
         }
     }
     
+    var currentItem: AVPlayerItem! {
+        player?.currentItem
+    }
+    
+    var durationHandler: ((CMTime) -> Void)! {
+        didSet {
+            player?.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1000),
+                                            queue: DispatchQueue.main,
+                                            using: durationHandler)
+        }
+    }
+    
     private var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
     
     private var player: AVPlayer?
     private var playerItems: [AVPlayerItem]?
+//    private var queuePlayer: AVQueuePlayer?
     
     private var currentItemIndex = 0 {
         didSet {
             guard let itemsCount = playerItems?.count else {
                 return
             }
-            
+
             if currentItemIndex >= itemsCount {
                 currentItemIndex = 0
             } else if currentItemIndex < 0 {
@@ -35,18 +48,15 @@ class AudioManager {
         }
     }
     
-    private var isPlaying = false {
-        didSet {
-            print(isPlaying)
-        }
+    private var isPlaying: Bool {
+        player?.timeControlStatus == .playing ? true : false
     }
     
-    private var seekFrame: AVAudioFramePosition = 0
-    private var currentPosition: AVAudioFramePosition = 0
-    private var audioLengthSamples: AVAudioFramePosition = 0
-    
+//    private var seekFrame: AVAudioFramePosition = 0
+//    private var currentPosition: AVAudioFramePosition = 0
+//    private var audioLengthSamples: AVAudioFramePosition = 0
+//
     private var displayLink: CADisplayLink?
-
     
     init() {
         do {
@@ -59,17 +69,27 @@ class AudioManager {
         setupDisplayLink()
     }
     
+    func setupPlayer(with songs: [Song], startFrom songNumber: Int) {
+        let urls = songs.compactMap() { URL(string: $0.audio) }
+        let assets = urls.map() { AVAsset(url: $0) }
+        playerItems = assets.map() { AVPlayerItem(asset: $0) }
+//        queuePlayer = AVQueuePlayer(items: playerItems)
+//        queuePlayer?.actionAtItemEnd = .advance
+//        queuePlayer?.play()
+        currentItemIndex = songNumber
+        
+        if let playerItems = playerItems {
+            player = AVPlayer(playerItem: playerItems[currentItemIndex])
+            player?.volume = volume
+            playOrPause()
+        }
+    }
+    
     func playOrPause() {
-        if let aPlayer = player {
-            DispatchQueue.main.async { [self] in
-                if isPlaying {
-                    aPlayer.pause()
-                    isPlaying.toggle()
-                } else {
-                    aPlayer.play()
-                    isPlaying.toggle()
-                }
-            }
+        if player?.timeControlStatus == .playing {
+            player?.pause()
+        } else {
+            player?.play()
         }
     }
     
@@ -87,20 +107,15 @@ class AudioManager {
         if let playerItems = playerItems {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
             player?.seek(to: .zero)
+            
+            if isPlaying {
+                player?.play()
+            }
         }
     }
     
-    func setupPlayer(with songs: [Song], startFrom songNumber: Int) {
-        let urls = songs.compactMap() { URL(string: $0.audio) }
-        let assets = urls.map() { AVAsset(url: $0) }
-        playerItems = assets.map() { AVPlayerItem(asset: $0) }
-        currentItemIndex = songNumber
+    func seek(to time: Float) {
         
-        if let playerItems = playerItems {
-            player = AVPlayer(playerItem: playerItems[currentItemIndex])
-            player?.volume = volume
-            player?.play()
-        }
     }
     
     // MARK: Audio adjustments
@@ -193,11 +208,16 @@ extension AudioManager {
         let urls = stringURLs.compactMap() { URL(string: $0) }
         let assets = urls.map() { AVAsset(url: $0) }
         playerItems = assets.map() { AVPlayerItem(asset: $0) }
+        
+//        queuePlayer = AVQueuePlayer(items: playerItems)
+//        queuePlayer?.actionAtItemEnd = .advance
+//        queuePlayer?.play()
+        
         currentItemIndex = 0
         
-        if let playerItems = playerItems {
+        if let playerItems = self.playerItems {
             player = AVPlayer(playerItem: playerItems[currentItemIndex])
-            player?.play()
+            playOrPause()
         }
     }
 }
