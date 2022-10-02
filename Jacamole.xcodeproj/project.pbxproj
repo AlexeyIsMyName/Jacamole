@@ -10,6 +10,7 @@
 		77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7B28DB1DAE00D0F6E5 /* NetworkManager.swift */; };
 		77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */; };
 		77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */; };
+		E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A028E4BED6003033F4 /* PlayerViewController.swift */; };
 		77568D8428DB417700D0F6E5 /* SongsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8328DB417700D0F6E5 /* SongsListView.swift */; };
 		77568D8628DB430D00D0F6E5 /* SongListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77568D8528DB430D00D0F6E5 /* SongListCell.swift */; };
 		77568D8828DB56FC00D0F6E5 /* Abel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77568D7E28DB217F00D0F6E5 /* Abel-Regular.ttf */; };
@@ -44,6 +45,7 @@
 		77568D7E28DB217F00D0F6E5 /* Abel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Abel-Regular.ttf"; sourceTree = "<group>"; };
 		77568D7F28DB29A100D0F6E5 /* SongsAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsAPIClient.swift; sourceTree = "<group>"; };
 		77568D8128DB2A5900D0F6E5 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		E72C62A028E4BED6003033F4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		77568D8328DB417700D0F6E5 /* SongsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsListView.swift; sourceTree = "<group>"; };
 		77568D8528DB430D00D0F6E5 /* SongListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCell.swift; sourceTree = "<group>"; };
 		77568D8A28DB86AC00D0F6E5 /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				777F302B28E33CF1004B5A5E /* Coordinators */,
 				E7796EF128D92F0500D78A14 /* LaunchScreen.storyboard */,
 				E7796EF428D92F0500D78A14 /* Info.plist */,
+				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
@@ -272,6 +275,7 @@
 				E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */,
 				776A37CD28E60482005DAF1C /* ExtensionUIImageViewLoadView.swift in Sources */,
 				77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */,
+				E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */,
 				776A37BD28E45DE3005DAF1C /* AppCoordinator.swift in Sources */,
 				776A37BF28E474BB005DAF1C /* Coordinator.swift in Sources */,
 				776A37B328E44513005DAF1C /* ArtistAPIClient.swift in Sources */,
