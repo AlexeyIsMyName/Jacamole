@@ -9,6 +9,8 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
+    let audioManager = AudioManager()
+    
     private lazy var nowPlayingLabel: UILabel = {
         let nowPlayingLabel = UILabel()
         nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
@@ -129,6 +131,9 @@ class PlayerViewController: UIViewController {
         backwardButton.tintColor = UIColor(named: "TextColor")
         backwardButton.setImage(UIImage(systemName: "backward.fill"),
                                 for: .normal)
+        backwardButton.addTarget(self,
+                                 action: #selector(backwardButtonPressed),
+                                 for: .touchUpInside)
         return backwardButton
     }()
     
@@ -137,6 +142,10 @@ class PlayerViewController: UIViewController {
         playAndPauseButton.tintColor = UIColor(named: "TextColor")
         playAndPauseButton.setImage(UIImage(systemName: "playpause.fill"),
                                     for: .normal)
+        playAndPauseButton.addTarget(self,
+                                     action: #selector(playPauseButtonPressed),
+                                     for: .touchUpInside)
+        
         return playAndPauseButton
     }()
     
@@ -145,6 +154,9 @@ class PlayerViewController: UIViewController {
         forwardButton.tintColor = UIColor(named: "TextColor")
         forwardButton.setImage(UIImage(systemName: "forward.fill"),
                                for: .normal)
+        forwardButton.addTarget(self,
+                                action: #selector(forwardButtonPressed),
+                                for: .touchUpInside)
         return forwardButton
     }()
     
@@ -167,6 +179,10 @@ class PlayerViewController: UIViewController {
         vcSlider.tintColor = UIColor(named: "TextColor")
         vcSlider.minimumValueImage = UIImage(systemName: "speaker.1")
         vcSlider.maximumValueImage = UIImage(systemName: "speaker.3")
+        vcSlider.value = audioManager.volume
+        vcSlider.addTarget(self,
+                           action: #selector(volumeSliderChanged),
+                           for: .valueChanged)
         return vcSlider
     }()
     
@@ -206,6 +222,7 @@ class PlayerViewController: UIViewController {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         setupViews()
         setConstraints()
+        audioManager.setupPlayer()
     }
     
     private func setupViews() {
@@ -228,5 +245,21 @@ class PlayerViewController: UIViewController {
             posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor)
         ])
+    }
+    
+    @objc private func playPauseButtonPressed() {
+        audioManager.playOrPause()
+    }
+    
+    @objc private func backwardButtonPressed() {
+        audioManager.backward()
+    }
+    
+    @objc private func forwardButtonPressed() {
+        audioManager.forward()
+    }
+    
+    @objc private func volumeSliderChanged() {
+        audioManager.volume = volumeControlSlider.value
     }
 }
