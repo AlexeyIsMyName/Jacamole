@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "filmscore.jpeg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
