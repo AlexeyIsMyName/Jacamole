@@ -22,21 +22,15 @@ class AudioManager {
     
     var durationHandler: ((CMTime) -> Void)! {
         didSet {
-//            player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1),
-//                                           queue: DispatchQueue.main,
-//                                           using: durationHandler)
+            player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1),
+                                           queue: DispatchQueue.main,
+                                           using: durationHandler)
         }
     }
     
     var newSongHandler: ((Double) -> Void)! {
         didSet {
-            let songDuration = currentItem.asset.duration.seconds
-            let minutes = floor(songDuration / 60)
-            let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
-            
-            print(minutes)
-            print(seconds)
-            newSongHandler(minutes + seconds)
+            provideDuration()
         }
     }
     
@@ -117,17 +111,22 @@ class AudioManager {
         if let playerItems = playerItems {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
             player?.seek(to: .zero)
-            addTimeObserver()
             player?.play()
+            addTimeObserver()
+            provideDuration()
             
-            let songDuration = currentItem.asset.duration.seconds
-            let minutes = floor(songDuration / 60)
-            let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
-            
-            print(minutes)
-            print(seconds)
-            newSongHandler(minutes + seconds)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(playerDidFinishPlaying),
+                                                   name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+                                                   object: player.currentItem)
         }
+    }
+    
+    private func provideDuration() {
+        let songDuration = currentItem.asset.duration.seconds
+        let minutes = floor(songDuration / 60)
+        let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
+        newSongHandler(minutes + seconds)
     }
     
     func seek(to time: Float) {
@@ -170,25 +169,30 @@ class AudioManager {
 //        }
 //    }
     
+    @objc private func playerDidFinishPlaying(note: NSNotification) {
+        print("Got triggered")
+        forward()
+    }
+    
     func addTimeObserver() {
         
-        let interval = CMTimeMultiplyByFloat64(currentItem.asset.duration, multiplier: 1.0)
-        
-        print(interval)
-        
-//        player.addPeriodicTimeObserver(forInterval: interval,
+//        let interval = CMTimeMultiplyByFloat64(currentItem.asset.duration, multiplier: 1.0)
+//        let time = CMTime(value: currentItem.asset.duration.value - 1,
+//                          timescale: currentItem.asset.duration.timescale)
+//
+//        player.addPeriodicTimeObserver(forInterval: time,
 //                                       queue: DispatchQueue.main) { _ in
 //            print("Got triggered")
 //            self.forward()
 //        }
         
-//        player.addBoundaryTimeObserver(forTimes: [NSValue(time: interval)],
-//                                       queue: .main) { [weak self] in
+//        let times = [NSValue(time: time)]
+//        print(times)
+//        player.addBoundaryTimeObserver(forTimes: times,
+//                                       queue: .main) {
 //            print("Got triggered")
-//            self?.forward()
+//            self.forward()
 //        }
-        
-        
     }
     
     private func setupDisplayLink() {
@@ -249,10 +253,10 @@ extension AudioManager {
         currentItemIndex = 0
         
         if let playerItems = self.playerItems {
-            player = AVPlayer(playerItem: playerItems[currentItemIndex])
-            addTimeObserver()
-            playOrPause()
 //            replaceCurrentPlayerItem()
+            player = AVPlayer(playerItem: playerItems[currentItemIndex])
+            playOrPause()
+            addTimeObserver()
         }
     }
 }

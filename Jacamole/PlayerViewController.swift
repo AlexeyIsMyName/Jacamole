@@ -230,13 +230,13 @@ class PlayerViewController: UIViewController {
         
         songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
         
+        audioManager.durationHandler = { time in
+            self.songDuartionSlider.value = Float(time.seconds)
+        }
+        
         audioManager.newSongHandler = { duration in
             self.songTimeTitle.text = String(format: "%.2f", duration)
             self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
-        }
-        
-        audioManager.durationHandler = { time in
-            self.songDuartionSlider.value = Float(time.seconds)
         }
     }
     
@@ -262,6 +262,10 @@ class PlayerViewController: UIViewController {
         ])
     }
     
+    private func updateUI() {
+        
+    }
+    
     @objc private func playPauseButtonPressed() {
         audioManager.playOrPause()
     }
@@ -279,7 +283,6 @@ class PlayerViewController: UIViewController {
     }
     
     @objc private func songDuartionSliderChanged() {
-        print(songDuartionSlider.value)
         audioManager.seek(to: songDuartionSlider.value)
     }
 }
