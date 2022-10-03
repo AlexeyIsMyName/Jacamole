@@ -60,8 +60,7 @@ class AudioManager {
 //    private var seekFrame: AVAudioFramePosition = 0
 //    private var currentPosition: AVAudioFramePosition = 0
 //    private var audioLengthSamples: AVAudioFramePosition = 0
-
-    private var displayLink: CADisplayLink?
+//    private var displayLink: CADisplayLink?
     
     init() {
         do {
@@ -71,9 +70,8 @@ class AudioManager {
             print("ERROR SETTING AUDIO SESSION")
         }
         
-        player = AVPlayer()
-        
-        setupDisplayLink()
+//        player = AVPlayer()
+//        setupDisplayLink()
     }
     
     func setupPlayer(with songs: [Song], startFrom songNumber: Int) {
@@ -112,7 +110,6 @@ class AudioManager {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
             player?.seek(to: .zero)
             player?.play()
-            addTimeObserver()
             provideDuration()
             
             NotificationCenter.default.addObserver(self,
@@ -170,29 +167,7 @@ class AudioManager {
 //    }
     
     @objc private func playerDidFinishPlaying(note: NSNotification) {
-        print("Got triggered")
         forward()
-    }
-    
-    func addTimeObserver() {
-        
-//        let interval = CMTimeMultiplyByFloat64(currentItem.asset.duration, multiplier: 1.0)
-//        let time = CMTime(value: currentItem.asset.duration.value - 1,
-//                          timescale: currentItem.asset.duration.timescale)
-//
-//        player.addPeriodicTimeObserver(forInterval: time,
-//                                       queue: DispatchQueue.main) { _ in
-//            print("Got triggered")
-//            self.forward()
-//        }
-        
-//        let times = [NSValue(time: time)]
-//        print(times)
-//        player.addBoundaryTimeObserver(forTimes: times,
-//                                       queue: .main) {
-//            print("Got triggered")
-//            self.forward()
-//        }
     }
     
     private func setupDisplayLink() {
@@ -229,8 +204,6 @@ class AudioManager {
     }
 }
 
-
-
 // MARK: - TEMP CONFIGURATION METHODS
 extension AudioManager {
     func setupPlayer() {
@@ -253,10 +226,9 @@ extension AudioManager {
         currentItemIndex = 0
         
         if let playerItems = self.playerItems {
-//            replaceCurrentPlayerItem()
             player = AVPlayer(playerItem: playerItems[currentItemIndex])
+            player?.volume = volume
             playOrPause()
-            addTimeObserver()
         }
     }
 }

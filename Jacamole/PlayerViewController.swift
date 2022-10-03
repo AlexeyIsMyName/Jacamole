@@ -9,12 +9,12 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
-    let audioManager = AudioManager()
+    private let textColor = UIColor(named: "TextColor")!
     
     private lazy var nowPlayingLabel: UILabel = {
         let nowPlayingLabel = UILabel()
         nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
-        nowPlayingLabel.textColor = UIColor(named: "TextColor")
+        nowPlayingLabel.textColor = textColor
         nowPlayingLabel.text = "Now Playing"
         return nowPlayingLabel
     }()
@@ -49,7 +49,7 @@ class PlayerViewController: UIViewController {
     private lazy var artistTitle: UILabel = {
         let artistTitle = UILabel()
         artistTitle.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        artistTitle.textColor = UIColor(named: "TextColor")
+        artistTitle.textColor = textColor
         artistTitle.text = "Artist Title"
         return artistTitle
     }()
@@ -57,7 +57,7 @@ class PlayerViewController: UIViewController {
     private lazy var songTitle: UILabel = {
         let songTitle = UILabel()
         songTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTitle.textColor = UIColor(named: "TextColor")
+        songTitle.textColor = textColor
         songTitle.text = "Song Title"
         return songTitle
     }()
@@ -93,7 +93,7 @@ class PlayerViewController: UIViewController {
     private lazy var songZeroTimeTitle: UILabel = {
         let songZeroTimeTitle = UILabel()
         songZeroTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songZeroTimeTitle.textColor = UIColor(named: "TextColor")
+        songZeroTimeTitle.textColor = textColor
         songZeroTimeTitle.text = "0.00"
         return songZeroTimeTitle
     }()
@@ -101,19 +101,30 @@ class PlayerViewController: UIViewController {
     private lazy var songTimeTitle: UILabel = {
         let songTimeTitle = UILabel()
         songTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTimeTitle.textColor = UIColor(named: "TextColor")
+        songTimeTitle.textColor = textColor
         songTimeTitle.text = "0.00"
         return songTimeTitle
     }()
     
+    private var isSongDurationSliderInteracting = false
     private lazy var songDuartionSlider: UISlider = {
         let sdSlider = UISlider()
-        sdSlider.tintColor = UIColor(named: "TextColor")
+        sdSlider.tintColor = textColor
         sdSlider.addTarget(self,
                            action: #selector(songDuartionSliderChanged),
                            for: .touchUpInside)
+        sdSlider.addTarget(self,
+                           action: #selector(songDuartionSliderChanged),
+                           for: .touchUpOutside)
+        sdSlider.addTarget(self,
+                           action: #selector(songSliderInteracting),
+                           for: .touchDown)
         return sdSlider
     }()
+    
+    @objc private func songSliderInteracting() {
+        isSongDurationSliderInteracting.toggle()
+    }
     
     private lazy var songDurationHStack: UIStackView = {
         let songDurationHStack = UIStackView(arrangedSubviews: [
@@ -131,9 +142,14 @@ class PlayerViewController: UIViewController {
     
     private lazy var backwardButton: UIButton = {
         let backwardButton = UIButton()
-        backwardButton.tintColor = UIColor(named: "TextColor")
-        backwardButton.setImage(UIImage(systemName: "backward.fill"),
-                                for: .normal)
+        let image = UIImage(systemName: "backward.fill")!
+        backwardButton.setImage(image.withTintColor(textColor,
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .normal)
+        
+        backwardButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .highlighted)
         backwardButton.addTarget(self,
                                  action: #selector(backwardButtonPressed),
                                  for: .touchUpInside)
@@ -142,9 +158,14 @@ class PlayerViewController: UIViewController {
     
     private lazy var playAndPauseButton: UIButton = {
         let playAndPauseButton = UIButton()
-        playAndPauseButton.tintColor = UIColor(named: "TextColor")
-        playAndPauseButton.setImage(UIImage(systemName: "playpause.fill"),
+        let image = UIImage(systemName: "playpause.fill")!
+        playAndPauseButton.setImage(image.withTintColor(textColor,
+                                                        renderingMode: .alwaysOriginal),
                                     for: .normal)
+        
+        playAndPauseButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .highlighted)
         playAndPauseButton.addTarget(self,
                                      action: #selector(playPauseButtonPressed),
                                      for: .touchUpInside)
@@ -154,9 +175,14 @@ class PlayerViewController: UIViewController {
     
     private lazy var forwardButton: UIButton = {
         let forwardButton = UIButton()
-        forwardButton.tintColor = UIColor(named: "TextColor")
-        forwardButton.setImage(UIImage(systemName: "forward.fill"),
-                               for: .normal)
+        let image = UIImage(systemName: "forward.fill")!
+        forwardButton.setImage(image.withTintColor(textColor,
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .normal)
+        
+        forwardButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .highlighted)
         forwardButton.addTarget(self,
                                 action: #selector(forwardButtonPressed),
                                 for: .touchUpInside)
@@ -179,7 +205,7 @@ class PlayerViewController: UIViewController {
     
     private lazy var volumeControlSlider: UISlider = {
         let vcSlider = UISlider()
-        vcSlider.tintColor = UIColor(named: "TextColor")
+        vcSlider.tintColor = textColor
         vcSlider.minimumValueImage = UIImage(systemName: "speaker.1")
         vcSlider.maximumValueImage = UIImage(systemName: "speaker.3")
         vcSlider.value = audioManager.volume
@@ -219,32 +245,20 @@ class PlayerViewController: UIViewController {
         mainVStack.translatesAutoresizingMaskIntoConstraints = false
         return mainVStack
     }()
+    
+    let audioManager = AudioManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        setupAudioManager()
+        updateUI()
+    }
+    
+    private func setupView() {
         view.backgroundColor = UIColor(named: "BackgroungColor")
-        setupViews()
-        setConstraints()
-        
-        audioManager.setupPlayer()
-        
-        songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
-        
-        audioManager.durationHandler = { time in
-            self.songDuartionSlider.value = Float(time.seconds)
-        }
-        
-        audioManager.newSongHandler = { duration in
-            self.songTimeTitle.text = String(format: "%.2f", duration)
-            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
-        }
-    }
-    
-    private func setupViews() {
         view.addSubview(mainVStack)
-    }
-    
-    private func setConstraints() {
+        
         NSLayoutConstraint.activate([
             mainVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                         constant: 10),
@@ -262,8 +276,24 @@ class PlayerViewController: UIViewController {
         ])
     }
     
-    private func updateUI() {
+    private func setupAudioManager() {
+        audioManager.setupPlayer()
         
+        audioManager.durationHandler = { time in
+            if !self.isSongDurationSliderInteracting {
+                self.songDuartionSlider.value = Float(time.seconds)
+            }
+        }
+        
+        audioManager.newSongHandler = { duration in
+            self.songTimeTitle.text = String(format: "%.2f", duration)
+            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
+        }
+    }
+    
+    private func updateUI() {
+        // метод для обновления картинки и тайтлов при смене песни
+        songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
     }
     
     @objc private func playPauseButtonPressed() {
@@ -283,6 +313,9 @@ class PlayerViewController: UIViewController {
     }
     
     @objc private func songDuartionSliderChanged() {
+        perform(#selector(songSliderInteracting),
+                with: nil,
+                afterDelay: 0.01)
         audioManager.seek(to: songDuartionSlider.value)
     }
 }
