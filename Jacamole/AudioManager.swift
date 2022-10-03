@@ -60,7 +60,6 @@ class AudioManager {
         } catch {
             print("ERROR SETTING AUDIO SESSION")
         }
-
     }
     
     func setupPlayer(with songs: [Song], startFrom songNumber: Int) {
@@ -94,6 +93,11 @@ class AudioManager {
         replaceCurrentPlayerItem()
     }
     
+    func seek(to time: Float) {
+        let cmDate = CMTime(value: CMTimeValue(time), timescale: 1)
+        player.seek(to: cmDate)
+    }
+    
     private func replaceCurrentPlayerItem() {
         if let playerItems = playerItems {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
@@ -116,10 +120,5 @@ class AudioManager {
         let total = minutes + seconds
         
         newSongHandler(String(format: "%.2f", total), Float(songDuration), currentItemIndex)
-    }
-    
-    func seek(to time: Float) {
-        let cmDate = CMTime(value: CMTimeValue(time), timescale: 1)
-        player.seek(to: cmDate)
     }
 }
