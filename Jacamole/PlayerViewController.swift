@@ -158,11 +158,11 @@ class PlayerViewController: UIViewController {
     
     private lazy var playAndPauseButton: UIButton = {
         let playAndPauseButton = UIButton()
-        let image = UIImage(systemName: "playpause.fill")!
+        let image = UIImage(systemName: "play.fill")!
         playAndPauseButton.setImage(image.withTintColor(textColor,
                                                         renderingMode: .alwaysOriginal),
                                     for: .normal)
-        
+
         playAndPauseButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
                                                         renderingMode: .alwaysOriginal),
                                     for: .highlighted)
@@ -270,12 +270,12 @@ class PlayerViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
             posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor)
         ])
     }
     
-    private func setupAudioManager2(with songs: [Song], and startIndex: Int) {
+    private func setupAudioManager(with songs: [Song], and startIndex: Int) {
         audioManager.setupPlayer(with: songs, startFrom: startIndex)
         
         audioManager.durationHandler = { time in
@@ -284,30 +284,46 @@ class PlayerViewController: UIViewController {
             }
         }
         
-        audioManager.newSongHandler = { duration, songIndex in
-            self.updateUI(with: duration, and: songIndex)
+        audioManager.newSongHandler = { stringDuration, duration, songIndex in
+            self.updateUI(with: stringDuration, duration: duration, and: songIndex)
         }
     }
     
-    private func updateUI(with duration: Double, and songIndex: Int) {
-        songDuartionSlider.maximumValue = Float(duration)
-        songTimeTitle.text = String(format: "%.2f", duration)
+    private func updateUI(with stringDuration: String, duration: Float, and songIndex: Int) {
+        // можно добавить анимации
+        songDuartionSlider.maximumValue = duration
+        songTimeTitle.text = stringDuration
+        posterImage.load(urlAdress: songs[songIndex].image)
+        songTitle.text = songs[songIndex].name
+        artistTitle.text = songs[songIndex].artistName
+    }
+    
+    @objc private func changePlayPauseButtonImage() {
+        var image = UIImage(systemName: "pause.fill")!
         
-        UIView.animate(withDuration: 0.5) {
-            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
-            self.posterImage.load(urlAdress: self.songs[songIndex].image)
-            self.songTitle.text = self.songs[songIndex].name
-            self.artistTitle.text = self.songs[songIndex].artistName
+        if audioManager.isPlaying {
+            image = UIImage(systemName: "play.fill")!
         }
+        
+        playAndPauseButton.setImage(image.withTintColor(textColor,
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .normal)
+        
+        playAndPauseButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
+                                                        renderingMode: .alwaysOriginal),
+                                    for: .highlighted)
     }
     
     func setSongs(_ songs: [Song], startIndex: Int) {
         self.songs = songs
-        setupAudioManager2(with: songs, and: startIndex)
+        setupAudioManager(with: songs, and: startIndex)
     }
     
     @objc private func playPauseButtonPressed() {
         audioManager.playOrPause()
+        perform(#selector(changePlayPauseButtonImage),
+                with: nil,
+                afterDelay: 0.02)
     }
     
     @objc private func backwardButtonPressed() {
@@ -325,7 +341,7 @@ class PlayerViewController: UIViewController {
     @objc private func songDuartionSliderChanged() {
         perform(#selector(songSliderInteracting),
                 with: nil,
-                afterDelay: 0.01)
+                afterDelay: 0.02)
         audioManager.seek(to: songDuartionSlider.value)
     }
 }

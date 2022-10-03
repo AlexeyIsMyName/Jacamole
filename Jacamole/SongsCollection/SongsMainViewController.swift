@@ -17,11 +17,6 @@ class SongsMainViewController: UIViewController {
     }()
     
     private var viewModel: SongsCollectionViewModel!
-
-    private var songs = [
-        ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
-        ["Genre": ["Rap", "Pop", "Jazz"]]
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()

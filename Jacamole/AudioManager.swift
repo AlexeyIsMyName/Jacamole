@@ -16,10 +16,6 @@ class AudioManager {
         }
     }
     
-    var currentItem: AVPlayerItem! {
-        player.currentItem
-    }
-    
     var durationHandler: ((CMTime) -> Void)! {
         didSet {
             player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1),
@@ -28,9 +24,9 @@ class AudioManager {
         }
     }
     
-    var newSongHandler: ((Double, Int) -> Void)! {
+    var newSongHandler: ((String, Float, Int) -> Void)! {
         didSet {
-            provideDuration()
+            providePlayerData()
         }
     }
     
@@ -53,7 +49,7 @@ class AudioManager {
         }
     }
     
-    private var isPlaying: Bool {
+    var isPlaying: Bool {
         player.timeControlStatus == .playing ? true : false
     }
     
@@ -93,7 +89,7 @@ class AudioManager {
         replaceCurrentPlayerItem()
     }
     
-    func forward() {
+    @objc func forward() {
         currentItemIndex += 1
         replaceCurrentPlayerItem()
     }
@@ -103,28 +99,27 @@ class AudioManager {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
             player?.seek(to: .zero)
             player?.play()
-            provideDuration()
+            providePlayerData()
             
             NotificationCenter.default.addObserver(self,
-                                                   selector: #selector(playerDidFinishPlaying),
+                                                   selector: #selector(forward),
                                                    name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                    object: player.currentItem)
         }
     }
     
-    private func provideDuration() {
-        let songDuration = currentItem.asset.duration.seconds
+    private func providePlayerData() {
+        let songDuration = player.currentItem?.asset.duration.seconds ?? 0.0
+        print(songDuration)
         let minutes = floor(songDuration / 60)
-        let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
-        newSongHandler(minutes + seconds, currentItemIndex)
+        let seconds = floor(((songDuration / 60) - minutes) * 60) / 100
+        let total = minutes + seconds
+        
+        newSongHandler(String(format: "%.2f", total), Float(songDuration), currentItemIndex)
     }
     
     func seek(to time: Float) {
         let cmDate = CMTime(value: CMTimeValue(time), timescale: 1)
         player.seek(to: cmDate)
-    }
-    
-    @objc private func playerDidFinishPlaying(note: NSNotification) {
-        forward()
     }
 }
