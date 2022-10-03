@@ -278,14 +278,18 @@ class PlayerViewController: UIViewController {
     private func setupAudioManager(with songs: [Song], and startIndex: Int) {
         audioManager.setupPlayer(with: songs, startFrom: startIndex)
         
-        audioManager.durationHandler = { time in
-            if !self.isSongDurationSliderInteracting {
-                self.songDuartionSlider.value = Float(time.seconds)
+        audioManager.durationHandler = { [weak self] time in
+            if let self = self {
+                if !self.isSongDurationSliderInteracting {
+                    self.songDuartionSlider.value = Float(time.seconds)
+                }
             }
         }
         
-        audioManager.newSongHandler = { stringDuration, duration, songIndex in
-            self.updateUI(with: stringDuration, duration: duration, and: songIndex)
+        audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
+            if let self = self {
+                self.updateUI(with: stringDuration, duration: duration, and: songIndex)
+            }
         }
     }
     
@@ -343,5 +347,9 @@ class PlayerViewController: UIViewController {
                 with: nil,
                 afterDelay: 0.02)
         audioManager.seek(to: songDuartionSlider.value)
+    }
+    
+    deinit {
+        print("deinit - PlayerViewController")
     }
 }

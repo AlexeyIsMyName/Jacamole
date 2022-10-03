@@ -29,9 +29,7 @@ class AudioManager {
             providePlayerData()
         }
     }
-    
-    private var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
-    
+
     private var player: AVPlayer!
     private var playerItems: [AVPlayerItem]?
     
@@ -54,6 +52,7 @@ class AudioManager {
     }
     
     init() {
+        let audioSession: AVAudioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.playback, mode: .default, options: [])
             try audioSession.setActive(true)
@@ -114,7 +113,6 @@ class AudioManager {
     
     private func providePlayerData() {
         let songDuration = player.currentItem?.asset.duration.seconds ?? 0.0
-        print(songDuration)
         let minutes = floor(songDuration / 60)
         let seconds = floor(((songDuration / 60) - minutes) * 60) / 100
         let total = minutes + seconds
