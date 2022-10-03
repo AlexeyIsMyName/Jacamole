@@ -246,12 +246,13 @@ class PlayerViewController: UIViewController {
         return mainVStack
     }()
     
-    let audioManager = AudioManager()
+    var audioManager = AudioManager()
+    var songs: [Song]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setupAudioManager()
+//        setupAudioManager1()
         updateUI()
     }
     
@@ -276,8 +277,24 @@ class PlayerViewController: UIViewController {
         ])
     }
     
-    private func setupAudioManager() {
+    private func setupAudioManager1() {
         audioManager.setupPlayer()
+        
+        audioManager.durationHandler = { time in
+            if !self.isSongDurationSliderInteracting {
+                self.songDuartionSlider.value = Float(time.seconds)
+            }
+        }
+        
+        audioManager.newSongHandler = { duration in
+            self.songTimeTitle.text = String(format: "%.2f", duration)
+            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
+        }
+    }
+    
+    private func setupAudioManager2(with songs: [Song], and startIndex: Int) {
+        audioManager.setupPlayer()
+        audioManager.setupPlayer(with: songs, startFrom: startIndex)
         
         audioManager.durationHandler = { time in
             if !self.isSongDurationSliderInteracting {
@@ -294,6 +311,11 @@ class PlayerViewController: UIViewController {
     private func updateUI() {
         // метод для обновления картинки и тайтлов при смене песни
         songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
+    }
+    
+    func setSongs(_ songs: [Song], startIndex: Int) {
+        self.songs = songs
+        setupAudioManager2(with: songs, and: startIndex)
     }
     
     @objc private func playPauseButtonPressed() {

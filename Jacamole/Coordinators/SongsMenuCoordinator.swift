@@ -18,7 +18,7 @@ class SongsMenuCoordinator: Coordinator {
 private extension SongsMenuCoordinator {
     
     func showSongsMenu() {
-        let songsMenuVC = PlayerViewController()
+        let songsMenuVC = SongsMainViewController()
         navigationController.pushViewController(songsMenuVC, animated: false)
     }
 }
