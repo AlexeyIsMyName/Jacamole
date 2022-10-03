@@ -12,27 +12,38 @@ class AudioManager {
     
     var volume: Float = 0.5 {
         didSet {
-            player?.volume = volume
+            player.volume = volume
         }
     }
     
     var currentItem: AVPlayerItem! {
-        player?.currentItem
+        player.currentItem
     }
     
     var durationHandler: ((CMTime) -> Void)! {
         didSet {
-            player?.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1000),
-                                            queue: DispatchQueue.main,
-                                            using: durationHandler)
+//            player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1),
+//                                           queue: DispatchQueue.main,
+//                                           using: durationHandler)
+        }
+    }
+    
+    var newSongHandler: ((Double) -> Void)! {
+        didSet {
+            let songDuration = currentItem.asset.duration.seconds
+            let minutes = floor(songDuration / 60)
+            let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
+            
+            print(minutes)
+            print(seconds)
+            newSongHandler(minutes + seconds)
         }
     }
     
     private var audioSession: AVAudioSession = AVAudioSession.sharedInstance()
     
-    private var player: AVPlayer?
+    private var player: AVPlayer!
     private var playerItems: [AVPlayerItem]?
-//    private var queuePlayer: AVQueuePlayer?
     
     private var currentItemIndex = 0 {
         didSet {
@@ -49,13 +60,13 @@ class AudioManager {
     }
     
     private var isPlaying: Bool {
-        player?.timeControlStatus == .playing ? true : false
+        player.timeControlStatus == .playing ? true : false
     }
     
 //    private var seekFrame: AVAudioFramePosition = 0
 //    private var currentPosition: AVAudioFramePosition = 0
 //    private var audioLengthSamples: AVAudioFramePosition = 0
-//
+
     private var displayLink: CADisplayLink?
     
     init() {
@@ -66,6 +77,8 @@ class AudioManager {
             print("ERROR SETTING AUDIO SESSION")
         }
         
+        player = AVPlayer()
+        
         setupDisplayLink()
     }
     
@@ -73,9 +86,6 @@ class AudioManager {
         let urls = songs.compactMap() { URL(string: $0.audio) }
         let assets = urls.map() { AVAsset(url: $0) }
         playerItems = assets.map() { AVPlayerItem(asset: $0) }
-//        queuePlayer = AVQueuePlayer(items: playerItems)
-//        queuePlayer?.actionAtItemEnd = .advance
-//        queuePlayer?.play()
         currentItemIndex = songNumber
         
         if let playerItems = playerItems {
@@ -107,15 +117,22 @@ class AudioManager {
         if let playerItems = playerItems {
             player?.replaceCurrentItem(with: playerItems[currentItemIndex])
             player?.seek(to: .zero)
+            addTimeObserver()
+            player?.play()
             
-            if isPlaying {
-                player?.play()
-            }
+            let songDuration = currentItem.asset.duration.seconds
+            let minutes = floor(songDuration / 60)
+            let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
+            
+            print(minutes)
+            print(seconds)
+            newSongHandler(minutes + seconds)
         }
     }
     
     func seek(to time: Float) {
-        
+        let cmDate = CMTime(value: CMTimeValue(time), timescale: 1)
+        player.seek(to: cmDate)
     }
     
     // MARK: Audio adjustments
@@ -152,6 +169,27 @@ class AudioManager {
 //            }
 //        }
 //    }
+    
+    func addTimeObserver() {
+        
+        let interval = CMTimeMultiplyByFloat64(currentItem.asset.duration, multiplier: 1.0)
+        
+        print(interval)
+        
+//        player.addPeriodicTimeObserver(forInterval: interval,
+//                                       queue: DispatchQueue.main) { _ in
+//            print("Got triggered")
+//            self.forward()
+//        }
+        
+//        player.addBoundaryTimeObserver(forTimes: [NSValue(time: interval)],
+//                                       queue: .main) { [weak self] in
+//            print("Got triggered")
+//            self?.forward()
+//        }
+        
+        
+    }
     
     private func setupDisplayLink() {
 //        displayLink = CADisplayLink(
@@ -208,16 +246,13 @@ extension AudioManager {
         let urls = stringURLs.compactMap() { URL(string: $0) }
         let assets = urls.map() { AVAsset(url: $0) }
         playerItems = assets.map() { AVPlayerItem(asset: $0) }
-        
-//        queuePlayer = AVQueuePlayer(items: playerItems)
-//        queuePlayer?.actionAtItemEnd = .advance
-//        queuePlayer?.play()
-        
         currentItemIndex = 0
         
         if let playerItems = self.playerItems {
             player = AVPlayer(playerItem: playerItems[currentItemIndex])
+            addTimeObserver()
             playOrPause()
+//            replaceCurrentPlayerItem()
         }
     }
 }

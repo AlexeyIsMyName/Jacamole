@@ -109,6 +109,9 @@ class PlayerViewController: UIViewController {
     private lazy var songDuartionSlider: UISlider = {
         let sdSlider = UISlider()
         sdSlider.tintColor = UIColor(named: "TextColor")
+        sdSlider.addTarget(self,
+                           action: #selector(songDuartionSliderChanged),
+                           for: .touchUpInside)
         return sdSlider
     }()
     
@@ -224,7 +227,14 @@ class PlayerViewController: UIViewController {
         setConstraints()
         
         audioManager.setupPlayer()
+        
         songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
+        
+        audioManager.newSongHandler = { duration in
+            self.songTimeTitle.text = String(format: "%.2f", duration)
+            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
+        }
+        
         audioManager.durationHandler = { time in
             self.songDuartionSlider.value = Float(time.seconds)
         }
@@ -266,5 +276,10 @@ class PlayerViewController: UIViewController {
     
     @objc private func volumeSliderChanged() {
         audioManager.volume = volumeControlSlider.value
+    }
+    
+    @objc private func songDuartionSliderChanged() {
+        print(songDuartionSlider.value)
+        audioManager.seek(to: songDuartionSlider.value)
     }
 }
