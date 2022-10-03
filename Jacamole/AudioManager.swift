@@ -28,7 +28,7 @@ class AudioManager {
         }
     }
     
-    var newSongHandler: ((Double) -> Void)! {
+    var newSongHandler: ((Double, Int) -> Void)! {
         didSet {
             provideDuration()
         }
@@ -123,7 +123,7 @@ class AudioManager {
         let songDuration = currentItem.asset.duration.seconds
         let minutes = floor(songDuration / 60)
         let seconds = floor(((songDuration / 60) - minutes) * 100) / 100
-        newSongHandler(minutes + seconds)
+        newSongHandler(minutes + seconds, currentItemIndex)
     }
     
     func seek(to time: Float) {

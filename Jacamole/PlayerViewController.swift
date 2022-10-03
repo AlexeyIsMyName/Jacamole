@@ -253,7 +253,7 @@ class PlayerViewController: UIViewController {
         super.viewDidLoad()
         setupView()
 //        setupAudioManager1()
-        updateUI()
+//        updateUI()
     }
     
     private func setupView() {
@@ -277,6 +277,7 @@ class PlayerViewController: UIViewController {
         ])
     }
     
+    /*
     private func setupAudioManager1() {
         audioManager.setupPlayer()
         
@@ -291,6 +292,7 @@ class PlayerViewController: UIViewController {
             self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
         }
     }
+     */
     
     private func setupAudioManager2(with songs: [Song], and startIndex: Int) {
         audioManager.setupPlayer()
@@ -302,15 +304,22 @@ class PlayerViewController: UIViewController {
             }
         }
         
-        audioManager.newSongHandler = { duration in
-            self.songTimeTitle.text = String(format: "%.2f", duration)
-            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
+        audioManager.newSongHandler = { duration, songIndex in
+            self.updateUI(with: duration, and: songIndex)
         }
     }
     
-    private func updateUI() {
+    private func updateUI(with duration: Double, and songIndex: Int) {
         // метод для обновления картинки и тайтлов при смене песни
-        songDuartionSlider.maximumValue = Float(audioManager.currentItem.asset.duration.seconds)
+        songDuartionSlider.maximumValue = Float(duration)
+        songTimeTitle.text = String(format: "%.2f", duration)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.songDuartionSlider.maximumValue = Float(self.audioManager.currentItem.asset.duration.seconds)
+            self.posterImage.load(urlAdress: self.songs[songIndex].image)
+            self.songTitle.text = self.songs[songIndex].name
+            self.artistTitle.text = self.songs[songIndex].artistName
+        }
     }
     
     func setSongs(_ songs: [Song], startIndex: Int) {
