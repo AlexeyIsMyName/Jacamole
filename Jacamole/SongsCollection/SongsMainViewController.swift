@@ -170,11 +170,6 @@ extension SongsMainViewController: UICollectionViewDelegate {
             playerVC.modalPresentationStyle = .pageSheet
             playerVC.setSongs(songs, startIndex: indexPath.row)
             present(playerVC, animated: true)
-            
-            
-            let song = songs[indexPath.row]
-            print("\(song.artistName) - \(song.name)")
-            
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
             print(genre.rawValue)
