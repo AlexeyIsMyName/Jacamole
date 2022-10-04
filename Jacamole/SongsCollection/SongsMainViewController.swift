@@ -17,11 +17,6 @@ class SongsMainViewController: UIViewController {
     }()
     
     private var viewModel: SongsCollectionViewModel!
-
-    private var songs = [
-        ["Top 10": ["Song One", "Song Two", "Song Three", "Song Four", "Song Five", "Song Six", "Song Seven", "Song Eight", "Song Nine", "Song Ten"]],
-        ["Genre": ["Rap", "Pop", "Jazz"]]
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,8 +166,10 @@ extension SongsMainViewController: UICollectionViewDelegate {
         let items = section.values.first!
         
         if let songs = items as? [Song] {
-            let song = songs[indexPath.row]
-            print("\(song.artistName) - \(song.name)")
+            let playerVC = PlayerViewController()
+            playerVC.modalPresentationStyle = .pageSheet
+            playerVC.setSongs(songs, startIndex: indexPath.row)
+            present(playerVC, animated: true)
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
             print(genre.rawValue)

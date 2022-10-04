@@ -35,6 +35,7 @@
 		E72C62A728E5F84A003033F4 /* SongsCollectionGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A628E5F84A003033F4 /* SongsCollectionGenres.swift */; };
 		E774AE0028E765FE00E7F9C7 /* SongsCollectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */; };
 		E774AE0228E97E8C00E7F9C7 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774AE0128E97E8C00E7F9C7 /* PosterView.swift */; };
+		E774AE0428E9D4E800E7F9C7 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */; };
 		E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE628D92F0400D78A14 /* AppDelegate.swift */; };
 		E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE828D92F0400D78A14 /* SceneDelegate.swift */; };
 		E7796EF028D92F0500D78A14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7796EEF28D92F0500D78A14 /* Assets.xcassets */; };
@@ -72,6 +73,7 @@
 		E75F06A028D93006006404D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionVM.swift; sourceTree = "<group>"; };
 		E774AE0128E97E8C00E7F9C7 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
+		E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		E7796EE328D92F0400D78A14 /* Jacamole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jacamole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7796EE628D92F0400D78A14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E7796EE828D92F0400D78A14 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				E7796EF428D92F0500D78A14 /* Info.plist */,
 				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				E774AE0128E97E8C00E7F9C7 /* PosterView.swift */,
+				E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
@@ -286,6 +289,7 @@
 				776A37BB28E45B04005DAF1C /* SongListVM.swift in Sources */,
 				776A37C328E47BE7005DAF1C /* SongsMenuCoordinator.swift in Sources */,
 				77568D8628DB430D00D0F6E5 /* SongListCell.swift in Sources */,
+				E774AE0428E9D4E800E7F9C7 /* AudioManager.swift in Sources */,
 				776A37CF28E621F5005DAF1C /* SongsCollectionReusableView.swift in Sources */,
 				776A37B128E44056005DAF1C /* ArtistModel.swift in Sources */,
 				77568D8428DB417700D0F6E5 /* SongsListView.swift in Sources */,
