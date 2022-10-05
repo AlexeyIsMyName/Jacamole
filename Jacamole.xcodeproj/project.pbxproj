@@ -40,6 +40,7 @@
 		E7796EE928D92F0400D78A14 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7796EE828D92F0400D78A14 /* SceneDelegate.swift */; };
 		E7796EF028D92F0500D78A14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7796EEF28D92F0500D78A14 /* Assets.xcassets */; };
 		E7796EF328D92F0500D78A14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7796EF128D92F0500D78A14 /* LaunchScreen.storyboard */; };
+		E7C985DC28EDAA4C00A13F11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		E7796EEF28D92F0500D78A14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7796EF228D92F0500D78A14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7796EF428D92F0500D78A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				E774AE0128E97E8C00E7F9C7 /* PosterView.swift */,
 				E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */,
+				E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
@@ -293,6 +296,7 @@
 				776A37CF28E621F5005DAF1C /* SongsCollectionReusableView.swift in Sources */,
 				776A37B128E44056005DAF1C /* ArtistModel.swift in Sources */,
 				77568D8428DB417700D0F6E5 /* SongsListView.swift in Sources */,
+				E7C985DC28EDAA4C00A13F11 /* StorageManager.swift in Sources */,
 				E774AE0028E765FE00E7F9C7 /* SongsCollectionVM.swift in Sources */,
 				776A37B528E44763005DAF1C /* SongsModel.swift in Sources */,
 				77568D8B28DB86AC00D0F6E5 /* AppTabBarController.swift in Sources */,
