@@ -6,7 +6,7 @@
     </entity>
     <entity name="MusicinfoEntity" representedClassName=".MusicinfoEntity" syncable="YES" codeGenerationType="class">
         <relationship name="parentSong" maxCount="1" deletionRule="Nullify" destinationEntity="SongEntity" inverseName="musicinfo" inverseEntity="SongEntity"/>
-        <relationship name="tags" maxCount="1" deletionRule="Nullify" destinationEntity="TagsEntity" inverseName="parentMusicInfo" inverseEntity="TagsEntity"/>
+        <relationship name="tags" maxCount="1" deletionRule="Cascade" destinationEntity="TagsEntity" inverseName="parentMusicInfo" inverseEntity="TagsEntity"/>
     </entity>
     <entity name="SongEntity" representedClassName=".SongEntity" syncable="YES" codeGenerationType="class">
         <attribute name="albumId" attributeType="String"/>
@@ -20,15 +20,15 @@
         <attribute name="image" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="position" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="musicinfo" maxCount="1" deletionRule="Nullify" destinationEntity="MusicinfoEntity" inverseName="parentSong" inverseEntity="MusicinfoEntity"/>
+        <relationship name="musicinfo" maxCount="1" deletionRule="Cascade" destinationEntity="MusicinfoEntity" inverseName="parentSong" inverseEntity="MusicinfoEntity"/>
         <relationship name="parentSongGroup" maxCount="1" deletionRule="Nullify" destinationEntity="SongGroupEntity" inverseName="songs" inverseEntity="SongGroupEntity"/>
     </entity>
     <entity name="SongGroupEntity" representedClassName=".SongGroupEntity" syncable="YES" codeGenerationType="class">
         <attribute name="title" attributeType="String"/>
-        <relationship name="songs" toMany="YES" deletionRule="Nullify" destinationEntity="SongEntity" inverseName="parentSongGroup" inverseEntity="SongEntity"/>
+        <relationship name="songs" toMany="YES" deletionRule="Cascade" destinationEntity="SongEntity" inverseName="parentSongGroup" inverseEntity="SongEntity"/>
     </entity>
     <entity name="TagsEntity" representedClassName=".TagsEntity" syncable="YES" codeGenerationType="class">
-        <relationship name="genres" toMany="YES" deletionRule="Nullify" destinationEntity="GenreEntity" inverseName="parentTag" inverseEntity="GenreEntity"/>
+        <relationship name="genres" toMany="YES" deletionRule="Cascade" destinationEntity="GenreEntity" inverseName="parentTag" inverseEntity="GenreEntity"/>
         <relationship name="parentMusicInfo" maxCount="1" deletionRule="Nullify" destinationEntity="MusicinfoEntity" inverseName="tags" inverseEntity="MusicinfoEntity"/>
     </entity>
 </model>

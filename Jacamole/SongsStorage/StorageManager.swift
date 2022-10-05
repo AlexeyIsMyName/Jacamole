@@ -28,12 +28,28 @@ class StorageManager {
         persistentContainer.viewContext
     }
     
-    func getSongGroups() -> [String: [Song]] {
+    private func loadSongEntities() throws -> [SongGroupEntity] {
         let request: NSFetchRequest<SongGroupEntity> = SongGroupEntity.fetchRequest()
-        var songGroups = [String: [Song]]()
         
         do {
             let songGroupEntities = try context.fetch(request)
+            print("+++++++++++++ songGroupEntities.count +++++++++++++")
+            print(songGroupEntities.count)
+            return songGroupEntities
+        } catch {
+            throw error
+        }
+    }
+    
+    func getFavoriteSongs() -> [Song] {
+        return getAllSongGroups()[Song.Groups.favourite.rawValue] ?? []
+    }
+    
+    func getAllSongGroups() -> [String: [Song]] {
+        var songGroups = [String: [Song]]()
+        
+        do {
+            let songGroupEntities = try loadSongEntities()
             
             songGroupEntities.forEach { songGroupEntity in
                 
@@ -43,7 +59,7 @@ class StorageManager {
                     return
                 }
                 
-                let songs = Song.generateArray(from: songEntities)
+                let songs = Song.generateSongs(from: songEntities)
                 
                 songGroups[title] = songs
             }
@@ -52,9 +68,69 @@ class StorageManager {
             return songGroups
         }
         
-        print(songGroups)
-        
         return songGroups
+    }
+    
+    func save(song: Song, in group: Song.Groups) {
+        
+        var songGroupEntities = [SongGroupEntity]()
+        
+        do {
+            songGroupEntities = try loadSongEntities()
+        } catch {
+            print("Error fetching data from context", error.localizedDescription)
+        }
+        
+        let songGroupEntity = songGroupEntities.first { $0.title == group.rawValue } ?? SongGroupEntity(context: context)
+        
+        songGroupEntity.title = group.rawValue
+    
+        let songEntity = SongEntity(context: context)
+        songEntity.parentSongGroup = songGroupEntity
+        
+        songEntity.id = song.id
+        songEntity.name = song.name
+        songEntity.duration = Int64(song.duration)
+        songEntity.artistId = song.artistId
+        songEntity.artistName = song.artistName
+        songEntity.albumName = song.albumName
+        songEntity.albumId = song.albumId
+        songEntity.position = Int64(song.position)
+        songEntity.audio = song.audio
+        songEntity.audiodownload = song.audiodownload
+        songEntity.image = song.image
+        
+        let musicInfoEntity = MusicinfoEntity(context: context)
+        musicInfoEntity.parentSong = songEntity
+        
+        let tagsEntity = TagsEntity(context: context)
+        tagsEntity.parentMusicInfo = musicInfoEntity
+        
+        song.musicinfo.tags.genres.forEach { genre in
+            let genreEntity = GenreEntity(context: context)
+            genreEntity.genre = genre
+            genreEntity.parentTag = tagsEntity
+        }
+        
+        saveContext()
+    }
+    
+    func removeAll() {
+        
+        var songGroupEntities = [SongGroupEntity]()
+        
+        do {
+            songGroupEntities = try loadSongEntities()
+        } catch {
+            print("Error fetching data from context", error.localizedDescription)
+        }
+        
+        songGroupEntities.forEach { songGroupEntity in
+            context.delete(songGroupEntity)
+        }
+        
+        print("Removed All")
+        saveContext()
     }
     
     // MARK: - Core Data Saving support

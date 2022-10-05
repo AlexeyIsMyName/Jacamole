@@ -87,18 +87,18 @@ extension SongsMainViewController {
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset * 2, trailing: inset)
         section.orthogonalScrollingBehavior = .continuous
         
         // Supplementary Item - HEADER
         let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(30))
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: "header", alignment: .top)
-        headerItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: inset, bottom: 8, trailing: inset)
+        headerItem.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         section.boundarySupplementaryItems = [headerItem]
         
         // Section Configuration
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 20
+        config.interSectionSpacing = inset * 2
         
         // Make UICollectionViewCompositionalLayout
         let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)

@@ -47,7 +47,7 @@ private extension SongsCollectionViewModel {
     }
     
     func getSongsFromSongCoreData() {
-        let songGroups = StorageManager.shared.getSongGroups()
+        let songGroups = StorageManager.shared.getAllSongGroups()
         
         songGroups.forEach { title, songs in
             self.songsVM.append(

@@ -2,6 +2,8 @@ import UIKit
 
 class SongListCell: UITableViewCell {
     
+    var heartHendler: (() -> Void)!
+    
     lazy var songImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "guacamole-vectorportal")
@@ -112,5 +114,8 @@ class SongListCell: UITableViewCell {
         self.heartButton.isSelected.toggle()
         let isSelected = self.heartButton.isSelected
         heartButton.tintColor = isSelected ? .red : UIColor(named: "TextColor")
+        
+        // saving song in favorites
+        heartHendler()
     }
 }
