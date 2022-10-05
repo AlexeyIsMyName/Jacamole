@@ -29,7 +29,7 @@ private extension SongsCollectionViewModel {
             [weak self] songs in
             guard let self = self else { return }
             
-            print("______________songs: \(songs)")
+//            print("______________songs: \(songs)")
             self.songsVM.append(
                 ["Popular Music": songs]
             )
@@ -43,32 +43,16 @@ private extension SongsCollectionViewModel {
         self.songsVM.append(
             ["Genres" : songGenres]
         )
+        getSongsFromSongCoreData()
     }
     
-    func loadFavoriteSongs() {
-        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
-            [weak self] songs in
-            guard let self = self else { return }
-            
-            print("______________songs: \(songs)")
+    func getSongsFromSongCoreData() {
+        let songGroups = StorageManager.shared.getSongGroups()
+        
+        songGroups.forEach { title, songs in
             self.songsVM.append(
-                ["Popular Music": songs]
+                [title: songs]
             )
-            self.appendGenres()
         }
     }
-    
-    func loadPreviouslyPlayedDongs() {
-        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
-            [weak self] songs in
-            guard let self = self else { return }
-            
-            print("______________songs: \(songs)")
-            self.songsVM.append(
-                ["Popular Music": songs]
-            )
-            self.appendGenres()
-        }
-    }
-    
 }
