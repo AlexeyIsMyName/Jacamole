@@ -41,6 +41,7 @@
 		E7796EF028D92F0500D78A14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7796EEF28D92F0500D78A14 /* Assets.xcassets */; };
 		E7796EF328D92F0500D78A14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7796EF128D92F0500D78A14 /* LaunchScreen.storyboard */; };
 		E7C985DC28EDAA4C00A13F11 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */; };
+		E7C985E028EDAC7300A13F11 /* SongsCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7C985DE28EDAC7300A13F11 /* SongsCoreData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		E7796EF228D92F0500D78A14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7796EF428D92F0500D78A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		E7C985DF28EDAC7300A13F11 /* SongsCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SongsCoreData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,12 +197,21 @@
 				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				E774AE0128E97E8C00E7F9C7 /* PosterView.swift */,
 				E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */,
-				E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */,
+				E7C985E128EDAC8C00A13F11 /* SongsStorage */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
 			);
 			path = Jacamole;
+			sourceTree = "<group>";
+		};
+		E7C985E128EDAC8C00A13F11 /* SongsStorage */ = {
+			isa = PBXGroup;
+			children = (
+				E7C985DB28EDAA4C00A13F11 /* StorageManager.swift */,
+				E7C985DE28EDAC7300A13F11 /* SongsCoreData.xcdatamodeld */,
+			);
+			path = SongsStorage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +316,7 @@
 				E774AE0228E97E8C00E7F9C7 /* PosterView.swift in Sources */,
 				776A37C128E47A59005DAF1C /* FavoriteCoordinator.swift in Sources */,
 				776A37D128E62248005DAF1C /* SongCollectionViewCell.swift in Sources */,
+				E7C985E028EDAC7300A13F11 /* SongsCoreData.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +532,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E7C985DE28EDAC7300A13F11 /* SongsCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E7C985DF28EDAC7300A13F11 /* SongsCoreData.xcdatamodel */,
+			);
+			currentVersion = E7C985DF28EDAC7300A13F11 /* SongsCoreData.xcdatamodel */;
+			path = SongsCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E7796EDB28D92F0300D78A14 /* Project object */;
 }
