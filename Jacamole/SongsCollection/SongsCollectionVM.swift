@@ -45,4 +45,30 @@ private extension SongsCollectionViewModel {
         )
     }
     
+    func loadFavoriteSongs() {
+        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
+            [weak self] songs in
+            guard let self = self else { return }
+            
+            print("______________songs: \(songs)")
+            self.songsVM.append(
+                ["Popular Music": songs]
+            )
+            self.appendGenres()
+        }
+    }
+    
+    func loadPreviouslyPlayedDongs() {
+        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
+            [weak self] songs in
+            guard let self = self else { return }
+            
+            print("______________songs: \(songs)")
+            self.songsVM.append(
+                ["Popular Music": songs]
+            )
+            self.appendGenres()
+        }
+    }
+    
 }
