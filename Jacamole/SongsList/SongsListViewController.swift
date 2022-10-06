@@ -1,6 +1,8 @@
 import UIKit
 
 class SongsListViewController: UIViewController {
+    private let iNeedSearchBar: Bool
+    private let iNeedCloseButton: Bool
     private let navigationTitle: String
     
     private lazy var songsListView = SongsListView(
@@ -35,8 +37,10 @@ class SongsListViewController: UIViewController {
     private let artistAPIClient = ArtistAPIClient()
     private let albomAPIClient = AlbomAPIClient()
     
-    init(navigationTitle: String) {
+    init(navigationTitle: String, iNeedSearchBar: Bool, iNeedCloseButton: Bool) {
         self.navigationTitle = navigationTitle
+        self.iNeedSearchBar = iNeedSearchBar
+        self.iNeedCloseButton = iNeedCloseButton
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,6 +54,14 @@ class SongsListViewController: UIViewController {
         view = songsListView
         view.backgroundColor = UIColor(named: "BackgroungColor")
         makeSearchBar()
+        
+        self.songsListView.songsLoadedAction = {
+            [weak self] in
+            guard let self = self else { return }
+            self.getNeedSomeAttributes()
+            self.navigationItem.searchController = self.searchController
+            self.searchController.searchBar.becomeFirstResponder()
+        }
 
 //        self.artistAPIClient.loadArtistSongs(artistID: "463402") {
 //            [weak self] tracks in
@@ -60,18 +72,22 @@ class SongsListViewController: UIViewController {
 //            [weak self] alboms in
 //            print("_________alboms: \(alboms)______________")
 //        }
+        
     }
     
     private func makeSearchBar() {
         navigationItem.title = navigationTitle
-        navigationItem.leftBarButtonItem = closeButton
-        navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Song"
         searchController.searchBar.tintColor = UIColor(named: "TextColor") ?? .black
         searchController.searchBar.searchTextField.font = UIFont(name: "Abel-Regular", size: 18.0)
+    }
+    
+    private func getNeedSomeAttributes() {
+        navigationItem.searchController = iNeedSearchBar ? nil : searchController
+        navigationItem.leftBarButtonItem = iNeedCloseButton ? closeButton : nil
     }
     
     @objc func popViewControler(){
@@ -81,7 +97,8 @@ class SongsListViewController: UIViewController {
 
 extension SongsListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
-      let searchBar = searchController.searchBar
+//      let searchBar = searchController.searchBar
+      
   }
     
 }

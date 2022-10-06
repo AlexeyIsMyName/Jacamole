@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
+    let appCoordinator = AppCoordinator()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .white //UIColor(named: "BackgroungColor")
         
-        let appCoordinator = AppCoordinator()
         window?.rootViewController = appCoordinator.rootViewController
         window?.makeKeyAndVisible()
         

@@ -9,11 +9,12 @@ class SongsListViewModel {
         }
     }
     
+    private var filteredSongs = [SongListItemViewModel]()
+    
     private let songsAPIClient: SongsAPIClient
     
     init(songsAPIClient: SongsAPIClient) {
         self.songsAPIClient = songsAPIClient
-        
         self.loadSongs()
     }
     
@@ -27,7 +28,6 @@ private extension SongsListViewModel {
             [weak self] songs in
             guard let self = self else { return }
             
-            print("______________songs: \(songs)")
             self.songsVM = songs.map { SongListItemViewModel(song: $0) }
         }
     }
@@ -37,4 +37,11 @@ private extension SongsListViewModel {
         self.songsVM = StorageManager.shared.getFavoriteSongs().map { SongListItemViewModel(song: $0) }
     }
     
+//    func filterContentForSearchText(_ searchText: String,
+//                                    category: SongListItemViewModel? = nil) {
+//      filteredSongs = songsVM.filter { (song: Song) -> Bool in
+//        return song.name.lowercased().contains(searchText.lowercased())
+//      }
+//    }
+//    
 }

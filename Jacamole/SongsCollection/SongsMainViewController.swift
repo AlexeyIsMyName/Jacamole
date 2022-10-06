@@ -9,6 +9,8 @@ import UIKit
 
 class SongsMainViewController: UIViewController {
     
+    var didTapOnCollectionViewSection: ((_ sectionIndex: Int, _ sectionTitle: String) -> Void)?
+    
     private lazy var collectionView: UICollectionView = {
         let viewLayout = setupCompositionalLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
@@ -17,6 +19,12 @@ class SongsMainViewController: UIViewController {
     }()
     
     private var viewModel: SongsCollectionViewModel!
+
+//    private var sectionTitles = [
+//        "Top 10",
+//        "Recently Played",
+//        "Genre"
+//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,8 +122,10 @@ extension SongsMainViewController {
 
 // MARK: UICollectionViewDataSource
 extension SongsMainViewController: UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel.songsVM.count
+//        self.sectionTitles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -132,12 +142,19 @@ extension SongsMainViewController: UICollectionViewDataSource {
             headerView.configure(with: title)
         }
         
+//        let sectionTitle = self.sectionTitles[indexPath.section]
+//        headerView.tag = indexPath.section
+//        headerView.configure(with: sectionTitle)
+//        headerView.isUserInteractionEnabled = true
+//        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapAtHeader(_:))))
         return headerView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = viewModel.songsVM[section]
         return section.values.first?.count ?? 0
+//        3
+
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -161,6 +178,8 @@ extension SongsMainViewController: UICollectionViewDataSource {
             cell.posterImage.image = UIImage(named: genre.rawValue)
         }
         
+//        let title = "test"
+//        cell.configure(with: title)
         return cell
     }
 }
@@ -185,3 +204,13 @@ extension SongsMainViewController: UICollectionViewDelegate {
         }
     }
 }
+
+//private extension SongsMainViewController {
+//    
+//    @objc func didTapAtHeader(_ tapGR: UITapGestureRecognizer) {
+//        let tappedSection = tapGR.view?.tag ?? 0
+//        let sectionTitle = self.sectionTitles[tappedSection]
+//        self.didTapOnCollectionViewSection?(tappedSection, sectionTitle)
+//    }
+//    
+//}

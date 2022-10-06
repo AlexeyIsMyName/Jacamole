@@ -1,6 +1,7 @@
 import UIKit
 
 class SongsListView: UIView {
+    var songsLoadedAction: (() -> Void)?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -31,6 +32,7 @@ class SongsListView: UIView {
             guard let self = self else { return }
             
             self.tableView.reloadData()
+            self.songsLoadedAction?()
         }
     }
     
