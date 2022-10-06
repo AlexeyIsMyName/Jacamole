@@ -428,13 +428,10 @@ class PlayerViewController: UIViewController {
     }
     
     @objc func heartButtonPressed() {
-        // saving song in favorites
         let song = songs[audioManager.currentItemIndex]
         if StorageManager.shared.isFavourite(songID: song.id) {
-            // если есть - удаляем
-            print(StorageManager.shared.delete(song, from: .favourite))
+            StorageManager.shared.delete(song, from: .favourite)
         } else {
-            // если нет - сохраняем
             StorageManager.shared.save(song, in: .favourite)
         }
         

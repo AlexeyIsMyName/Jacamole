@@ -144,18 +144,18 @@ class StorageManager {
         saveContext()
     }
     
-    func delete(_ song: Song, from group: StorageManager.Groups) -> Bool {
+    func delete(_ song: Song, from group: StorageManager.Groups) {
         
         do {
             let songGroupEntities = try loadSongEntities()
             
             guard let songGroupEntity = songGroupEntities.first(where: { $0.title == group.rawValue }) else {
-                return false
+                return
             }
                 
             guard let songEntities = songGroupEntity.songs?.allObjects as? [SongEntity] else {
                 print("ERROR converting NSSet TO Array of SongEntities")
-                return false
+                return
             }
             
             if let songEntity = songEntities.first(where: { $0.id == song.id }) {
@@ -166,9 +166,9 @@ class StorageManager {
             deleteIfEmpty(group)
         } catch {
             print("Error fetching data from context", error.localizedDescription)
-            return false
+            return
         }
-        return true
+        return
     }
     
     func removeAll() {
