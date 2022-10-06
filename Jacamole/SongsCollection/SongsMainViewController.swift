@@ -87,7 +87,7 @@ extension SongsMainViewController {
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset * 2, trailing: inset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset * 3, trailing: inset)
         section.orthogonalScrollingBehavior = .continuous
         
         // Supplementary Item - HEADER
@@ -139,7 +139,9 @@ extension SongsMainViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongCollectionViewCell", for: indexPath) as? SongCollectionViewCell else {
             return SongCollectionViewCell()
         }
-    
+        
+        cell.cleanCell()
+        
         let section = viewModel.songsVM[indexPath.section]
         let items = section.values.first!
         

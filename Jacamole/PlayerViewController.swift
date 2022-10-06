@@ -19,6 +19,34 @@ class PlayerViewController: UIViewController {
         return nowPlayingLabel
     }()
     
+     private lazy var heartButton: UIButton = {
+         let btn = UIButton()
+         let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                  weight: .light,
+                                                  scale: .default)
+       
+         btn.setImage( UIImage.init(systemName: "heart", withConfiguration: config), for: .normal)
+         btn.setImage( UIImage.init(systemName: "heart.fill", withConfiguration: config), for: .selected)
+         btn.tintColor = UIColor(named: "TextColor")
+         btn.setTitleColor(.red, for: .selected)
+         btn.addTarget(self, action: #selector(setHeartColor), for: .touchUpInside)
+         
+         return btn
+     }()
+    
+    private lazy var headerHStack: UIStackView = {
+        let headerHStack = UIStackView(arrangedSubviews: [
+            nowPlayingLabel,
+            heartButton
+        ])
+        headerHStack.axis = .horizontal
+        headerHStack.distribution = .fill
+        headerHStack.alignment = .center
+        headerHStack.spacing = 16
+        headerHStack.backgroundColor = UIColor(named: "BackgroungColor")
+        return headerHStack
+    }()
+    
     private lazy var posterImage: UIImageView = {
         let posterImage = UIImageView()
         posterImage.image = UIImage(named: "guacamole-vectorportal")
@@ -145,7 +173,14 @@ class PlayerViewController: UIViewController {
     
     private lazy var backwardButton: UIButton = {
         let backwardButton = UIButton()
-        let image = UIImage(systemName: "backward.fill")!
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                 weight: .light,
+                                                 scale: .default)
+        
+        let image =  UIImage.init(systemName: "backward.fill", withConfiguration: config)!
+        
+        
         backwardButton.setImage(image.withTintColor(textColor,
                                                         renderingMode: .alwaysOriginal),
                                     for: .normal)
@@ -161,7 +196,13 @@ class PlayerViewController: UIViewController {
     
     private lazy var playAndPauseButton: UIButton = {
         let playAndPauseButton = UIButton()
-        let image = UIImage(systemName: "play.fill")!
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                 weight: .light,
+                                                 scale: .default)
+        
+        let image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
+        
         playAndPauseButton.setImage(image.withTintColor(textColor,
                                                         renderingMode: .alwaysOriginal),
                                     for: .normal)
@@ -172,13 +213,18 @@ class PlayerViewController: UIViewController {
         playAndPauseButton.addTarget(self,
                                      action: #selector(playPauseButtonPressed),
                                      for: .touchUpInside)
-        
         return playAndPauseButton
     }()
     
     private lazy var forwardButton: UIButton = {
         let forwardButton = UIButton()
-        let image = UIImage(systemName: "forward.fill")!
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                 weight: .light,
+                                                 scale: .default)
+        
+        let image =  UIImage.init(systemName: "forward.fill", withConfiguration: config)!
+        
         forwardButton.setImage(image.withTintColor(textColor,
                                                         renderingMode: .alwaysOriginal),
                                     for: .normal)
@@ -199,9 +245,9 @@ class PlayerViewController: UIViewController {
             forwardButton
         ])
         controlsHStack.axis = .horizontal
-        controlsHStack.distribution = .fillEqually
+        controlsHStack.distribution = .equalCentering
         controlsHStack.alignment = .center
-        controlsHStack.spacing = 16
+        controlsHStack.spacing = 0
         controlsHStack.backgroundColor = UIColor(named: "BackgroungColor")
         return controlsHStack
     }()
@@ -235,7 +281,7 @@ class PlayerViewController: UIViewController {
     
     private lazy var mainVStack: UIStackView = {
         let mainVStack = UIStackView(arrangedSubviews: [
-            nowPlayingLabel,
+            headerHStack,
             imageAndTitlesVStack,
             allControlsVStack
         ])
@@ -271,7 +317,7 @@ class PlayerViewController: UIViewController {
             mainVStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                            constant: -30)
         ])
-        
+         
         posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
         posterViewHeightAnchor = posterView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
         posterViewWidthAnchor?.isActive = true
@@ -306,28 +352,28 @@ class PlayerViewController: UIViewController {
     }
     
     @objc private func changePlayPauseButtonImage() {
-        var image = UIImage(systemName: "pause.fill")!
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
+                                                 weight: .light,
+                                                 scale: .default)
+        
+        var image =  UIImage.init(systemName: "pause.fill", withConfiguration: config)!
+        
+        posterViewWidthAnchor?.isActive = false
         
         if audioManager.isPlaying {
-            image = UIImage(systemName: "play.fill")!
-            
-            posterViewWidthAnchor?.isActive = false
-            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
-            posterViewWidthAnchor?.isActive = true
-            
-            UIView.animate(withDuration: 0.5) { [weak self] in
-                guard let self = self else { return }
-                self.posterView.layoutIfNeeded()
-            }
+            image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                                      multiplier: 0.7)
         } else {
-            posterViewWidthAnchor?.isActive = false
-            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.73)
-            posterViewWidthAnchor?.isActive = true
-            
-            UIView.animate(withDuration: 0.5) { [weak self] in
-                guard let self = self else { return }
-                self.posterView.layoutIfNeeded()
-            }
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                                      multiplier: 0.73)
+        }
+        
+        posterViewWidthAnchor?.isActive = true
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
+            self.posterView.layoutIfNeeded()
         }
         
         playAndPauseButton.setImage(image.withTintColor(textColor,
@@ -368,6 +414,16 @@ class PlayerViewController: UIViewController {
                 with: nil,
                 afterDelay: 0.02)
         audioManager.seek(to: songDuartionSlider.value)
+    }
+    
+    @objc func setHeartColor() {
+        print("I tap on this button")
+        self.heartButton.isSelected.toggle()
+        let isSelected = self.heartButton.isSelected
+        heartButton.tintColor = isSelected ? .red : UIColor(named: "TextColor")
+        
+        // saving song in favorites
+//        heartHendler()
     }
     
     deinit {

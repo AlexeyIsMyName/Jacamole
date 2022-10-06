@@ -84,20 +84,26 @@ class SongCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: posterImage.bottomAnchor,
-                                               constant: 0),
+                                               constant: 8),
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                                   constant: 0),
+                                                   constant: 8),
             title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                    constant: 0)
+                                                    constant: 8)
         ])
         
         NSLayoutConstraint.activate([
             secondaryTitle.topAnchor.constraint(equalTo: title.bottomAnchor,
                                                constant: 0),
             secondaryTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                                   constant: 0),
+                                                   constant: 8),
             secondaryTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                    constant: 0)
+                                                    constant: 8)
         ])
+    }
+    
+    func cleanCell() {
+        posterImage.image = nil
+        title.text = nil
+        secondaryTitle.text = nil
     }
 }
