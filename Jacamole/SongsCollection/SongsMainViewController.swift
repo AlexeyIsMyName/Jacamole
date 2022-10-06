@@ -25,6 +25,12 @@ class SongsMainViewController: UIViewController {
         setupViews()
         setupLayouts()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // не срабатывает - вью всегда в памяти
+        collectionView.reloadData()
+    }
 }
 
 // MARK: Setting up view model

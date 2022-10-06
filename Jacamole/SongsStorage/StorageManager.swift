@@ -10,6 +10,11 @@ import CoreData
 
 class StorageManager {
     
+    enum Groups: String {
+        case favourite = "Favourite Songs"
+        case previouslyPlayed = "Previously Played Songs"
+    }
+    
     static let shared = StorageManager()
     private init() {}
     
@@ -33,8 +38,6 @@ class StorageManager {
         
         do {
             let songGroupEntities = try context.fetch(request)
-            print("+++++++++++++ songGroupEntities.count +++++++++++++")
-            print(songGroupEntities.count)
             return songGroupEntities
         } catch {
             throw error
@@ -42,7 +45,7 @@ class StorageManager {
     }
     
     func getFavoriteSongs() -> [Song] {
-        return getAllSongGroups()[Song.Groups.favourite.rawValue] ?? []
+        return getAllSongGroups()[Groups.favourite.rawValue] ?? []
     }
     
     func getAllSongGroups() -> [String: [Song]] {
@@ -71,7 +74,15 @@ class StorageManager {
         return songGroups
     }
     
-    func save(song: Song, in group: Song.Groups) {
+    func isFavourite(songID: String) -> Bool {
+        if getFavoriteSongs().first(where: { $0.id == songID }) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func save(song: Song, in group: StorageManager.Groups) {
         
         var songGroupEntities = [SongGroupEntity]()
         

@@ -29,7 +29,7 @@ class PlayerViewController: UIViewController {
          btn.setImage( UIImage.init(systemName: "heart.fill", withConfiguration: config), for: .selected)
          btn.tintColor = UIColor(named: "TextColor")
          btn.setTitleColor(.red, for: .selected)
-         btn.addTarget(self, action: #selector(setHeartColor), for: .touchUpInside)
+         btn.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
          
          return btn
      }()
@@ -301,6 +301,7 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupHeartButton()
     }
     
     private func setupView() {
@@ -322,6 +323,16 @@ class PlayerViewController: UIViewController {
         posterViewHeightAnchor = posterView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
         posterViewWidthAnchor?.isActive = true
         posterViewHeightAnchor?.isActive = true
+    }
+    
+    private func setupHeartButton() {
+        let song = songs[audioManager.currentItemIndex]
+        if StorageManager.shared.isFavourite(songID: song.id) {
+            heartButton.isSelected = true
+        } else {
+            heartButton.isSelected = false
+        }
+        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
     }
     
     private func setupAudioManager(with songs: [Song], and startIndex: Int) {
@@ -416,14 +427,18 @@ class PlayerViewController: UIViewController {
         audioManager.seek(to: songDuartionSlider.value)
     }
     
-    @objc func setHeartColor() {
-        print("I tap on this button")
-        self.heartButton.isSelected.toggle()
-        let isSelected = self.heartButton.isSelected
-        heartButton.tintColor = isSelected ? .red : UIColor(named: "TextColor")
-        
+    @objc func heartButtonPressed() {
         // saving song in favorites
-//        heartHendler()
+        let song = songs[audioManager.currentItemIndex]
+        if StorageManager.shared.isFavourite(songID: song.id) {
+            // если есть - удаляем
+            
+        } else {
+            // если нет - сохраняем
+            StorageManager.shared.save(song: song, in: .favourite)
+        }
+        
+        setupHeartButton()
     }
     
     deinit {

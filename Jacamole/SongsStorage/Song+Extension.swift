@@ -9,11 +9,6 @@ import Foundation
 
 extension Song {
     
-    enum Groups: String {
-        case favourite = "Favourite Songs"
-        case previouslyPlayed = "Previously Played Songs"
-    }
-    
     static func generateSongs(from songEntities: [SongEntity]) -> [Song] {
         
         var songs = [Song]()
@@ -43,9 +38,6 @@ extension Song {
             )
             songs.append(song)
         }
-        print("==============================================================")
-        print(songs)
-        print("==============================================================")
         return songs
     }
 }
