@@ -66,6 +66,7 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
         cell.songLabel.text = vm.songName
         cell.artistLabel.text = vm.songArtist
         cell.songImage.load(urlAdress: vm.imageAdress)
+        cell.heartHendler = vm.heartHandler
         return cell
     }
     

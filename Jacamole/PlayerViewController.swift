@@ -32,8 +32,11 @@ class PlayerViewController: UIViewController {
         return posterImage
     }()
     
+    var posterViewWidthAnchor: NSLayoutConstraint?
+    var posterViewHeightAnchor: NSLayoutConstraint?
     private lazy var posterView: PosterView = {
         let posterView = PosterView()
+        posterView.translatesAutoresizingMaskIntoConstraints = false
         posterView.addSubview(posterImage)
         
         NSLayoutConstraint.activate([
@@ -269,10 +272,10 @@ class PlayerViewController: UIViewController {
                                            constant: -30)
         ])
         
-        NSLayoutConstraint.activate([
-            posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
-            posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor)
-        ])
+        posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
+        posterViewHeightAnchor = posterView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
+        posterViewWidthAnchor?.isActive = true
+        posterViewHeightAnchor?.isActive = true
     }
     
     private func setupAudioManager(with songs: [Song], and startIndex: Int) {
@@ -307,6 +310,24 @@ class PlayerViewController: UIViewController {
         
         if audioManager.isPlaying {
             image = UIImage(systemName: "play.fill")!
+            
+            posterViewWidthAnchor?.isActive = false
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
+            posterViewWidthAnchor?.isActive = true
+            
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self = self else { return }
+                self.posterView.layoutIfNeeded()
+            }
+        } else {
+            posterViewWidthAnchor?.isActive = false
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.73)
+            posterViewWidthAnchor?.isActive = true
+            
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self = self else { return }
+                self.posterView.layoutIfNeeded()
+            }
         }
         
         playAndPauseButton.setImage(image.withTintColor(textColor,

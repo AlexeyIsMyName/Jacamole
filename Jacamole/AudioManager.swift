@@ -71,6 +71,7 @@ class AudioManager {
             player = AVPlayer(playerItem: playerItems[currentItemIndex])
             player?.volume = volume
             playOrPause()
+            addSongAutoSwitcherObserver()
         }
     }
     
@@ -103,12 +104,15 @@ class AudioManager {
             player?.seek(to: .zero)
             player?.play()
             providePlayerData()
-            
-            NotificationCenter.default.addObserver(self,
-                                                   selector: #selector(forward),
-                                                   name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                                   object: player.currentItem)
+            addSongAutoSwitcherObserver()
         }
+    }
+    
+    private func addSongAutoSwitcherObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(forward),
+                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+                                               object: player.currentItem)
     }
     
     private func providePlayerData() {

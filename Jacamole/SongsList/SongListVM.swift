@@ -21,6 +21,7 @@ class SongsListViewModel {
 
 private extension SongsListViewModel {
     
+    /*
     func loadSongs() {
         self.songsAPIClient.loadPopularMonthSongs(tag: "") {
             [weak self] songs in
@@ -29,6 +30,11 @@ private extension SongsListViewModel {
             print("______________songs: \(songs)")
             self.songsVM = songs.map { SongListItemViewModel(song: $0) }
         }
+    }
+     */
+    
+    func loadSongs() {
+        self.songsVM = StorageManager.shared.getFavoriteSongs().map { SongListItemViewModel(song: $0) }
     }
     
 }
