@@ -54,7 +54,6 @@ class StorageManager {
             
             if songGroupEntity.songs?.count == 0 {
                 context.delete(songGroupEntity)
-                print("songGroupEntity DELETED")
             }
             
             saveContext()
@@ -169,8 +168,6 @@ class StorageManager {
             print("Error fetching data from context", error.localizedDescription)
             return false
         }
-        
-        print("DELETED")
         return true
     }
     
@@ -187,8 +184,6 @@ class StorageManager {
         songGroupEntities.forEach { songGroupEntity in
             context.delete(songGroupEntity)
         }
-        
-        print("Removed All")
         saveContext()
     }
     
