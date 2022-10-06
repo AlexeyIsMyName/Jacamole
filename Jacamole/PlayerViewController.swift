@@ -432,10 +432,10 @@ class PlayerViewController: UIViewController {
         let song = songs[audioManager.currentItemIndex]
         if StorageManager.shared.isFavourite(songID: song.id) {
             // если есть - удаляем
-            
+            print(StorageManager.shared.delete(song, from: .favourite))
         } else {
             // если нет - сохраняем
-            StorageManager.shared.save(song: song, in: .favourite)
+            StorageManager.shared.save(song, in: .favourite)
         }
         
         setupHeartButton()

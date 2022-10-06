@@ -22,10 +22,10 @@ class SongListItemViewModel {
             guard let self = self else { return }
             if StorageManager.shared.isFavourite(songID: self.song.id) {
                 // если есть - удаляем
-                
+                print(StorageManager.shared.delete(self.song, from: .favourite))
             } else {
                 // если нет - сохраняем
-                StorageManager.shared.save(song: self.song, in: .favourite)
+                StorageManager.shared.save(self.song, in: .favourite)
             }
         }
     }

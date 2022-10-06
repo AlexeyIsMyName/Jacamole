@@ -44,6 +44,25 @@ class StorageManager {
         }
     }
     
+    private func deleteIfEmpty(_ group: Groups) {
+        do {
+            let songGroupEntities = try loadSongEntities()
+            
+            guard let songGroupEntity = songGroupEntities.first(where: { $0.title == group.rawValue }) else {
+                return
+            }
+            
+            if songGroupEntity.songs?.count == 0 {
+                context.delete(songGroupEntity)
+                print("songGroupEntity DELETED")
+            }
+            
+            saveContext()
+        } catch {
+            print("Error fetching data from context", error.localizedDescription)
+        }
+    }
+    
     func getFavoriteSongs() -> [Song] {
         return getAllSongGroups()[Groups.favourite.rawValue] ?? []
     }
@@ -82,7 +101,7 @@ class StorageManager {
         }
     }
     
-    func save(song: Song, in group: StorageManager.Groups) {
+    func save(_ song: Song, in group: StorageManager.Groups) {
         
         var songGroupEntities = [SongGroupEntity]()
         
@@ -124,6 +143,35 @@ class StorageManager {
         }
         
         saveContext()
+    }
+    
+    func delete(_ song: Song, from group: StorageManager.Groups) -> Bool {
+        
+        do {
+            let songGroupEntities = try loadSongEntities()
+            
+            guard let songGroupEntity = songGroupEntities.first(where: { $0.title == group.rawValue }) else {
+                return false
+            }
+                
+            guard let songEntities = songGroupEntity.songs?.allObjects as? [SongEntity] else {
+                print("ERROR converting NSSet TO Array of SongEntities")
+                return false
+            }
+            
+            if let songEntity = songEntities.first(where: { $0.id == song.id }) {
+                context.delete(songEntity)
+            }
+            
+            saveContext()
+            deleteIfEmpty(group)
+        } catch {
+            print("Error fetching data from context", error.localizedDescription)
+            return false
+        }
+        
+        print("DELETED")
+        return true
     }
     
     func removeAll() {
