@@ -28,8 +28,7 @@ class SongsMainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // не срабатывает - вью всегда в памяти
-        collectionView.reloadData()
+        viewModel.refresh()
     }
 }
 

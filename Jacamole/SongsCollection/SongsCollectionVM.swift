@@ -18,13 +18,19 @@ class SongsCollectionViewModel {
     
     init(songsAPIClient: SongsAPIClient) {
         self.songsAPIClient = songsAPIClient
-        self.loadSongs()
+//        self.loadSongs()
+    }
+    
+    func refresh() {
+        loadSongs()
     }
 }
 
 private extension SongsCollectionViewModel {
     
     func loadSongs() {
+        songsVM.removeAll()
+        
         self.songsAPIClient.loadPopularMonthSongs(tag: "") {
             [weak self] songs in
             guard let self = self else { return }
