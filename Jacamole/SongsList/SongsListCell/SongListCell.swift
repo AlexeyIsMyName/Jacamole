@@ -3,6 +3,11 @@ import UIKit
 class SongListCell: UITableViewCell {
     
     var heartHendler: (() -> Void)!
+    var songID: String! {
+        didSet {
+            setupHeartButton()
+        }
+    }
     
     lazy var songImage: UIImageView = {
         let iv = UIImageView()
@@ -59,7 +64,7 @@ class SongListCell: UITableViewCell {
         btn.setImage( UIImage.init(systemName: "heart.fill", withConfiguration: config), for: .selected)
         btn.tintColor = UIColor(named: "TextColor")
         btn.setTitleColor(.red, for: .selected)
-        btn.addTarget(self, action: #selector(setHeartColor), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
         
         return btn
     }()
@@ -109,13 +114,17 @@ class SongListCell: UITableViewCell {
         ])
     }
     
-    @objc func setHeartColor() {
-        print("I tap on this button")
-        self.heartButton.isSelected.toggle()
-        let isSelected = self.heartButton.isSelected
-        heartButton.tintColor = isSelected ? .red : UIColor(named: "TextColor")
-        
-        // saving song in favorites
+    private func setupHeartButton() {
+        if StorageManager.shared.isFavourite(songID: songID) {
+            heartButton.isSelected = true
+        } else {
+            heartButton.isSelected = false
+        }
+        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
+    }
+    
+    @objc func heartButtonPressed() {
         heartHendler()
+        setupHeartButton()
     }
 }

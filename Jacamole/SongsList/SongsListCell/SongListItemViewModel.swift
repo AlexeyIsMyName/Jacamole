@@ -13,10 +13,18 @@ class SongListItemViewModel {
         song.image
     }
     
+    var songID: String {
+        song.id
+    }
+    
     var heartHandler: () -> Void {
         return { [weak self] in
             guard let self = self else { return }
-            StorageManager.shared.save(song: self.song, in: .favourite)
+            if StorageManager.shared.isFavourite(songID: self.song.id) {
+                StorageManager.shared.delete(self.song, from: .favourite)
+            } else {
+                StorageManager.shared.save(self.song, in: .favourite)
+            }
         }
     }
     

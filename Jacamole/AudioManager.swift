@@ -33,7 +33,7 @@ class AudioManager {
     private var player: AVPlayer!
     private var playerItems: [AVPlayerItem]?
     
-    private var currentItemIndex = 0 {
+    var currentItemIndex = 0 {
         didSet {
             guard let itemsCount = playerItems?.count else {
                 return
