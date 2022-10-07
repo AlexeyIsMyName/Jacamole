@@ -5,13 +5,16 @@
 //  Created by ALEKSEY SUSLOV on 07.10.2022.
 //
 
-//import Foundation
 
 // MARK: - Properties
 class PlayerViewModel {
-    var audioManager = AudioManager()
+    let audioManager = AudioManager.shared
     var songs: [Song]!
     var songIndex: Int!
+    
+    var isPlaying: Bool {
+        audioManager.isPlaying
+    }
     
     var songModelChanged: ((PlayerViewSongModel) -> Void)! {
         didSet {
@@ -21,14 +24,25 @@ class PlayerViewModel {
     
     var songModel: PlayerViewSongModel! {
         didSet {
-            print("songModelChanged")
             songModelChanged(songModel)
         }
     }
     
-    var songDurationTimePointInSeconds: Float!
+    var timePointChanged: ((Float) -> Void)!
+    var timePoint: Float! {
+        didSet {
+            timePointChanged(timePoint)
+        }
+    }
     
-    var volume: Float! = 0.5
+    var volume: Float! = 0.5 {
+        didSet {
+            audioManager.volume = volume
+        }
+    }
+    
+    var isTimeSeeking = false
+    var isFavourite: Bool!
 }
 
 // MARK: - Public func
@@ -36,6 +50,33 @@ extension PlayerViewModel {
     func setSongs(_ songs: [Song], startIndex: Int) {
         self.songs = songs
         self.songIndex = startIndex
+    }
+    
+    func backward() {
+        audioManager.backward()
+    }
+    
+    func forward() {
+        audioManager.forward()
+    }
+    
+    func playOrPause() {
+        audioManager.playOrPause()
+    }
+    
+    func seek(to time: Float) {
+        audioManager.seek(to: time)
+    }
+    
+    func heartButtonPressed() -> Bool {
+        let song = songs[songIndex]
+        if StorageManager.shared.isFavourite(songID: song.id) {
+            StorageManager.shared.delete(song, from: .favourite)
+            return false
+        } else {
+            StorageManager.shared.save(song, in: .favourite)
+            return true
+        }
     }
 }
 
@@ -46,7 +87,9 @@ private extension PlayerViewModel {
 
         audioManager.durationHandler = { [weak self] time in
             guard let self = self else { return }
-            self.songDurationTimePointInSeconds = Float(time.seconds)
+            if !self.isTimeSeeking {
+                self.timePoint = Float(time.seconds)
+            }
         }
 
         audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
@@ -59,7 +102,12 @@ private extension PlayerViewModel {
                 floatDuration: duration,
                 posterImageURL: self.songs[songIndex].image,
                 title: self.songs[songIndex].name,
-                artist: self.songs[songIndex].artistName)
+                artist: self.songs[songIndex].artistName,
+                isFavourite: self.isFavorite(self.songs[songIndex].id))
         }
+    }
+    
+    private func isFavorite(_ songID: String) -> Bool {
+        return StorageManager.shared.isFavourite(songID: songID)
     }
 }

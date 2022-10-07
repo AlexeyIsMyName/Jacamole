@@ -156,7 +156,7 @@ class PlayerViewController: UIViewController {
     }()
     
     @objc private func songSliderInteracting() {
-        isSongDurationSliderInteracting.toggle()
+        viewModel.isTimeSeeking.toggle()
     }
     
     private lazy var songDurationHStack: UIStackView = {
@@ -300,12 +300,17 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setupHeartButton()
+//        setupHeartButton()
     }
     
     init(viewModel: PlayerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        self.viewModel.timePointChanged = { [weak self] timePoint in
+            guard let self = self else { return }
+            self.songDuartionSlider.value = timePoint
+        }
         
         self.viewModel.songModelChanged = { [weak self] songModel in
             guard let self = self else { return }
@@ -315,6 +320,7 @@ class PlayerViewController: UIViewController {
             self.posterImage.load(urlAdress: songModel.posterImageURL)
             self.songTitle.text = songModel.title
             self.artistTitle.text = songModel.artist
+            self.setupHeartButton(with: songModel.isFavourite)
         }
     }
     
@@ -343,14 +349,14 @@ class PlayerViewController: UIViewController {
         posterViewHeightAnchor?.isActive = true
     }
     
-    private func setupHeartButton() {
-//        let song = songs[audioManager.currentItemIndex]
-//        if StorageManager.shared.isFavourite(songID: song.id) {
-//            heartButton.isSelected = true
-//        } else {
-//            heartButton.isSelected = false
-//        }
-//        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
+    private func setupHeartButton(with condition: Bool) {
+        if condition {
+            heartButton.isSelected = true
+        } else {
+            heartButton.isSelected = false
+        }
+        
+        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
     }
     
     @objc private func changePlayPauseButtonImage() {
@@ -363,14 +369,14 @@ class PlayerViewController: UIViewController {
         
         posterViewWidthAnchor?.isActive = false
         
-//        if audioManager.isPlaying {
-//            image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
-//            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
-//                                                                      multiplier: 0.7)
-//        } else {
-//            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
-//                                                                      multiplier: 0.73)
-//        }
+        if viewModel.isPlaying {
+            image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                                      multiplier: 0.7)
+        } else {
+            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+                                                                      multiplier: 0.73)
+        }
         
         posterViewWidthAnchor?.isActive = true
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -388,41 +394,34 @@ class PlayerViewController: UIViewController {
     }
     
     @objc private func playPauseButtonPressed() {
-//        audioManager.playOrPause()
-//        perform(#selector(changePlayPauseButtonImage),
-//                with: nil,
-//                afterDelay: 0.02)
+        viewModel.playOrPause()
+        perform(#selector(changePlayPauseButtonImage),
+                with: nil,
+                afterDelay: 0.02)
     }
     
     @objc private func backwardButtonPressed() {
-//        audioManager.backward()
+        viewModel.backward()
     }
     
     @objc private func forwardButtonPressed() {
-//        audioManager.forward()
+        viewModel.forward()
     }
     
     @objc private func volumeSliderChanged() {
-//        audioManager.volume = volumeControlSlider.value
+        viewModel.volume = volumeControlSlider.value
     }
     
     @objc private func songDuartionSliderChanged() {
-//        perform(#selector(songSliderInteracting),
-//                with: nil,
-//                afterDelay: 0.02)
-//        audioManager.seek(to: songDuartionSlider.value)
+        perform(#selector(songSliderInteracting),
+                with: nil,
+                afterDelay: 0.02)
+        viewModel.seek(to: songDuartionSlider.value)
     }
     
     @objc func heartButtonPressed() {
-//        viewModel.heartButtonPressed()
-//        let song = songs[audioManager.currentItemIndex]
-//        if StorageManager.shared.isFavourite(songID: song.id) {
-//            StorageManager.shared.delete(song, from: .favourite)
-//        } else {
-//            StorageManager.shared.save(song, in: .favourite)
-//        }
-        
-//        setupHeartButton()
+        let condition = viewModel.heartButtonPressed()
+        setupHeartButton(with: condition)
     }
     
     deinit {

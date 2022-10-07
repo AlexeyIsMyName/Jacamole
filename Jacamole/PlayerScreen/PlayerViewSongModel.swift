@@ -11,4 +11,5 @@ struct PlayerViewSongModel {
     let posterImageURL: String
     let title: String
     let artist: String
+    let isFavourite: Bool
 }
