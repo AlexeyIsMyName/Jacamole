@@ -8,7 +8,7 @@
 
 // MARK: - Properties
 class PlayerViewModel {
-    private let audioManager = AudioManager.shared
+    private var audioManager: AudioManager!
     private var songs: [Song]!
     private var songIndex: Int!
     
@@ -35,7 +35,7 @@ class PlayerViewModel {
         }
     }
     
-    var volume: Float! = 0.5 {
+    var volume: Float! {
         didSet {
             audioManager.volume = volume
         }
@@ -43,6 +43,11 @@ class PlayerViewModel {
     
     var isTimeSeeking = false
     private var isFavourite: Bool!
+    
+    init() {
+        self.audioManager = AudioManager.shared
+        self.volume = audioManager.volume
+    }
 }
 
 // MARK: - Public func
