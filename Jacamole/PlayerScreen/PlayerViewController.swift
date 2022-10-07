@@ -13,13 +13,7 @@ class PlayerViewController: UIViewController {
     
     private let textColor = UIColor(named: "TextColor")!
     
-    private lazy var nowPlayingLabel: UILabel = {
-        let nowPlayingLabel = UILabel()
-        nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
-        nowPlayingLabel.textColor = textColor
-        nowPlayingLabel.text = "Now Playing"
-        return nowPlayingLabel
-    }()
+    private var nowPlayingLabel: UILabel!
     
      private lazy var heartButton: UIButton = {
          let btn = UIButton()
@@ -299,6 +293,7 @@ class PlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSubViews()
         setupView()
 //        setupHeartButton()
     }
@@ -426,5 +421,18 @@ class PlayerViewController: UIViewController {
     
     deinit {
         print("deinit - PlayerViewController")
+    }
+}
+
+// MARK: - setting up subviews
+extension PlayerViewController {
+    private func setupSubViews() {
+        nowPlayingLabel = {
+            let nowPlayingLabel = UILabel()
+            nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
+            nowPlayingLabel.textColor = textColor
+            nowPlayingLabel.text = "Now Playing"
+            return nowPlayingLabel
+        }()
     }
 }

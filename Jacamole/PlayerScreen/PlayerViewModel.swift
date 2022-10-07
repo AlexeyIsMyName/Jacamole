@@ -95,7 +95,7 @@ private extension PlayerViewModel {
         audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
             guard let self = self else { return }
             
-//            self.songIndex = songIndex
+            self.songIndex = songIndex
             
             self.songModel = PlayerViewSongModel(
                 stringDuration: stringDuration,
