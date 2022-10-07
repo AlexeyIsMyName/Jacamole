@@ -9,7 +9,7 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
-    var viewModel: PlayerViewModel!
+    let viewModel: PlayerViewModel!
     
     private let textColor = UIColor(named: "TextColor")!
     
@@ -296,9 +296,6 @@ class PlayerViewController: UIViewController {
         mainVStack.translatesAutoresizingMaskIntoConstraints = false
         return mainVStack
     }()
-    
-//    var audioManager = AudioManager()
-//    var songs: [Song]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -309,6 +306,16 @@ class PlayerViewController: UIViewController {
     init(viewModel: PlayerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        self.viewModel.songModelChanged = { [weak self] songModel in
+            guard let self = self else { return }
+            
+            self.songDuartionSlider.maximumValue = songModel.floatDuration
+            self.songTimeTitle.text = songModel.stringDuration
+            self.posterImage.load(urlAdress: songModel.posterImageURL)
+            self.songTitle.text = songModel.title
+            self.artistTitle.text = songModel.artist
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -346,33 +353,6 @@ class PlayerViewController: UIViewController {
 //        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
     }
     
-    private func setupAudioManager(with songs: [Song], and startIndex: Int) {
-//        audioManager.setupPlayer(with: songs, startFrom: startIndex)
-//
-//        audioManager.durationHandler = { [weak self] time in
-//            if let self = self {
-//                if !self.isSongDurationSliderInteracting {
-//                    self.songDuartionSlider.value = Float(time.seconds)
-//                }
-//            }
-//        }
-//
-//        audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
-//            if let self = self {
-//                self.updateUI(with: stringDuration, duration: duration, and: songIndex)
-//            }
-//        }
-    }
-    
-    private func updateUI(with stringDuration: String, duration: Float, and songIndex: Int) {
-        // можно добавить анимации
-//        songDuartionSlider.maximumValue = duration
-//        songTimeTitle.text = stringDuration
-//        posterImage.load(urlAdress: songs[songIndex].image)
-//        songTitle.text = songs[songIndex].name
-//        artistTitle.text = songs[songIndex].artistName
-    }
-    
     @objc private func changePlayPauseButtonImage() {
         
         let config = UIImage.SymbolConfiguration(pointSize: 25.0,
@@ -405,11 +385,6 @@ class PlayerViewController: UIViewController {
         playAndPauseButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
                                                         renderingMode: .alwaysOriginal),
                                     for: .highlighted)
-    }
-    
-    func setSongs(_ songs: [Song], startIndex: Int) {
-//        self.songs = songs
-//        setupAudioManager(with: songs, and: startIndex)
     }
     
     @objc private func playPauseButtonPressed() {

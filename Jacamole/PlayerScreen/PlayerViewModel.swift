@@ -5,16 +5,23 @@
 //  Created by ALEKSEY SUSLOV on 07.10.2022.
 //
 
-import Foundation
+//import Foundation
 
+// MARK: - Properties
 class PlayerViewModel {
-    var audioManager: AudioManager!
+    var audioManager = AudioManager()
     var songs: [Song]!
     var songIndex: Int!
     
-    var songModelChanged: ((PlayerViewSongModel) -> Void)!
+    var songModelChanged: ((PlayerViewSongModel) -> Void)! {
+        didSet {
+            setupAudioManager(with: songs, and: songIndex)
+        }
+    }
+    
     var songModel: PlayerViewSongModel! {
         didSet {
+            print("songModelChanged")
             songModelChanged(songModel)
         }
     }
@@ -22,12 +29,18 @@ class PlayerViewModel {
     var songDurationTimePointInSeconds: Float!
     
     var volume: Float! = 0.5
-    
+}
+
+// MARK: - Public func
+extension PlayerViewModel {
     func setSongs(_ songs: [Song], startIndex: Int) {
         self.songs = songs
-        setupAudioManager(with: songs, and: startIndex)
+        self.songIndex = startIndex
     }
-    
+}
+
+// MARK: - Private func
+private extension PlayerViewModel {
     private func setupAudioManager(with songs: [Song], and startIndex: Int) {
         audioManager.setupPlayer(with: songs, startFrom: startIndex)
 
@@ -38,6 +51,8 @@ class PlayerViewModel {
 
         audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
             guard let self = self else { return }
+            
+//            self.songIndex = songIndex
             
             self.songModel = PlayerViewSongModel(
                 stringDuration: stringDuration,

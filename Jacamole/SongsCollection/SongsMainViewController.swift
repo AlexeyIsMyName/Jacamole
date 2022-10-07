@@ -176,9 +176,7 @@ extension SongsMainViewController: UICollectionViewDelegate {
             let playerVM = PlayerViewModel()
             playerVM.setSongs(songs, startIndex: indexPath.row)
             let playerVC = PlayerViewController(viewModel: playerVM)
-            
             playerVC.modalPresentationStyle = .pageSheet
-//            playerVC.setSongs(songs, startIndex: indexPath.row)
             present(playerVC, animated: true)
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
