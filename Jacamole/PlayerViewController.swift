@@ -9,6 +9,8 @@ import UIKit
 
 class PlayerViewController: UIViewController {
     
+    var viewModel: PlayerViewModel!
+    
     private let textColor = UIColor(named: "TextColor")!
     
     private lazy var nowPlayingLabel: UILabel = {
@@ -441,4 +443,13 @@ class PlayerViewController: UIViewController {
     deinit {
         print("deinit - PlayerViewController")
     }
+}
+
+// MARK: - Player View Model Delegate
+extension PlayerViewController: PlayerViewModelDelegate {
+    func songDurationInSecondsUpdated() {
+        
+    }
+    
+    
 }
