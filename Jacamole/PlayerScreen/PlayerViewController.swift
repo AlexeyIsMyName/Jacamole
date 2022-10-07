@@ -77,7 +77,15 @@ class PlayerViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    deinit {
+        print("deinit - PlayerViewController")
+    }
+}
+
+
+// MARK: - setup methods
+extension PlayerViewController {
     private func setupView() {
         view.backgroundColor = UIColor(named: "BackgroungColor")
         view.addSubview(mainVStack)
@@ -140,7 +148,11 @@ class PlayerViewController: UIViewController {
                                       action: #selector(volumeSliderChanged),
                                       for: .valueChanged)
     }
-    
+}
+
+
+// MARK: - @objc methods
+extension PlayerViewController {
     @objc private func changePlayPauseButtonImage() {
         
         let config = UIImage.SymbolConfiguration(pointSize: 25.0,
@@ -195,22 +207,18 @@ class PlayerViewController: UIViewController {
     }
     
     @objc private func songDuartionSliderChanged() {
+        viewModel.seek(to: songDuartionSlider.value)
         perform(#selector(songSliderInteracting),
                 with: nil,
                 afterDelay: 0.02)
-        viewModel.seek(to: songDuartionSlider.value)
     }
     
-    @objc func heartButtonPressed() {
+    @objc private func heartButtonPressed() {
         let condition = viewModel.heartButtonPressed()
         setupHeartButton(with: condition)
     }
     
     @objc private func songSliderInteracting() {
         viewModel.isTimeSeeking.toggle()
-    }
-    
-    deinit {
-        print("deinit - PlayerViewController")
     }
 }
