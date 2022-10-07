@@ -36,6 +36,7 @@
 		E75C9F8028EDCFC900606A5F /* Song+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C9F7F28EDCFC900606A5F /* Song+Extension.swift */; };
 		E76DCF2928F09CAE000182C6 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DCF2828F09CAE000182C6 /* PlayerViewModel.swift */; };
 		E76DCF2C28F0AF30000182C6 /* PlayerViewSongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DCF2B28F0AF30000182C6 /* PlayerViewSongModel.swift */; };
+		E76DCF2E28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DCF2D28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift */; };
 		E774AE0028E765FE00E7F9C7 /* SongsCollectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */; };
 		E774AE0228E97E8C00E7F9C7 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774AE0128E97E8C00E7F9C7 /* PosterView.swift */; };
 		E774AE0428E9D4E800E7F9C7 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */; };
@@ -79,6 +80,7 @@
 		E75F06A028D93006006404D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E76DCF2828F09CAE000182C6 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		E76DCF2B28F0AF30000182C6 /* PlayerViewSongModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewSongModel.swift; sourceTree = "<group>"; };
+		E76DCF2D28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionPlayerVCSetupSubviews.swift; sourceTree = "<group>"; };
 		E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionVM.swift; sourceTree = "<group>"; };
 		E774AE0128E97E8C00E7F9C7 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
 		E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				E72C62A028E4BED6003033F4 /* PlayerViewController.swift */,
 				E76DCF2828F09CAE000182C6 /* PlayerViewModel.swift */,
 				E76DCF2B28F0AF30000182C6 /* PlayerViewSongModel.swift */,
+				E76DCF2D28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift */,
 			);
 			path = PlayerScreen;
 			sourceTree = "<group>";
@@ -210,9 +213,9 @@
 				777F302B28E33CF1004B5A5E /* Coordinators */,
 				E7796EF128D92F0500D78A14 /* LaunchScreen.storyboard */,
 				E7796EF428D92F0500D78A14 /* Info.plist */,
-				E76DCF2A28F0AEC7000182C6 /* PlayerScreen */,
 				E774AE0128E97E8C00E7F9C7 /* PosterView.swift */,
 				E774AE0328E9D4E800E7F9C7 /* AudioManager.swift */,
+				E76DCF2A28F0AEC7000182C6 /* PlayerScreen */,
 				E7C985E128EDAC8C00A13F11 /* SongsStorage */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
@@ -333,6 +336,7 @@
 				776A37C728E4824A005DAF1C /* SongsListViewController.swift in Sources */,
 				776A37B928E45636005DAF1C /* AlbomModel.swift in Sources */,
 				E774AE0228E97E8C00E7F9C7 /* PosterView.swift in Sources */,
+				E76DCF2E28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift in Sources */,
 				776A37C128E47A59005DAF1C /* FavoriteCoordinator.swift in Sources */,
 				776A37D128E62248005DAF1C /* SongCollectionViewCell.swift in Sources */,
 				E7C985E028EDAC7300A13F11 /* SongsCoreData.xcdatamodeld in Sources */,

@@ -11,296 +11,46 @@ class PlayerViewController: UIViewController {
     
     let viewModel: PlayerViewModel!
     
-    private let textColor = UIColor(named: "TextColor")!
+    let textColor = UIColor(named: "TextColor")!
     
-    private var nowPlayingLabel: UILabel!
+    var nowPlayingLabel: UILabel!
+    var heartButton: UIButton!
+    var headerHStack: UIStackView!
     
-     private lazy var heartButton: UIButton = {
-         let btn = UIButton()
-         let config = UIImage.SymbolConfiguration(pointSize: 25.0,
-                                                  weight: .light,
-                                                  scale: .default)
-       
-         btn.setImage( UIImage.init(systemName: "heart", withConfiguration: config), for: .normal)
-         btn.setImage( UIImage.init(systemName: "heart.fill", withConfiguration: config), for: .selected)
-         btn.tintColor = UIColor(named: "TextColor")
-         btn.setTitleColor(.red, for: .selected)
-         btn.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
-         
-         return btn
-     }()
+    private var posterViewWidthAnchor: NSLayoutConstraint?
+    private var posterViewHeightAnchor: NSLayoutConstraint?
+    var posterView: PosterView!
+    var posterImage: UIImageView!
     
-    private lazy var headerHStack: UIStackView = {
-        let headerHStack = UIStackView(arrangedSubviews: [
-            nowPlayingLabel,
-            heartButton
-        ])
-        headerHStack.axis = .horizontal
-        headerHStack.distribution = .fill
-        headerHStack.alignment = .center
-        headerHStack.spacing = 16
-        headerHStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return headerHStack
-    }()
+    var artistTitle: UILabel!
+    var songTitle: UILabel!
+    var titlesVStack: UIStackView!
+    var imageAndTitlesVStack: UIStackView!
     
-    private lazy var posterImage: UIImageView = {
-        let posterImage = UIImageView()
-        posterImage.image = UIImage(named: "guacamole-vectorportal")
-        posterImage.sizeToFit()
-        posterImage.contentMode = .scaleAspectFill
-        
-        posterImage.layer.cornerRadius = 12
-        posterImage.layer.masksToBounds = true
-        
-        posterImage.translatesAutoresizingMaskIntoConstraints = false
-        return posterImage
-    }()
+    var songZeroTimeTitle: UILabel!
+    var songTimeTitle: UILabel!
+    var songDuartionSlider: UISlider!
+    var songDurationHStack: UIStackView!
     
-    var posterViewWidthAnchor: NSLayoutConstraint?
-    var posterViewHeightAnchor: NSLayoutConstraint?
-    private lazy var posterView: PosterView = {
-        let posterView = PosterView()
-        posterView.translatesAutoresizingMaskIntoConstraints = false
-        posterView.addSubview(posterImage)
-        
-        NSLayoutConstraint.activate([
-            posterImage.topAnchor.constraint(equalTo: posterView.topAnchor),
-            posterImage.leadingAnchor.constraint(equalTo: posterView.leadingAnchor),
-            posterImage.trailingAnchor.constraint(equalTo: posterView.trailingAnchor),
-            posterImage.bottomAnchor.constraint(equalTo: posterView.bottomAnchor)
-        ])
-        
-        return posterView
-    }()
+    var backwardButton: UIButton!
+    var playAndPauseButton: UIButton!
+    var forwardButton: UIButton!
+    var playerControlsHStack: UIStackView!
     
-    private lazy var artistTitle: UILabel = {
-        let artistTitle = UILabel()
-        artistTitle.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        artistTitle.textColor = textColor
-        artistTitle.text = "Artist Title"
-        return artistTitle
-    }()
+    var volumeControlSlider: UISlider!
+    var allControlsVStack: UIStackView!
     
-    private lazy var songTitle: UILabel = {
-        let songTitle = UILabel()
-        songTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTitle.textColor = textColor
-        songTitle.text = "Song Title"
-        return songTitle
-    }()
+    var mainVStack: UIStackView!
     
-    private lazy var titlesVStack: UIStackView = {
-        let titlesVStack = UIStackView(arrangedSubviews: [
-            artistTitle,
-            songTitle
-        ])
-        
-        titlesVStack.axis = .vertical
-        titlesVStack.distribution = .fillProportionally
-        titlesVStack.alignment = .center
-        titlesVStack.spacing = 16
-        titlesVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return titlesVStack
-    }()
-    
-    private lazy var imageAndTitlesVStack: UIStackView = {
-        let imageAndTitlesVStack = UIStackView(arrangedSubviews: [
-            posterView,
-            titlesVStack
-        ])
-        
-        imageAndTitlesVStack.axis = .vertical
-        imageAndTitlesVStack.distribution = .equalCentering
-        imageAndTitlesVStack.alignment = .center
-        imageAndTitlesVStack.spacing = 16
-        imageAndTitlesVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return imageAndTitlesVStack
-    }()
-    
-    private lazy var songZeroTimeTitle: UILabel = {
-        let songZeroTimeTitle = UILabel()
-        songZeroTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songZeroTimeTitle.textColor = textColor
-        songZeroTimeTitle.text = "0.00"
-        return songZeroTimeTitle
-    }()
-    
-    private lazy var songTimeTitle: UILabel = {
-        let songTimeTitle = UILabel()
-        songTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        songTimeTitle.textColor = textColor
-        songTimeTitle.text = "0.00"
-        return songTimeTitle
-    }()
-    
-    private var isSongDurationSliderInteracting = false
-    private lazy var songDuartionSlider: UISlider = {
-        let sdSlider = UISlider()
-        sdSlider.tintColor = textColor
-        sdSlider.addTarget(self,
-                           action: #selector(songDuartionSliderChanged),
-                           for: .touchUpInside)
-        sdSlider.addTarget(self,
-                           action: #selector(songDuartionSliderChanged),
-                           for: .touchUpOutside)
-        sdSlider.addTarget(self,
-                           action: #selector(songSliderInteracting),
-                           for: .touchDown)
-        return sdSlider
-    }()
-    
-    @objc private func songSliderInteracting() {
-        viewModel.isTimeSeeking.toggle()
+    override func loadView() {
+        super.loadView()
+        setupSubViews()
     }
-    
-    private lazy var songDurationHStack: UIStackView = {
-        let songDurationHStack = UIStackView(arrangedSubviews: [
-            songZeroTimeTitle,
-            songDuartionSlider,
-            songTimeTitle
-        ])
-        songDurationHStack.axis = .horizontal
-        songDurationHStack.distribution = .fill
-        songDurationHStack.alignment = .center
-        songDurationHStack.spacing = 16
-        songDurationHStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return songDurationHStack
-    }()
-    
-    private lazy var backwardButton: UIButton = {
-        let backwardButton = UIButton()
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
-                                                 weight: .light,
-                                                 scale: .default)
-        
-        let image =  UIImage.init(systemName: "backward.fill", withConfiguration: config)!
-        
-        
-        backwardButton.setImage(image.withTintColor(textColor,
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .normal)
-        
-        backwardButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .highlighted)
-        backwardButton.addTarget(self,
-                                 action: #selector(backwardButtonPressed),
-                                 for: .touchUpInside)
-        return backwardButton
-    }()
-    
-    private lazy var playAndPauseButton: UIButton = {
-        let playAndPauseButton = UIButton()
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
-                                                 weight: .light,
-                                                 scale: .default)
-        
-        let image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
-        
-        playAndPauseButton.setImage(image.withTintColor(textColor,
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .normal)
-
-        playAndPauseButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .highlighted)
-        playAndPauseButton.addTarget(self,
-                                     action: #selector(playPauseButtonPressed),
-                                     for: .touchUpInside)
-        return playAndPauseButton
-    }()
-    
-    private lazy var forwardButton: UIButton = {
-        let forwardButton = UIButton()
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 25.0,
-                                                 weight: .light,
-                                                 scale: .default)
-        
-        let image =  UIImage.init(systemName: "forward.fill", withConfiguration: config)!
-        
-        forwardButton.setImage(image.withTintColor(textColor,
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .normal)
-        
-        forwardButton.setImage(image.withTintColor(textColor.withAlphaComponent(0.4),
-                                                        renderingMode: .alwaysOriginal),
-                                    for: .highlighted)
-        forwardButton.addTarget(self,
-                                action: #selector(forwardButtonPressed),
-                                for: .touchUpInside)
-        return forwardButton
-    }()
-    
-    private lazy var controlsHStack: UIStackView = {
-        let controlsHStack = UIStackView(arrangedSubviews: [
-            backwardButton,
-            playAndPauseButton,
-            forwardButton
-        ])
-        controlsHStack.axis = .horizontal
-        controlsHStack.distribution = .equalCentering
-        controlsHStack.alignment = .center
-        controlsHStack.spacing = 0
-        controlsHStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return controlsHStack
-    }()
-    
-    private lazy var volumeControlSlider: UISlider = {
-        let vcSlider = UISlider()
-        vcSlider.tintColor = textColor
-        vcSlider.minimumValueImage = UIImage(systemName: "speaker.1")
-        vcSlider.maximumValueImage = UIImage(systemName: "speaker.3")
-        vcSlider.value = viewModel.volume
-        vcSlider.addTarget(self,
-                           action: #selector(volumeSliderChanged),
-                           for: .valueChanged)
-        return vcSlider
-    }()
-    
-    private lazy var allControlsVStack: UIStackView = {
-        let allControlsVStack = UIStackView(arrangedSubviews: [
-            songDurationHStack,
-            controlsHStack,
-            volumeControlSlider
-        ])
-        
-        allControlsVStack.axis = .vertical
-        allControlsVStack.distribution = .equalSpacing
-        allControlsVStack.alignment = .fill
-        allControlsVStack.spacing = 64
-        allControlsVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        return allControlsVStack
-    }()
-    
-    private lazy var mainVStack: UIStackView = {
-        let mainVStack = UIStackView(arrangedSubviews: [
-            headerHStack,
-            imageAndTitlesVStack,
-            allControlsVStack
-        ])
-        
-        mainVStack.axis = .vertical
-        mainVStack.distribution = .equalSpacing
-        mainVStack.alignment = .fill
-        mainVStack.spacing = 16
-        mainVStack.backgroundColor = UIColor(named: "BackgroungColor")
-        mainVStack.translatesAutoresizingMaskIntoConstraints = false
-        return mainVStack
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubViews()
         setupView()
-//        setupHeartButton()
-    }
-    
-    init(viewModel: PlayerViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        setupTargets()
         
         self.viewModel.timePointChanged = { [weak self] timePoint in
             guard let self = self else { return }
@@ -317,6 +67,11 @@ class PlayerViewController: UIViewController {
             self.artistTitle.text = songModel.artist
             self.setupHeartButton(with: songModel.isFavourite)
         }
+    }
+    
+    init(viewModel: PlayerViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -352,6 +107,38 @@ class PlayerViewController: UIViewController {
         }
         
         heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
+    }
+    
+    private func setupTargets() {
+        heartButton.addTarget(self,
+                              action: #selector(heartButtonPressed),
+                              for: .touchUpInside)
+        
+        songDuartionSlider.addTarget(self,
+                                     action: #selector(songDuartionSliderChanged),
+                                     for: .touchUpInside)
+        songDuartionSlider.addTarget(self,
+                                     action: #selector(songDuartionSliderChanged),
+                                     for: .touchUpOutside)
+        songDuartionSlider.addTarget(self,
+                                     action: #selector(songSliderInteracting),
+                                     for: .touchDown)
+        
+        backwardButton.addTarget(self,
+                                 action: #selector(backwardButtonPressed),
+                                 for: .touchUpInside)
+        
+        playAndPauseButton.addTarget(self,
+                                     action: #selector(playPauseButtonPressed),
+                                     for: .touchUpInside)
+        
+        forwardButton.addTarget(self,
+                                action: #selector(forwardButtonPressed),
+                                for: .touchUpInside)
+        
+        volumeControlSlider.addTarget(self,
+                                      action: #selector(volumeSliderChanged),
+                                      for: .valueChanged)
     }
     
     @objc private func changePlayPauseButtonImage() {
@@ -419,20 +206,11 @@ class PlayerViewController: UIViewController {
         setupHeartButton(with: condition)
     }
     
+    @objc private func songSliderInteracting() {
+        viewModel.isTimeSeeking.toggle()
+    }
+    
     deinit {
         print("deinit - PlayerViewController")
-    }
-}
-
-// MARK: - setting up subviews
-extension PlayerViewController {
-    private func setupSubViews() {
-        nowPlayingLabel = {
-            let nowPlayingLabel = UILabel()
-            nowPlayingLabel.font = .systemFont(ofSize: 28, weight: .medium)
-            nowPlayingLabel.textColor = textColor
-            nowPlayingLabel.text = "Now Playing"
-            return nowPlayingLabel
-        }()
     }
 }
