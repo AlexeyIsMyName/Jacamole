@@ -9,6 +9,7 @@ import Foundation
 import AVFoundation
 
 class AudioManager {
+    static let shared = AudioManager()
     
     var volume: Float = 0.5 {
         didSet {
@@ -51,7 +52,7 @@ class AudioManager {
         player.timeControlStatus == .playing ? true : false
     }
     
-    init() {
+    private init() {
         let audioSession: AVAudioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.playback, mode: .default, options: [])

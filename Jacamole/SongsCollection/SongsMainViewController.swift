@@ -28,8 +28,7 @@ class SongsMainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // не срабатывает - вью всегда в памяти
-        collectionView.reloadData()
+        viewModel.refresh()
     }
 }
 
@@ -174,9 +173,10 @@ extension SongsMainViewController: UICollectionViewDelegate {
         let items = section.values.first!
         
         if let songs = items as? [Song] {
-            let playerVC = PlayerViewController()
+            let playerVM = PlayerViewModel()
+            playerVM.setSongs(songs, startIndex: indexPath.row)
+            let playerVC = PlayerViewController(viewModel: playerVM)
             playerVC.modalPresentationStyle = .pageSheet
-            playerVC.setSongs(songs, startIndex: indexPath.row)
             present(playerVC, animated: true)
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
