@@ -259,7 +259,7 @@ class PlayerViewController: UIViewController {
         vcSlider.tintColor = textColor
         vcSlider.minimumValueImage = UIImage(systemName: "speaker.1")
         vcSlider.maximumValueImage = UIImage(systemName: "speaker.3")
-        vcSlider.value = audioManager.volume
+        vcSlider.value = viewModel.volume
         vcSlider.addTarget(self,
                            action: #selector(volumeSliderChanged),
                            for: .valueChanged)
@@ -297,13 +297,22 @@ class PlayerViewController: UIViewController {
         return mainVStack
     }()
     
-    var audioManager = AudioManager()
-    var songs: [Song]!
+//    var audioManager = AudioManager()
+//    var songs: [Song]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupHeartButton()
+    }
+    
+    init(viewModel: PlayerViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupView() {
@@ -328,40 +337,40 @@ class PlayerViewController: UIViewController {
     }
     
     private func setupHeartButton() {
-        let song = songs[audioManager.currentItemIndex]
-        if StorageManager.shared.isFavourite(songID: song.id) {
-            heartButton.isSelected = true
-        } else {
-            heartButton.isSelected = false
-        }
-        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
+//        let song = songs[audioManager.currentItemIndex]
+//        if StorageManager.shared.isFavourite(songID: song.id) {
+//            heartButton.isSelected = true
+//        } else {
+//            heartButton.isSelected = false
+//        }
+//        heartButton.tintColor = heartButton.isSelected ? .red : UIColor(named: "TextColor")
     }
     
     private func setupAudioManager(with songs: [Song], and startIndex: Int) {
-        audioManager.setupPlayer(with: songs, startFrom: startIndex)
-        
-        audioManager.durationHandler = { [weak self] time in
-            if let self = self {
-                if !self.isSongDurationSliderInteracting {
-                    self.songDuartionSlider.value = Float(time.seconds)
-                }
-            }
-        }
-        
-        audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
-            if let self = self {
-                self.updateUI(with: stringDuration, duration: duration, and: songIndex)
-            }
-        }
+//        audioManager.setupPlayer(with: songs, startFrom: startIndex)
+//
+//        audioManager.durationHandler = { [weak self] time in
+//            if let self = self {
+//                if !self.isSongDurationSliderInteracting {
+//                    self.songDuartionSlider.value = Float(time.seconds)
+//                }
+//            }
+//        }
+//
+//        audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
+//            if let self = self {
+//                self.updateUI(with: stringDuration, duration: duration, and: songIndex)
+//            }
+//        }
     }
     
     private func updateUI(with stringDuration: String, duration: Float, and songIndex: Int) {
         // можно добавить анимации
-        songDuartionSlider.maximumValue = duration
-        songTimeTitle.text = stringDuration
-        posterImage.load(urlAdress: songs[songIndex].image)
-        songTitle.text = songs[songIndex].name
-        artistTitle.text = songs[songIndex].artistName
+//        songDuartionSlider.maximumValue = duration
+//        songTimeTitle.text = stringDuration
+//        posterImage.load(urlAdress: songs[songIndex].image)
+//        songTitle.text = songs[songIndex].name
+//        artistTitle.text = songs[songIndex].artistName
     }
     
     @objc private func changePlayPauseButtonImage() {
@@ -374,14 +383,14 @@ class PlayerViewController: UIViewController {
         
         posterViewWidthAnchor?.isActive = false
         
-        if audioManager.isPlaying {
-            image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
-            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
-                                                                      multiplier: 0.7)
-        } else {
-            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
-                                                                      multiplier: 0.73)
-        }
+//        if audioManager.isPlaying {
+//            image =  UIImage.init(systemName: "play.fill", withConfiguration: config)!
+//            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+//                                                                      multiplier: 0.7)
+//        } else {
+//            posterViewWidthAnchor = posterView.widthAnchor.constraint(equalTo: view.widthAnchor,
+//                                                                      multiplier: 0.73)
+//        }
         
         posterViewWidthAnchor?.isActive = true
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -399,57 +408,49 @@ class PlayerViewController: UIViewController {
     }
     
     func setSongs(_ songs: [Song], startIndex: Int) {
-        self.songs = songs
-        setupAudioManager(with: songs, and: startIndex)
+//        self.songs = songs
+//        setupAudioManager(with: songs, and: startIndex)
     }
     
     @objc private func playPauseButtonPressed() {
-        audioManager.playOrPause()
-        perform(#selector(changePlayPauseButtonImage),
-                with: nil,
-                afterDelay: 0.02)
+//        audioManager.playOrPause()
+//        perform(#selector(changePlayPauseButtonImage),
+//                with: nil,
+//                afterDelay: 0.02)
     }
     
     @objc private func backwardButtonPressed() {
-        audioManager.backward()
+//        audioManager.backward()
     }
     
     @objc private func forwardButtonPressed() {
-        audioManager.forward()
+//        audioManager.forward()
     }
     
     @objc private func volumeSliderChanged() {
-        audioManager.volume = volumeControlSlider.value
+//        audioManager.volume = volumeControlSlider.value
     }
     
     @objc private func songDuartionSliderChanged() {
-        perform(#selector(songSliderInteracting),
-                with: nil,
-                afterDelay: 0.02)
-        audioManager.seek(to: songDuartionSlider.value)
+//        perform(#selector(songSliderInteracting),
+//                with: nil,
+//                afterDelay: 0.02)
+//        audioManager.seek(to: songDuartionSlider.value)
     }
     
     @objc func heartButtonPressed() {
-        let song = songs[audioManager.currentItemIndex]
-        if StorageManager.shared.isFavourite(songID: song.id) {
-            StorageManager.shared.delete(song, from: .favourite)
-        } else {
-            StorageManager.shared.save(song, in: .favourite)
-        }
+//        viewModel.heartButtonPressed()
+//        let song = songs[audioManager.currentItemIndex]
+//        if StorageManager.shared.isFavourite(songID: song.id) {
+//            StorageManager.shared.delete(song, from: .favourite)
+//        } else {
+//            StorageManager.shared.save(song, in: .favourite)
+//        }
         
-        setupHeartButton()
+//        setupHeartButton()
     }
     
     deinit {
         print("deinit - PlayerViewController")
     }
-}
-
-// MARK: - Player View Model Delegate
-extension PlayerViewController: PlayerViewModelDelegate {
-    func songDurationInSecondsUpdated() {
-        
-    }
-    
-    
 }
