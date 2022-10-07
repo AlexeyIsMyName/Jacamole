@@ -8,9 +8,9 @@
 
 // MARK: - Properties
 class PlayerViewModel {
-    let audioManager = AudioManager.shared
-    var songs: [Song]!
-    var songIndex: Int!
+    private let audioManager = AudioManager.shared
+    private var songs: [Song]!
+    private var songIndex: Int!
     
     var isPlaying: Bool {
         audioManager.isPlaying
@@ -22,14 +22,14 @@ class PlayerViewModel {
         }
     }
     
-    var songModel: PlayerViewSongModel! {
+    private var songModel: PlayerViewSongModel! {
         didSet {
             songModelChanged(songModel)
         }
     }
     
     var timePointChanged: ((Float) -> Void)!
-    var timePoint: Float! {
+    private var timePoint: Float! {
         didSet {
             timePointChanged(timePoint)
         }
@@ -42,7 +42,7 @@ class PlayerViewModel {
     }
     
     var isTimeSeeking = false
-    var isFavourite: Bool!
+    private var isFavourite: Bool!
 }
 
 // MARK: - Public func
