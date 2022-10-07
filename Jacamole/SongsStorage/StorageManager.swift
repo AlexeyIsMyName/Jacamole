@@ -13,6 +13,7 @@ class StorageManager {
     enum Groups: String {
         case favourite = "Favourite Songs"
         case previouslyPlayed = "Previously Played Songs"
+        case searchedSongs = "Searched Songs"
     }
     
     static let shared = StorageManager()
@@ -66,6 +67,10 @@ class StorageManager {
         return getAllSongGroups()[Groups.favourite.rawValue] ?? []
     }
     
+    func getSearchedSongs() -> [Song] {
+        return getAllSongGroups()[Groups.searchedSongs.rawValue] ?? []
+    }
+    
     func getAllSongGroups() -> [String: [Song]] {
         var songGroups = [String: [Song]]()
         
@@ -93,11 +98,39 @@ class StorageManager {
     }
     
     func isFavourite(songID: String) -> Bool {
-        if getFavoriteSongs().first(where: { $0.id == songID }) != nil {
-            return true
-        } else {
-            return false
+        
+        let fetchRequest: NSFetchRequest<SongGroupEntity> = SongGroupEntity.fetchRequest()
+        
+        let groupPredicate = NSPredicate(
+            format: "title = %@", StorageManager.Groups.favourite.rawValue
+        )
+
+        let songIDPredicate = NSPredicate(
+            format: "SUBQUERY(" +
+                "songs, " +
+                "$song, " +
+                "$song.id ==[cd] \"\(songID)\"" +
+                ").@count > 0"
+        )
+        
+        fetchRequest.predicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: [
+                groupPredicate,
+                songIDPredicate
+            ]
+        )
+        
+        do {
+            let songGroupEntities = try context.fetch(fetchRequest)
+            
+            if !songGroupEntities.isEmpty {
+                return true
+            }
+        } catch {
+            print("ERROR with the fetching of Request", error.localizedDescription)
         }
+        
+        return false
     }
     
     func save(_ song: Song, in group: StorageManager.Groups) {

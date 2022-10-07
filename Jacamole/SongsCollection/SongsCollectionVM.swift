@@ -50,9 +50,11 @@ private extension SongsCollectionViewModel {
         let songGroups = StorageManager.shared.getAllSongGroups()
         
         songGroups.forEach { title, songs in
-            self.songsVM.append(
-                [title: songs]
-            )
+            if title != StorageManager.Groups.searchedSongs.rawValue {
+                self.songsVM.append(
+                    [title: songs]
+                )
+            }
         }
     }
 }
