@@ -11,6 +11,12 @@ import AVFoundation
 class AudioManager {
     static let shared = AudioManager()
     
+    private var songs: [Song]!
+    
+    var currentSong: Song {
+        return songs[currentItemIndex]
+    }
+    
     var volume: Float = 0.5 {
         didSet {
             player.volume = volume
@@ -25,7 +31,7 @@ class AudioManager {
         }
     }
     
-    var newSongHandler: ((String, Float, Int) -> Void)! {
+    var newSongHandler: ((PlayerViewSongModel) -> Void)! {
         didSet {
             providePlayerData()
         }
@@ -62,11 +68,16 @@ class AudioManager {
         }
     }
     
-    func setupPlayer(with songs: [Song], startFrom songNumber: Int) {
+    func isFavorite(_ songID: String) -> Bool {
+        return StorageManager.shared.isFavourite(songID: songID)
+    }
+    
+    func setup(with songs: [Song], startFrom songNumber: Int) {
         let urls = songs.compactMap() { URL(string: $0.audio) }
         let assets = urls.map() { AVAsset(url: $0) }
         playerItems = assets.map() { AVPlayerItem(asset: $0) }
         currentItemIndex = songNumber
+        self.songs = songs
         
         if let playerItems = playerItems {
             player = AVPlayer(playerItem: playerItems[currentItemIndex])
@@ -122,6 +133,15 @@ class AudioManager {
         let seconds = floor(((songDuration / 60) - minutes) * 60) / 100
         let total = minutes + seconds
         
-        newSongHandler(String(format: "%.2f", total), Float(songDuration), currentItemIndex)
+        let playerViewSongModel = PlayerViewSongModel(
+            stringDuration: String(format: "%.2f", total),
+            floatDuration: Float(songDuration),
+            posterImageURL: songs[currentItemIndex].image,
+            title: songs[currentItemIndex].name,
+            artist: songs[currentItemIndex].artistName,
+            isFavourite: StorageManager.shared.isFavourite(songID: songs[currentItemIndex].id)
+        )
+        
+        newSongHandler(playerViewSongModel)
     }
 }

@@ -174,7 +174,8 @@ extension SongsMainViewController: UICollectionViewDelegate {
         
         if let songs = items as? [Song] {
             let playerVM = PlayerViewModel()
-            playerVM.setSongs(songs, startIndex: indexPath.row)
+//            playerVM.setSongs(songs, startIndex: indexPath.row)
+            AudioManager.shared.setup(with: songs, startFrom: indexPath.row)
             let playerVC = PlayerViewController(viewModel: playerVM)
             playerVC.modalPresentationStyle = .pageSheet
             present(playerVC, animated: true)
