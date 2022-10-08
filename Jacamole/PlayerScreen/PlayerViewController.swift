@@ -63,6 +63,17 @@ class PlayerViewController: UIViewController {
             self.songDuartionSlider.maximumValue = songModel.floatDuration
             self.songTimeTitle.text = songModel.stringDuration
             self.posterImage.load(urlAdress: songModel.posterImageURL)
+            
+            UIView.animate(withDuration: 0.1) { [weak self] in
+                guard let self = self else { return }
+                self.posterImage.alpha = 0.3
+            }
+            
+            UIView.animate(withDuration: 0.2, delay: 0.1) { [weak self] in
+                guard let self = self else { return }
+                self.posterImage.alpha = 1
+            }
+            
             self.songTitle.text = songModel.title
             self.artistTitle.text = songModel.artist
             self.setupHeartButton(with: songModel.isFavourite)
