@@ -3,45 +3,38 @@ import Foundation
 class SongsListViewModel {
     var viewModelChanged: (() -> Void)?
     
-    private(set) var songsVM = [SongListItemViewModel]() {
+    private(set) var songsVM = [Song]() {
         didSet {
             self.viewModelChanged?()
         }
     }
     
-    private var filteredSongs = [SongListItemViewModel]()
-    
     private let songsAPIClient: SongsAPIClient
     
-    init(songsAPIClient: SongsAPIClient) {
+    init(
+        songsAPIClient: SongsAPIClient,
+        songsVM: [Song] = [Song]()
+    ) {
         self.songsAPIClient = songsAPIClient
-        self.loadSongs()
+        self.songsVM = songsVM
     }
     
-}
-
-private extension SongsListViewModel {
+    func updateSongs(_ songs: [Song]) {
+        self.songsVM = songs
+    }
     
-    /*
-    func loadSongs() {
-        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
+    func seachSongs(by query: String) {
+        self.songsAPIClient.searchSongs(query: query) {
             [weak self] songs in
-            guard let self = self else { return }
-            
-            self.songsVM = songs.map { SongListItemViewModel(song: $0) }
+            self?.songsVM = songs
         }
     }
-     */
     
-    func loadSongs() {
-        self.songsVM = StorageManager.shared.getFavoriteSongs().map { SongListItemViewModel(song: $0) }
+    var heartHandler: (_ song: Song) -> Void {
+        return { [weak self] song in
+            //            guard let self = self else { return }
+            StorageManager.shared.save(song: song, in: .favourite)
+        }
     }
     
-//    func filterContentForSearchText(_ searchText: String,
-//                                    category: SongListItemViewModel? = nil) {
-//      filteredSongs = songsVM.filter { (song: Song) -> Bool in
-//        return song.name.lowercased().contains(searchText.lowercased())
-//      }
-//    }
-//    
 }

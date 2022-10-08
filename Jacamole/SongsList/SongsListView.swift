@@ -2,6 +2,7 @@ import UIKit
 
 class SongsListView: UIView {
     var songsLoadedAction: (() -> Void)?
+    var tapOnTabelCell: (() -> Void)?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -34,6 +35,8 @@ class SongsListView: UIView {
             self.tableView.reloadData()
             self.songsLoadedAction?()
         }
+        
+        print("self.viewModel.songsVM.count: \(self.viewModel.songsVM.count)")
     }
     
     required init?(coder: NSCoder) {
@@ -65,11 +68,21 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
     func makeSongCell(for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongListCell
         let vm = self.viewModel.songsVM[indexPath.row]
-        cell.songLabel.text = vm.songName
-        cell.artistLabel.text = vm.songArtist
-        cell.songImage.load(urlAdress: vm.imageAdress)
-        cell.heartHendler = vm.heartHandler
-        cell.songID = vm.songID
+
+//        cell.songLabel.text = vm.songName
+//        cell.artistLabel.text = vm.songArtist
+//        cell.songImage.load(urlAdress: vm.imageAdress)
+//        cell.heartHendler = vm.heartHandler
+//        cell.songID = vm.songID
+
+        cell.songLabel.text = vm.name
+        cell.artistLabel.text = vm.artistName
+        cell.songImage.load(urlAdress: vm.image)
+//        cell.heartHendler = vm.heartHandler
+
+        
+        
+        
         return cell
     }
     
@@ -81,26 +94,17 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
         self.viewModel.songsVM.count
     }
     
-    //Вывести в ячейках отфильтрованные данные по запросу
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//      if isFiltering {
-//        return filteredSongs.count
-//      }
-//
-//      return songs.count
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//      let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
-//      let song: Song
-//      if isFiltering {
-//        song = filteredSongs[indexPath.row]
-//      } else {
-//        song = songs[indexPath.row]
-//      }
-//      cell.textLabel?.text = song.name
-//      cell.detailTextLabel?.text = song.category.rawValue
-//      return cell
-//    }
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let song = viewModel.songsVM[indexPath.row]
+        
+        tapOnTabelCell?()
+        print("I tap on this cell")
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastIndex = viewModel.songsVM.count - 1
+        if indexPath.row == lastIndex {
+            // api call and get next page
+        }
+    }
 }

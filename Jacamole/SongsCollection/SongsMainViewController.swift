@@ -9,7 +9,8 @@ import UIKit
 
 class SongsMainViewController: UIViewController {
     
-    var didTapOnCollectionViewSection: ((_ sectionIndex: Int, _ sectionTitle: String) -> Void)?
+    var didTapOnCollectionViewSection: ((_ sectionIndex: Int, _ sectionTitle: String, _ songs: [Song]) -> Void)?
+    var didTapOnGenreCell: ((_ genreTitle: String) -> Void)?
     
     private lazy var collectionView: UICollectionView = {
         let viewLayout = setupCompositionalLayout()
@@ -19,12 +20,6 @@ class SongsMainViewController: UIViewController {
     }()
     
     private var viewModel: SongsCollectionViewModel!
-
-//    private var sectionTitles = [
-//        "Top 10",
-//        "Recently Played",
-//        "Genre"
-//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +120,6 @@ extension SongsMainViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel.songsVM.count
-//        self.sectionTitles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -138,23 +132,20 @@ extension SongsMainViewController: UICollectionViewDataSource {
         
         if let _ = section[title] as? [Song] {
             headerView.configure(with: title, isTappable: true)
+            headerView.tag = indexPath.section
+            headerView.isUserInteractionEnabled = true
+            headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapAtHeader(_:))))
         } else {
             headerView.configure(with: title)
         }
         
-//        let sectionTitle = self.sectionTitles[indexPath.section]
-//        headerView.tag = indexPath.section
-//        headerView.configure(with: sectionTitle)
-//        headerView.isUserInteractionEnabled = true
-//        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapAtHeader(_:))))
         return headerView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = viewModel.songsVM[section]
+        
         return section.values.first?.count ?? 0
-//        3
-
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -177,40 +168,48 @@ extension SongsMainViewController: UICollectionViewDataSource {
             cell.title.text = genre.rawValue.uppercased()
             cell.posterImage.image = UIImage(named: genre.rawValue)
         }
-        
-//        let title = "test"
-//        cell.configure(with: title)
         return cell
     }
 }
 
 // MARK: UICollectionViewDelegate
 extension SongsMainViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let section = viewModel.songsVM[indexPath.section]
         let items = section.values.first!
         
         if let songs = items as? [Song] {
+            
             AudioManager.shared.setup(with: songs, startFrom: indexPath.row)
             
             let playerVM = PlayerViewModel()
             let playerVC = PlayerViewController(viewModel: playerVM)
             playerVC.modalPresentationStyle = .pageSheet
             present(playerVC, animated: true)
+            
+            
+//            let playerVC = PlayerViewController()
+//            playerVC.setSongs(songs, startIndex: indexPath.row)
+//            playerVC.modalPresentationStyle = .pageSheet
+//            self.present(playerVC, animated: true)
+            
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
+            didTapOnGenreCell?(genre.rawValue)
             print(genre.rawValue)
         }
     }
 }
 
-//private extension SongsMainViewController {
-//    
-//    @objc func didTapAtHeader(_ tapGR: UITapGestureRecognizer) {
-//        let tappedSection = tapGR.view?.tag ?? 0
-//        let sectionTitle = self.sectionTitles[tappedSection]
-//        self.didTapOnCollectionViewSection?(tappedSection, sectionTitle)
-//    }
-//    
-//}
+private extension SongsMainViewController {
+    
+    @objc func didTapAtHeader(_ tapGR: UITapGestureRecognizer) {
+        let tappedSection = tapGR.view?.tag ?? 0
+        guard let sectionTitle = self.viewModel.songsVM[tappedSection].first?.key,
+              let popularSongs = self.viewModel.songsVM[tappedSection][sectionTitle] as? [Song] else { return }
+        
+        self.didTapOnCollectionViewSection?(tappedSection, sectionTitle, popularSongs)
+    }
+
+}

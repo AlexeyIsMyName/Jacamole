@@ -1,24 +1,34 @@
 import UIKit
 
+
 class SongsListViewController: UIViewController {
     private let iNeedSearchBar: Bool
     private let iNeedCloseButton: Bool
     private let navigationTitle: String
     
     private lazy var songsListView = SongsListView(
-        viewModel: SongsListViewModel(songsAPIClient: SongsAPIClient())
+        viewModel: SongsListViewModel(
+            songsAPIClient: SongsAPIClient(),
+            songsVM: self.songsVM
+        )
     )
     
     private let searchController = UISearchController(searchResultsController: nil)
     
     var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
+        searchController.searchBar.text?.isEmpty ?? true
     }
     
     var isFiltering: Bool {
-      return searchController.isActive && !isSearchBarEmpty
+        searchController.isActive && !isSearchBarEmpty
     }
-
+    
+    var songsVM: [Song] {
+        didSet {
+            self.songsListView.viewModel.updateSongs(self.songsVM)
+        }
+    }
+    
     private lazy var closeButton: UIBarButtonItem = {
         let config = UIImage.SymbolConfiguration(pointSize: 17.0,
                                                  weight: .light,
@@ -34,13 +44,19 @@ class SongsListViewController: UIViewController {
         return button
     }()
     
-    private let artistAPIClient = ArtistAPIClient()
-    private let albomAPIClient = AlbomAPIClient()
+    private var pendingRequestWorkItem: DispatchWorkItem?
     
-    init(navigationTitle: String, iNeedSearchBar: Bool, iNeedCloseButton: Bool) {
+    init(
+        navigationTitle: String,
+        iNeedSearchBar: Bool,
+        iNeedCloseButton: Bool,
+        songsVM: [Song] = [Song]()
+    ) {
         self.navigationTitle = navigationTitle
         self.iNeedSearchBar = iNeedSearchBar
         self.iNeedCloseButton = iNeedCloseButton
+        self.songsVM = songsVM
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,31 +78,33 @@ class SongsListViewController: UIViewController {
             self.navigationItem.searchController = self.searchController
             self.searchController.searchBar.becomeFirstResponder()
         }
-
-//        self.artistAPIClient.loadArtistSongs(artistID: "463402") {
-//            [weak self] tracks in
-//            print("________________tracks: \(tracks)______________")
-//        }
-//
-//        self.albomAPIClient.loadAlbomSongs(albomID: "144705") {
-//            [weak self] alboms in
-//            print("_________alboms: \(alboms)______________")
-//        }
         
+        self.songsListView.tapOnTabelCell = {
+//            [weak self] song in
+//            guard let self = self else { return }
+//            
+//            let playerVC = PlayerViewController()
+//            playerVC.setSongs(songs, startIndex: indexPath.row)
+//            playerVC.modalPresentationStyle = .pageSheet
+//            self.present(playerVC, animated: true)
+        }
+        
+        self.getNeedSomeAttributes()
     }
     
     private func makeSearchBar() {
         navigationItem.title = navigationTitle
         definesPresentationContext = true
-        searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Song"
         searchController.searchBar.tintColor = UIColor(named: "TextColor") ?? .black
         searchController.searchBar.searchTextField.font = UIFont(name: "Abel-Regular", size: 18.0)
+        
+        self.searchController.searchBar.delegate = self
     }
     
     private func getNeedSomeAttributes() {
-        navigationItem.searchController = iNeedSearchBar ? nil : searchController
+        navigationItem.searchController = iNeedSearchBar ? searchController : nil
         navigationItem.leftBarButtonItem = iNeedCloseButton ? closeButton : nil
     }
     
@@ -95,10 +113,22 @@ class SongsListViewController: UIViewController {
     }
 }
 
-extension SongsListViewController: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-//      let searchBar = searchController.searchBar
-      
-  }
-    
+extension SongsListViewController: UISearchBarDelegate {
+   
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let query = searchBar.text else { return }
+        // Cancel the currently pending item
+        self.pendingRequestWorkItem?.cancel()
+
+        // Wrap our request in a work item
+        let requestWorkItem = DispatchWorkItem { [weak self] in
+            self?.songsListView.viewModel.seachSongs(by: query)
+        }
+
+        // Save the new work item and execute it after 250 ms
+        self.pendingRequestWorkItem = requestWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250),
+                                      execute: requestWorkItem)
+    }
+
 }
