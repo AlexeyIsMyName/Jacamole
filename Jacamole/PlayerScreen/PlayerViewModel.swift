@@ -9,8 +9,6 @@
 // MARK: - Properties
 class PlayerViewModel {
     private var audioManager: AudioManager!
-    private var songs: [Song]!
-    private var songIndex: Int!
     
     var isPlaying: Bool {
         audioManager.isPlaying
@@ -18,7 +16,7 @@ class PlayerViewModel {
     
     var songModelChanged: ((PlayerViewSongModel) -> Void)! {
         didSet {
-            setupAudioManager(with: songs, and: songIndex)
+            setupAudioManager()
         }
     }
     
@@ -52,10 +50,6 @@ class PlayerViewModel {
 
 // MARK: - Public func
 extension PlayerViewModel {
-    func setSongs(_ songs: [Song], startIndex: Int) {
-        self.songs = songs
-        self.songIndex = startIndex
-    }
     
     func backward() {
         audioManager.backward()
@@ -74,7 +68,7 @@ extension PlayerViewModel {
     }
     
     func heartButtonPressed() -> Bool {
-        let song = songs[songIndex]
+        let song = audioManager.currentSong
         if StorageManager.shared.isFavourite(songID: song.id) {
             StorageManager.shared.delete(song, from: .favourite)
             return false
@@ -87,9 +81,7 @@ extension PlayerViewModel {
 
 // MARK: - Private func
 private extension PlayerViewModel {
-    private func setupAudioManager(with songs: [Song], and startIndex: Int) {
-        audioManager.setupPlayer(with: songs, startFrom: startIndex)
-
+    private func setupAudioManager() {
         audioManager.durationHandler = { [weak self] time in
             guard let self = self else { return }
             if !self.isTimeSeeking {
@@ -97,22 +89,9 @@ private extension PlayerViewModel {
             }
         }
 
-        audioManager.newSongHandler = { [weak self] stringDuration, duration, songIndex in
+        audioManager.newSongHandler = { [weak self] playerViewSongModel in
             guard let self = self else { return }
-            
-            self.songIndex = songIndex
-            
-            self.songModel = PlayerViewSongModel(
-                stringDuration: stringDuration,
-                floatDuration: duration,
-                posterImageURL: self.songs[songIndex].image,
-                title: self.songs[songIndex].name,
-                artist: self.songs[songIndex].artistName,
-                isFavourite: self.isFavorite(self.songs[songIndex].id))
+            self.songModel = playerViewSongModel
         }
-    }
-    
-    private func isFavorite(_ songID: String) -> Bool {
-        return StorageManager.shared.isFavourite(songID: songID)
     }
 }
