@@ -2,7 +2,7 @@ import UIKit
 
 class SongsListView: UIView {
     var songsLoadedAction: (() -> Void)?
-    var tapOnTabelCell: (() -> Void)?
+    var showPlayerVC: ((_ vc: UIViewController) -> Void)?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -69,20 +69,11 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath) as! SongListCell
         let vm = self.viewModel.songsVM[indexPath.row]
 
-//        cell.songLabel.text = vm.songName
-//        cell.artistLabel.text = vm.songArtist
-//        cell.songImage.load(urlAdress: vm.imageAdress)
-//        cell.heartHendler = vm.heartHandler
-//        cell.songID = vm.songID
-
         cell.songLabel.text = vm.name
         cell.artistLabel.text = vm.artistName
         cell.songImage.load(urlAdress: vm.image)
-//        cell.heartHendler = vm.heartHandler
+        cell.songID = vm.id
 
-        
-        
-        
         return cell
     }
     
@@ -95,16 +86,17 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let song = viewModel.songsVM[indexPath.row]
+        let playerVC = PlayerViewController()
+        playerVC.setSongs(viewModel.songsVM, startIndex: indexPath.row)
+        playerVC.modalPresentationStyle = .pageSheet
         
-        tapOnTabelCell?()
-        print("I tap on this cell")
+        showPlayerVC?(playerVC)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastIndex = viewModel.songsVM.count - 1
         if indexPath.row == lastIndex {
-            // api call and get next page
+            self.viewModel.loadNextSongs()
         }
     }
 }

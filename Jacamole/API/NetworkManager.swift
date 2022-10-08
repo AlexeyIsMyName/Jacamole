@@ -36,8 +36,6 @@ class NetworkManager {
         )
         
         let url = components.url!
-        print("___url: \(url)")
-//        print("clientId: \(apiConstructor.clientId)")
         self.request(for: url, for: dataModel, completion: completion)
     }
     

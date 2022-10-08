@@ -32,8 +32,19 @@ class SongsListViewModel {
     
     var heartHandler: (_ song: Song) -> Void {
         return { [weak self] song in
-            //            guard let self = self else { return }
-            StorageManager.shared.save(song: song, in: .favourite)
+            StorageManager.shared.save(song, in: .favourite)
+        }
+    }
+    
+    func clearSongs() {
+      self.songsVM.removeAll()
+     }
+    
+    func loadNextSongs() {
+        self.songsAPIClient.loadNextTenSongs {
+            songs in
+            self.songsVM += songs
+            print("_____________________---songsVM: \(self.songsVM)")
         }
     }
     

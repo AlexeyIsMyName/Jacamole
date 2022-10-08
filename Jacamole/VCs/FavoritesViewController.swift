@@ -19,7 +19,7 @@ class FavoritesViewController: SongsListViewController {
     
     override init(navigationTitle: String, iNeedSearchBar: Bool, iNeedCloseButton: Bool, songsVM: [Song] = [Song]()) {
         super.init(navigationTitle: navigationTitle, iNeedSearchBar: iNeedSearchBar, iNeedCloseButton: iNeedCloseButton, songsVM: songsVM)
-        self.viewModel.songsVM = songsVM
+        self.songsVM = self.viewModel.songsVM
         
         self.viewModel.viewModelChanged = {
             [weak self] in
@@ -33,6 +33,11 @@ class FavoritesViewController: SongsListViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let query = searchBar.text, !query.isEmpty else {
             self.songsVM = self.viewModel.songsVM
@@ -41,6 +46,4 @@ class FavoritesViewController: SongsListViewController {
        
         self.viewModel.filterContentForSearchText(query)
     }
-    
-    
 }

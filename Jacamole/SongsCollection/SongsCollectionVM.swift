@@ -35,7 +35,6 @@ private extension SongsCollectionViewModel {
             [weak self] songs in
             guard let self = self else { return }
             
-//            print("______________songs: \(songs)")
             self.songsVM.append(
                 ["Popular Music": songs]
             )

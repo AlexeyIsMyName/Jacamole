@@ -73,20 +73,17 @@ class SongsListViewController: UIViewController {
         
         self.songsListView.songsLoadedAction = {
             [weak self] in
-            guard let self = self else { return }
+            guard let self = self, self.iNeedSearchBar else { return }
             self.getNeedSomeAttributes()
             self.navigationItem.searchController = self.searchController
             self.searchController.searchBar.becomeFirstResponder()
         }
         
-        self.songsListView.tapOnTabelCell = {
-//            [weak self] song in
-//            guard let self = self else { return }
-//            
-//            let playerVC = PlayerViewController()
-//            playerVC.setSongs(songs, startIndex: indexPath.row)
-//            playerVC.modalPresentationStyle = .pageSheet
-//            self.present(playerVC, animated: true)
+        self.songsListView.showPlayerVC = {
+            [weak self] playerVC in
+            guard let self = self else { return }
+           
+            self.present(playerVC, animated: true)
         }
         
         self.getNeedSomeAttributes()
@@ -116,7 +113,10 @@ class SongsListViewController: UIViewController {
 extension SongsListViewController: UISearchBarDelegate {
    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let query = searchBar.text else { return }
+        guard let query = searchBar.text, !query.isEmpty else {
+           self.songsListView.viewModel.clearSongs()
+           return
+          }
         // Cancel the currently pending item
         self.pendingRequestWorkItem?.cancel()
 

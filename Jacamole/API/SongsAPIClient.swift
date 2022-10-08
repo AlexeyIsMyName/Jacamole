@@ -12,6 +12,7 @@ import Foundation
 
 class SongsAPIClient {
     private let networkManager = NetworkManager()
+    private var nextURL: URL?
     
     func loadPopularMonthSongs(tag: String, complition: @escaping ([Song]) -> Void) {
         let api = APIEndpoints.songs
@@ -26,6 +27,7 @@ class SongsAPIClient {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let songs):
+                    self.nextURL = URL(string: songs.headers.next)
                     complition(songs.results)
                 case .failure(let error):
                     print("loadPopularMonthSongs: \(error)")
@@ -55,14 +57,17 @@ class SongsAPIClient {
         }
     }
     
-    func loadNextTenSongs(url: String, complition: @escaping ([Song]) -> Void) {
-        
-        guard let url = URL(string: url) else { return }
+    func loadNextTenSongs(complition: @escaping ([Song]) -> Void) {
+        guard let url = self.nextURL else {
+            return
+        }
         
         networkManager.request(for: url, for: SongsAPIResult.self) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let songs):
+                    self.nextURL = URL(string: songs.headers.next)
+                    print("___self.nextURL: \(self.nextURL)")
                     complition(songs.results)
                 case .failure(let error):
                     print("loadSearchSongs: \(error)")

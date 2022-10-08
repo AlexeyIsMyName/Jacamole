@@ -29,15 +29,14 @@ private extension SongsMenuCoordinator {
             
             switch section {
             case 0:
-                self?.showPopularSongs(navigationTitle: sectionTitle, songsVM: songs)
+                self?.showPopularSongs(navigationTitle: sectionTitle)
             case 1:
                 break
             case 2:
-                break
+                self?.showFavoriteSongs(navigationTitle: sectionTitle)
             default:
                 break
             }
-//            self?.showSongsList(section: section, sectionTitle: sectionTitle, songsVM: songs)
         }
         
         songsMenuVC.didTapOnGenreCell = {
@@ -48,29 +47,18 @@ private extension SongsMenuCoordinator {
         navigationController.pushViewController(songsMenuVC, animated: false)
     }
     
-    func showPopularSongs(navigationTitle: String, songsVM: [Song]) {
-        let vc = PopularMusicViewController(navigationTitle: navigationTitle, songsVM: songsVM)
+    func showPopularSongs(navigationTitle: String) {
+        let vc = PopularMusicViewController(navigationTitle: navigationTitle)
         self.navigationController.pushViewController(vc, animated: true)
     }
-    
-//    func showSongsList(section: Int, sectionTitle: String, songsVM: [Song]) {
-//        let listItemsVMs = songsVM.map { SongListItemViewModel(song: $0) }
-//        let vc = SongsListViewController(navigationTitle: sectionTitle, iNeedSearchBar: false, iNeedCloseButton: true, songsVM: listItemsVMs)
-//        self.navigationController.pushViewController(vc, animated: true)
-//    }
     
     func showSongsOnGenre(genreTitle: String) {
         let vc = SongsByGenresViewController(genre: genreTitle)
         self.navigationController.pushViewController(vc, animated: true)
-//        let apiClient = SongsAPIClient()
-//        let listItemsVMs = songsVM.map { SongListItemViewModel(song: $0) }
-//        let vc = SongsListViewController(navigationTitle: genreTitle, iNeedSearchBar: true, iNeedCloseButton: true, songsVM: listItemsVMs)
-//        self.navigationController.pushViewController(vc, animated: true)
     }
     
-    func showFavoriteSongs(navigationTitle: String, songsVM: [Song]) {
-        let vc = FavoritesViewController(navigationTitle: navigationTitle, iNeedSearchBar: false, iNeedCloseButton: true, songsVM: songsVM)
-//        let vc = PopularMusicViewController(songsVM: listItemsVMs)
+    func showFavoriteSongs(navigationTitle: String) {
+        let vc = FavoritesViewController(navigationTitle: navigationTitle, iNeedSearchBar: false, iNeedCloseButton: true)
         self.navigationController.pushViewController(vc, animated: true)
     }
     
