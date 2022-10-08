@@ -94,7 +94,8 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         AudioManager.shared.setup(with: viewModel.songsVM, startFrom: indexPath.row)
-        let playerVC = PlayerViewController(viewModel: PlayerViewModel())
+        
+        let playerVC = PlayerViewController()
         playerVC.modalPresentationStyle = .pageSheet
         showPlayerVC?(playerVC)
     }

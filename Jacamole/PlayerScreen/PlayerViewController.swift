@@ -80,8 +80,8 @@ class PlayerViewController: UIViewController {
         }
     }
     
-    init(viewModel: PlayerViewModel) {
-        self.viewModel = viewModel
+    init() {
+        self.viewModel = PlayerViewModel()
         super.init(nibName: nil, bundle: nil)
     }
     

@@ -180,19 +180,11 @@ extension SongsMainViewController: UICollectionViewDelegate {
         let items = section.values.first!
         
         if let songs = items as? [Song] {
-            
             AudioManager.shared.setup(with: songs, startFrom: indexPath.row)
             
-            let playerVM = PlayerViewModel()
-            let playerVC = PlayerViewController(viewModel: playerVM)
+            let playerVC = PlayerViewController()
             playerVC.modalPresentationStyle = .pageSheet
             present(playerVC, animated: true)
-            
-            
-//            let playerVC = PlayerViewController()
-//            playerVC.setSongs(songs, startIndex: indexPath.row)
-//            playerVC.modalPresentationStyle = .pageSheet
-//            self.present(playerVC, animated: true)
             
         } else if let genres = items as? [SongsCollectionGenres] {
             let genre = genres[indexPath.row]
