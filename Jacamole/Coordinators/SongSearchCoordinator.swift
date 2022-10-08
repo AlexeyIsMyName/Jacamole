@@ -18,7 +18,7 @@ class SongSearchCoordinator: Coordinator {
 private extension SongSearchCoordinator {
     
     func showSongSearch() {
-        let songSearchVC = SongsListViewController(navigationTitle: "Search")
+        let songSearchVC = SongsListViewController(navigationTitle: "Search", iNeedSearchBar: true, iNeedCloseButton: false)
         navigationController.pushViewController(songSearchVC, animated: false)
     }
 }

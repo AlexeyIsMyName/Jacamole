@@ -17,7 +17,7 @@ class AlbomAPIClient {
             case .success(let alboms):
                 complition(alboms.results)
             case .failure(let error):
-                print("loadPopularMonthSongs: \(error)")
+                print("loadAlbomSongs: \(error)")
                 complition([])
             }
         }

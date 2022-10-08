@@ -3,7 +3,7 @@ import Foundation
 class SongsListViewModel {
     var viewModelChanged: (() -> Void)?
     
-    private(set) var songsVM = [SongListItemViewModel]() {
+    private(set) var songsVM = [Song]() {
         didSet {
             self.viewModelChanged?()
         }
@@ -11,30 +11,41 @@ class SongsListViewModel {
     
     private let songsAPIClient: SongsAPIClient
     
-    init(songsAPIClient: SongsAPIClient) {
+    init(
+        songsAPIClient: SongsAPIClient,
+        songsVM: [Song] = [Song]()
+    ) {
         self.songsAPIClient = songsAPIClient
-        
-        self.loadSongs()
+        self.songsVM = songsVM
     }
     
-}
-
-private extension SongsListViewModel {
+    func updateSongs(_ songs: [Song]) {
+        self.songsVM = songs
+    }
     
-    /*
-    func loadSongs() {
-        self.songsAPIClient.loadPopularMonthSongs(tag: "") {
+    func seachSongs(by query: String) {
+        self.songsAPIClient.searchSongs(query: query) {
             [weak self] songs in
-            guard let self = self else { return }
-            
-            print("______________songs: \(songs)")
-            self.songsVM = songs.map { SongListItemViewModel(song: $0) }
+            self?.songsVM = songs
         }
     }
-     */
     
-    func loadSongs() {
-        self.songsVM = StorageManager.shared.getFavoriteSongs().map { SongListItemViewModel(song: $0) }
+    var heartHandler: (_ song: Song) -> Void {
+        return { [weak self] song in
+            StorageManager.shared.save(song, in: .favourite)
+        }
+    }
+    
+    func clearSongs() {
+      self.songsVM.removeAll()
+     }
+    
+    func loadNextSongs() {
+        self.songsAPIClient.loadNextTenSongs {
+            songs in
+            self.songsVM += songs
+            print("_____________________---songsVM: \(self.songsVM)")
+        }
     }
     
 }
