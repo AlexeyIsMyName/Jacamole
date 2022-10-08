@@ -5,7 +5,6 @@ class AppCoordinator: Coordinator {
     private let tabBarController = AppTabBarController()
     
     // MARK: - API
-    
     override var rootViewController: UIViewController? {
         tabBarController
     }
@@ -39,4 +38,25 @@ private extension AppCoordinator {
         tabBarController.viewControllers = tabs.map({ $0.rootViewController! })
         childCoordinators.append(contentsOf: tabs)
     }
+    
+//    func setupTab() {
+//        guard var tabViewControllers = tabBarController.viewControllers else { return }
+//
+//        let songsMenuCoordinator = SongsMenuCoordinator()
+//        songsMenuCoordinator.start()
+//
+//        tabViewControllers[1] = songsMenuCoordinator.rootViewController!
+//
+//        childCoordinators.append(songsMenuCoordinator)
+
+//        // Remove unnecessary coordinator
+//        if lkCoordinator is LKCoordinator {
+//            if let indx = childCoordinators.firstIndex(where: { $0 is LKAuthIntroCoordinator }) { popCoordinator(childCoordinators[indx]) }
+//        } else {
+//            if let indx = childCoordinators.firstIndex(where: { $0 is LKCoordinator }) { popCoordinator(childCoordinators[indx]) }
+//        }
+//
+//        tabBarController.viewControllers = tabViewControllers
+//    }
+
 }

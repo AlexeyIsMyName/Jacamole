@@ -24,6 +24,17 @@ class AppTabBarController: UITabBarController {
         return navController
     }
     
+//    private func setupVCs() {
+//        viewControllers = [
+//            createNavController(for: SongsListViewController(),
+//                                image: UIImage(systemName: "heart")!),
+//            createNavController(for: SongsCollectionViewController(),
+//                                image: UIImage(named: "Music")!),
+//            createNavController(for: SongsListViewController(),
+//                                image: UIImage(systemName: "magnifyingglass")!)
+//        ]
+//    }
+    
     private func setupTB() {
         UITabBar.appearance().barTintColor = UIColor(named: "ButtonColor")
         tabBar.backgroundColor = UIColor(named: "BackgroungColor")

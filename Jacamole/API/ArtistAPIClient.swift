@@ -17,7 +17,7 @@ class ArtistAPIClient {
             case .success(let artist):
                 complition(artist.results)
             case .failure(let error):
-                print("loadArtistSongs: \(error)")
+                print("loadPopularMonthSongs: \(error)")
                 complition([])
             }
         }

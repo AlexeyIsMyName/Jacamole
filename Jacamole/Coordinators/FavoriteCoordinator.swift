@@ -18,9 +18,8 @@ class FavoriteCoordinator: Coordinator {
 private extension FavoriteCoordinator {
     
     func showFavoriteSongs() {
-        let favoriteVC = FavoritesViewController(navigationTitle: "Favorite Title", iNeedSearchBar: true, iNeedCloseButton: false)
+        let favoriteVC = SongsListViewController(navigationTitle: "Favorite Title")
         navigationController.pushViewController(favoriteVC, animated: false)
     }
-    
 }
 

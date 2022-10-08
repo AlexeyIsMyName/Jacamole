@@ -168,7 +168,7 @@ class StorageManager {
         let tagsEntity = TagsEntity(context: context)
         tagsEntity.parentMusicInfo = musicInfoEntity
         
-        song.musicinfo?.tags.genres.forEach { genre in
+        song.musicinfo.tags.genres.forEach { genre in
             let genreEntity = GenreEntity(context: context)
             genreEntity.genre = genre
             genreEntity.parentTag = tagsEntity

@@ -19,7 +19,7 @@ struct Song: Decodable {
     let audio: String
     let audiodownload: String
     let image: String
-    let musicinfo: Musicinfo?
+    let musicinfo: Musicinfo
 }
 
 struct Headers: Decodable {

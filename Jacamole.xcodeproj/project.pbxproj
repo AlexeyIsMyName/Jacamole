@@ -26,15 +26,10 @@
 		776A37C328E47BE7005DAF1C /* SongsMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C228E47BE7005DAF1C /* SongsMenuCoordinator.swift */; };
 		776A37C528E47D95005DAF1C /* SongSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C428E47D95005DAF1C /* SongSearchCoordinator.swift */; };
 		776A37C728E4824A005DAF1C /* SongsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C628E4824A005DAF1C /* SongsListViewController.swift */; };
+		776A37CA28E5E7CF005DAF1C /* SongListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37C928E5E7CE005DAF1C /* SongListItemViewModel.swift */; };
 		776A37CD28E60482005DAF1C /* ExtensionUIImageViewLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37CC28E60482005DAF1C /* ExtensionUIImageViewLoadView.swift */; };
 		776A37CF28E621F5005DAF1C /* SongsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37CE28E621F5005DAF1C /* SongsCollectionReusableView.swift */; };
 		776A37D128E62248005DAF1C /* SongCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776A37D028E62248005DAF1C /* SongCollectionViewCell.swift */; };
-		77D71BDB28EF0BE500613B15 /* PopularMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BDA28EF0BE500613B15 /* PopularMusicViewController.swift */; };
-		77D71BDD28EF0D6B00613B15 /* UIViewController+addChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BDC28EF0D6B00613B15 /* UIViewController+addChild.swift */; };
-		77D71BDF28EF0E0800613B15 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BDE28EF0E0800613B15 /* UIView+Constraints.swift */; };
-		77D71BE528EF134A00613B15 /* SongsByGenresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BE428EF134A00613B15 /* SongsByGenresViewController.swift */; };
-		77D71BE728EF140700613B15 /* SongsByGenresVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BE628EF140700613B15 /* SongsByGenresVM.swift */; };
-		77D71BE928F0245A00613B15 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D71BE828F0245A00613B15 /* FavoritesViewController.swift */; };
 		E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A028E4BED6003033F4 /* PlayerViewController.swift */; };
 		E72C62A328E5E614003033F4 /* SongsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A228E5E614003033F4 /* SongsMainViewController.swift */; };
 		E72C62A728E5F84A003033F4 /* SongsCollectionGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72C62A628E5F84A003033F4 /* SongsCollectionGenres.swift */; };
@@ -73,15 +68,10 @@
 		776A37C228E47BE7005DAF1C /* SongsMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsMenuCoordinator.swift; sourceTree = "<group>"; };
 		776A37C428E47D95005DAF1C /* SongSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearchCoordinator.swift; sourceTree = "<group>"; };
 		776A37C628E4824A005DAF1C /* SongsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsListViewController.swift; sourceTree = "<group>"; };
+		776A37C928E5E7CE005DAF1C /* SongListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListItemViewModel.swift; sourceTree = "<group>"; };
 		776A37CC28E60482005DAF1C /* ExtensionUIImageViewLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIImageViewLoadView.swift; sourceTree = "<group>"; };
 		776A37CE28E621F5005DAF1C /* SongsCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongsCollectionReusableView.swift; sourceTree = "<group>"; };
 		776A37D028E62248005DAF1C /* SongCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCollectionViewCell.swift; sourceTree = "<group>"; };
-		77D71BDA28EF0BE500613B15 /* PopularMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMusicViewController.swift; sourceTree = "<group>"; };
-		77D71BDC28EF0D6B00613B15 /* UIViewController+addChild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addChild.swift"; sourceTree = "<group>"; };
-		77D71BDE28EF0E0800613B15 /* UIView+Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
-		77D71BE428EF134A00613B15 /* SongsByGenresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsByGenresViewController.swift; sourceTree = "<group>"; };
-		77D71BE628EF140700613B15 /* SongsByGenresVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsByGenresVM.swift; sourceTree = "<group>"; };
-		77D71BE828F0245A00613B15 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		E72C62A028E4BED6003033F4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		E72C62A228E5E614003033F4 /* SongsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsMainViewController.swift; sourceTree = "<group>"; };
 		E72C62A628E5F84A003033F4 /* SongsCollectionGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionGenres.swift; sourceTree = "<group>"; };
@@ -154,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				77568D8528DB430D00D0F6E5 /* SongListCell.swift */,
+				776A37C928E5E7CE005DAF1C /* SongListItemViewModel.swift */,
 			);
 			path = SongsListCell;
 			sourceTree = "<group>";
@@ -170,7 +161,6 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-
 		E76DCF2A28F0AEC7000182C6 /* PlayerScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,43 +170,6 @@
 				E76DCF2D28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift */,
 			);
 			path = PlayerScreen;
-
-		77D71BD928EF0BB800613B15 /* VCs */ = {
-			isa = PBXGroup;
-			children = (
-				77D71BE328EF132000613B15 /* SongsByGenresVC */,
-				77D71BE028EF0ECB00613B15 /* PopularMusicVC */,
-				77D71BE828F0245A00613B15 /* FavoritesViewController.swift */,
-			);
-			path = VCs;
-			sourceTree = "<group>";
-		};
-		77D71BE028EF0ECB00613B15 /* PopularMusicVC */ = {
-			isa = PBXGroup;
-			children = (
-				77D71BDA28EF0BE500613B15 /* PopularMusicViewController.swift */,
-			);
-			path = PopularMusicVC;
-			sourceTree = "<group>";
-		};
-		77D71BE328EF132000613B15 /* SongsByGenresVC */ = {
-			isa = PBXGroup;
-			children = (
-				77D71BE428EF134A00613B15 /* SongsByGenresViewController.swift */,
-				77D71BE628EF140700613B15 /* SongsByGenresVM.swift */,
-			);
-			path = SongsByGenresVC;
-			sourceTree = "<group>";
-		};
-		77D71BEA28F088BC00613B15 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				77D71BDE28EF0E0800613B15 /* UIView+Constraints.swift */,
-				77D71BDC28EF0D6B00613B15 /* UIViewController+addChild.swift */,
-			);
-			name = Extension;
-			path = Jacamole;
-
 			sourceTree = "<group>";
 		};
 		E774ADFE28E763B300E7F9C7 /* SongsCollection */ = {
@@ -225,8 +178,8 @@
 				776A37D028E62248005DAF1C /* SongCollectionViewCell.swift */,
 				E72C62A228E5E614003033F4 /* SongsMainViewController.swift */,
 				776A37CE28E621F5005DAF1C /* SongsCollectionReusableView.swift */,
-				E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */,
 				E72C62A628E5F84A003033F4 /* SongsCollectionGenres.swift */,
+				E774ADFF28E765FE00E7F9C7 /* SongsCollectionVM.swift */,
 			);
 			path = SongsCollection;
 			sourceTree = "<group>";
@@ -237,7 +190,6 @@
 				E75F06A028D93006006404D6 /* README.md */,
 				E75F069F28D92FB1006404D6 /* .gitignore */,
 				E7796EE528D92F0400D78A14 /* Jacamole */,
-				77D71BEA28F088BC00613B15 /* Extension */,
 				E7796EE428D92F0400D78A14 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -267,7 +219,6 @@
 				E7C985E128EDAC8C00A13F11 /* SongsStorage */,
 				E774ADFE28E763B300E7F9C7 /* SongsCollection */,
 				77568D8728DB47DE00D0F6E5 /* SongsList */,
-				77D71BD928EF0BB800613B15 /* VCs */,
 				77568D7D28DB213B00D0F6E5 /* Resourсes */,
 			);
 			path = Jacamole;
@@ -355,18 +306,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				776A37B728E455C3005DAF1C /* AlbomAPIClient.swift in Sources */,
+				776A37CA28E5E7CF005DAF1C /* SongListItemViewModel.swift in Sources */,
 				77568D8228DB2A5900D0F6E5 /* AppNavigationController.swift in Sources */,
-				77D71BDF28EF0E0800613B15 /* UIView+Constraints.swift in Sources */,
 				E72C62A728E5F84A003033F4 /* SongsCollectionGenres.swift in Sources */,
 				E72C62A328E5E614003033F4 /* SongsMainViewController.swift in Sources */,
 				77568D7C28DB1DAE00D0F6E5 /* NetworkManager.swift in Sources */,
-				77D71BDB28EF0BE500613B15 /* PopularMusicViewController.swift in Sources */,
 				776A37C528E47D95005DAF1C /* SongSearchCoordinator.swift in Sources */,
-				77D71BDD28EF0D6B00613B15 /* UIViewController+addChild.swift in Sources */,
 				E7796EE728D92F0400D78A14 /* AppDelegate.swift in Sources */,
 				776A37CD28E60482005DAF1C /* ExtensionUIImageViewLoadView.swift in Sources */,
 				77568D8028DB29A100D0F6E5 /* SongsAPIClient.swift in Sources */,
-				77D71BE928F0245A00613B15 /* FavoritesViewController.swift in Sources */,
 				E72C62A128E4BED6003033F4 /* PlayerViewController.swift in Sources */,
 				776A37BD28E45DE3005DAF1C /* AppCoordinator.swift in Sources */,
 				776A37BF28E474BB005DAF1C /* Coordinator.swift in Sources */,
@@ -388,12 +336,7 @@
 				776A37C728E4824A005DAF1C /* SongsListViewController.swift in Sources */,
 				776A37B928E45636005DAF1C /* AlbomModel.swift in Sources */,
 				E774AE0228E97E8C00E7F9C7 /* PosterView.swift in Sources */,
-
 				E76DCF2E28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift in Sources */,
-
-				77D71BE728EF140700613B15 /* SongsByGenresVM.swift in Sources */,
-				77D71BE528EF134A00613B15 /* SongsByGenresViewController.swift in Sources */,
-
 				776A37C128E47A59005DAF1C /* FavoriteCoordinator.swift in Sources */,
 				776A37D128E62248005DAF1C /* SongCollectionViewCell.swift in Sources */,
 				E7C985E028EDAC7300A13F11 /* SongsCoreData.xcdatamodeld in Sources */,
