@@ -170,7 +170,6 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-
 		E76DCF2A28F0AEC7000182C6 /* PlayerScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +179,8 @@
 				E76DCF2D28F0D501000182C6 /* ExtensionPlayerVCSetupSubviews.swift */,
 			);
 			path = PlayerScreen;
-
+			sourceTree = "<group>";
+		};
 		77D71BD928EF0BB800613B15 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
