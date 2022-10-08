@@ -31,7 +31,7 @@ class SongsListViewModel {
     }
     
     var heartHandler: (_ song: Song) -> Void {
-        return { [weak self] song in
+        return { song in
             StorageManager.shared.save(song, in: .favourite)
         }
     }
