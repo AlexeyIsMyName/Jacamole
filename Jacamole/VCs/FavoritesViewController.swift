@@ -12,6 +12,10 @@ class FavoritesVM {
         self.viewModelChanged?()
     }
     
+    func refresh() {
+        filteredSongs = StorageManager.shared.getFavoriteSongs()
+        viewModelChanged?()
+    }
 }
 
 class FavoritesViewController: SongsListViewController {
@@ -35,7 +39,7 @@ class FavoritesViewController: SongsListViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        viewModel.refresh()
     }
     
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
