@@ -73,7 +73,13 @@ extension SongsListView: UITableViewDataSource, UITableViewDelegate {
         cell.artistLabel.text = vm.artistName
         cell.songImage.load(urlAdress: vm.image)
         cell.songID = vm.id
-        cell.heartHendler = viewModel.heartHandler
+        cell.heartHendler = {
+            if StorageManager.shared.isFavourite(songID: vm.id) {
+                StorageManager.shared.delete(vm, from: .favourite)
+            } else {
+                StorageManager.shared.save(vm, in: .favourite)
+            }
+        }
 
         return cell
     }
