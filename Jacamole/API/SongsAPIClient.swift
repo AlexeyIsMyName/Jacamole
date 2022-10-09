@@ -28,6 +28,7 @@ class SongsAPIClient {
                 switch result {
                 case .success(let songs):
                     self.nextURL = URL(string: songs.headers.next)
+//                    print("___self.nextURL: \(self.nextURL!)")
                     complition(songs.results)
                 case .failure(let error):
                     print("loadPopularMonthSongs: \(error)")
@@ -67,7 +68,7 @@ class SongsAPIClient {
                 switch result {
                 case .success(let songs):
                     self.nextURL = URL(string: songs.headers.next)
-                    print("___self.nextURL: \(self.nextURL)")
+                    print("___self.nextURL: \(self.nextURL!)")
                     complition(songs.results)
                 case .failure(let error):
                     print("loadSearchSongs: \(error)")

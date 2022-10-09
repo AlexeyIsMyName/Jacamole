@@ -21,8 +21,8 @@ class FavoritesVM {
 class FavoritesViewController: SongsListViewController {
     private let viewModel = FavoritesVM()
     
-    override init(navigationTitle: String, iNeedSearchBar: Bool, iNeedCloseButton: Bool, songsVM: [Song] = [Song]()) {
-        super.init(navigationTitle: navigationTitle, iNeedSearchBar: iNeedSearchBar, iNeedCloseButton: iNeedCloseButton, songsVM: songsVM)
+	init(navigationTitle: String, iNeedSearchBar: Bool, iNeedCloseButton: Bool) {
+		super.init(navigationTitle: navigationTitle, iNeedSearchBar: iNeedSearchBar, iNeedCloseButton: iNeedCloseButton, songsVM: [], songsAPIClient: SongsAPIClient())
         self.songsVM = self.viewModel.songsVM
         
         self.viewModel.viewModelChanged = {

@@ -4,11 +4,12 @@ class SongsByGenresVM {
     var viewModelChanged: (() -> Void)?
     private(set) var songsVM = [Song]()
     
-    private let apiClient = SongsAPIClient()
+	private let apiClient: SongsAPIClient
     private let genre: String
     
-    init(genre: String) {
+    init(genre: String, apiClient: SongsAPIClient) {
         self.genre = genre
+		self.apiClient = apiClient
     }
 
     func viewWillAppear() {

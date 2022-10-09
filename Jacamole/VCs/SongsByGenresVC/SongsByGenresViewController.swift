@@ -4,8 +4,9 @@ class SongsByGenresViewController: SongsListViewController {
     private let viewModel: SongsByGenresVM
     
     init(genre: String) {
-        self.viewModel = SongsByGenresVM(genre: genre)
-        super.init(navigationTitle: genre.capitalized, iNeedSearchBar: false, iNeedCloseButton: true)
+		let apiClient = SongsAPIClient()
+		self.viewModel = SongsByGenresVM(genre: genre, apiClient: apiClient)
+		super.init(navigationTitle: genre.capitalized, iNeedSearchBar: false, iNeedCloseButton: true, songsAPIClient: apiClient)
     }
     
     required init?(coder: NSCoder) {
@@ -21,7 +22,6 @@ class SongsByGenresViewController: SongsListViewController {
             
             self.songsVM = self.viewModel.songsVM
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
