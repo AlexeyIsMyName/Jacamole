@@ -5,7 +5,11 @@ class SongsByPopularMusic {
     var viewModelChanged: (() -> Void)?
     private(set) var songsVM = [Song]()
     
-    private let apiClient = SongsAPIClient()
+	private let apiClient: SongsAPIClient
+
+	init(apiClient: SongsAPIClient) {
+		self.apiClient = apiClient
+	}
 
     func viewWillAppear() {
         self.apiClient.loadPopularMonthSongs(tag: "") {
@@ -24,8 +28,9 @@ class PopularMusicViewController: SongsListViewController {
     private let viewModel: SongsByPopularMusic
     
     init(navigationTitle: String) {
-        self.viewModel = SongsByPopularMusic()
-        super.init(navigationTitle: navigationTitle, iNeedSearchBar: false, iNeedCloseButton: true)
+		let apiClient = SongsAPIClient()
+        self.viewModel = SongsByPopularMusic(apiClient: apiClient)
+		super.init(navigationTitle: navigationTitle, iNeedSearchBar: false, iNeedCloseButton: true, songsAPIClient: apiClient)
     }
     
     required init?(coder: NSCoder) {

@@ -41,7 +41,7 @@ class SongsListViewModel {
      }
     
     func loadNextSongs() {
-        self.songsAPIClient.loadNextTenSongs {
+        self.songsAPIClient.loadNextTenSongs() {
             songs in
             self.songsVM += songs
             print("_____________________---songsVM: \(self.songsVM)")

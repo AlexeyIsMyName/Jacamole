@@ -5,10 +5,12 @@ class SongsListViewController: UIViewController {
     private let iNeedSearchBar: Bool
     private let iNeedCloseButton: Bool
     private let navigationTitle: String
+
+	private let songsAPIClient: SongsAPIClient
     
     private lazy var songsListView = SongsListView(
         viewModel: SongsListViewModel(
-            songsAPIClient: SongsAPIClient(),
+			songsAPIClient: self.songsAPIClient,
             songsVM: self.songsVM
         )
     )
@@ -50,12 +52,14 @@ class SongsListViewController: UIViewController {
         navigationTitle: String,
         iNeedSearchBar: Bool,
         iNeedCloseButton: Bool,
-        songsVM: [Song] = [Song]()
+        songsVM: [Song] = [Song](),
+		songsAPIClient: SongsAPIClient
     ) {
         self.navigationTitle = navigationTitle
         self.iNeedSearchBar = iNeedSearchBar
         self.iNeedCloseButton = iNeedCloseButton
         self.songsVM = songsVM
+		self.songsAPIClient = songsAPIClient
         
         super.init(nibName: nil, bundle: nil)
     }
